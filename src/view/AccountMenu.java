@@ -3,12 +3,14 @@ package view;
 import model.Account;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AccountMenu {
+import controller.PlayController;
 
+public class AccountMenu extends Menus{
     ArrayList<Account> accounts;
 
     public void createAccount(String userName , ArrayList<Account> accounts){
@@ -21,7 +23,8 @@ public class AccountMenu {
 
         String passWord = getPassWord();
 
-        Account account = new Account(userName , passWord);
+        accounts.add(new Account(userName , passWord));
+
     }
 
     public void login(String userName, ArrayList<Account> accounts){
@@ -33,7 +36,8 @@ public class AccountMenu {
                     System.out.println("Invalid password!");
                     passWord = scanner.nextLine();
                 }
-                
+                PlayController.setAnAccount(account);
+                break;
             }
         }
         System.out.println("Invalid username!");
@@ -55,6 +59,26 @@ public class AccountMenu {
             digitMatcher = digitPattern.matcher(passWord);
         }
         return passWord;
+    }
+
+    public void showLeaderBoard(){
+        accounts.sort(new AccountWinComparator());
+        for (int i = 0; i < accounts.size() ; i++) {
+            System.out.printf("%d - UserName : %s Wins : %d\n" , i , accounts.get(i).getUserName() , accounts.get(i).getWins());
+        }
+    }
+
+    @Override
+    public void help(){
+        System.out.print("create account [user name]\nlogin [user name]\nshow leaderboard\n");
+    }
+
+}
+
+class AccountWinComparator implements Comparator<Account> {
+
+    public int compare(Account account1, Account account2) {
+        return Integer.compare(account1.getWins() , account2.getWins());
     }
 
 }
