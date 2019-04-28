@@ -13,9 +13,9 @@ public class Account {
 
     private PlayerCollection collection;
     //private ArrayList<Battle> matchHistory;
-    private ArrayList<ArrayList<Card>> decks;
-    private ArrayList<Card> mainDeck;
-    private ArrayList<Card> hand;
+    private ArrayList<ArrayList<CardOrItem>> decks;
+    private ArrayList<CardOrItem> mainDeck;
+    private ArrayList<CardOrItem> hand;
     private GraveYard playerGraveYard;
 
 
@@ -48,11 +48,11 @@ public class Account {
         return playerGraveYard;
     }
 
-    public ArrayList<Card> getMainDeck() {
+    public ArrayList<CardOrItem> getMainDeck() {
         return mainDeck;
     }
 
-    public void setMainDeck(ArrayList<Card> mainDeck) {
+    public void setMainDeck(ArrayList<CardOrItem> mainDeck) {
         this.mainDeck = mainDeck;
     }
 }

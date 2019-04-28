@@ -1,7 +1,7 @@
 package model;
 
-public class Card {
-
+public class CardOrItem {
+    private String name;
     private int money;
     private int x;
     private int y;
@@ -19,7 +19,12 @@ public class Card {
     public void setY(int y) {
         this.y = y;
     }
-
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
     public int getMoney() {
         return money;
     }
@@ -27,8 +32,5 @@ public class Card {
         this.money = money;
     }
 
-    public void goToGraveYard(){
-        this.owner.getPlayerGraveYard().add(this);
-    }
 
 }
