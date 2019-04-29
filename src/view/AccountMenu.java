@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 import controller.PlayController;
 
 public class AccountMenu extends Menus{
-    ArrayList<Account> accounts;
+    public static ArrayList<Account> accounts;
 
     public void createAccount(String userName , ArrayList<Account> accounts){
         for (Account account1 : accounts) {
@@ -36,7 +36,7 @@ public class AccountMenu extends Menus{
                     System.out.println("Invalid password!");
                     passWord = scanner.nextLine();
                 }
-                PlayController.setAnAccount(account);
+                PlayController.setAnActiveAccount(account);
                 break;
             }
         }

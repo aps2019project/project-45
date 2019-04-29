@@ -1,14 +1,14 @@
 package view;
 
-import model.Card;
+import model.CardOrItem;
 
 import java.util.ArrayList;
 
 public class GraveYard {
-    private ArrayList<Card> cards;
+    private ArrayList<CardOrItem> cards;
 
-    public void add(Card card){
-        this.cards.add(card);
+    public void add(CardOrItem CardOrItem){
+        this.cards.add(CardOrItem);
     }
 
 }

@@ -6,6 +6,7 @@ public class CardOrItem {
     private int x;
     private int y;
     private Account owner;
+    private String cardID;
 
     public int getX() {
         return x;
@@ -33,4 +34,11 @@ public class CardOrItem {
     }
 
 
+    public String getCardID() {
+        return cardID;
+    }
+
+    public void setCardID(String cardID) {
+        this.cardID = cardID;
+    }
 }
