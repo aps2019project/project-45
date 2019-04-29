@@ -20,7 +20,7 @@ public class Account {
     private GraveYard playerGraveYard;
     private ArrayList enemyName = new ArrayList();
     private ArrayList matchStatuse = new ArrayList();
-    private ArrayList <Date> matchTime = new ArrayList();
+    private ArrayList<Date> matchTime = new ArrayList();
 
 
     public Account(String userName, String passWord) {
