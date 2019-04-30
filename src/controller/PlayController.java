@@ -15,10 +15,19 @@ public class PlayController {
 
 
     public void firstToEnd(){
-        AccountMenu accountMenu = new AccountMenu();
-        menus.push(accountMenu);
-        Request request = new Request(accountMenu);
+        Menus currentMenu = null;
+        menus.push(new AccountMenu());
+        while (true) {
+            if (currentMenu != menus.peek()){
+                currentMenu = menus.peek();
+            }
+            if (currentMenu == null) break;
+            currentMenu.open();
 
+            Request request = new Request(menus.peek());
+            request.setNewCommand();
+            request.getRelatedMenu().handleRequest(request.getCommand());
+        }
     }
 
     public static void addMenue (Menus menu){

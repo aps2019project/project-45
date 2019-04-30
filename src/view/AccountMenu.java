@@ -13,8 +13,11 @@ import model.Battle;
 
 public class AccountMenu extends Menus{
     public static ArrayList<Account> accounts;
+    Scanner scanner = new Scanner(System.in);
 
-    public void createAccount(String userName , ArrayList<Account> accounts){
+    public void createAccount(){
+        System.out.println("Username: ");
+        String userName = scanner.nextLine();
         if (checkIfCreatedUserNameExisted(userName, accounts)) return;
         String passWord = getPassWord();
         accounts.add(new Account(userName , passWord));
@@ -23,19 +26,21 @@ public class AccountMenu extends Menus{
     private boolean checkIfCreatedUserNameExisted(String userName, ArrayList<Account> accounts) {
         for (Account account1 : accounts) {
             if (account1.getUserName().equals(userName)) {
-                View.createdUserNameExisted();
+                System.out.println("The username has already existed.");
                 return true;
             }
         }
         return false;
     }
 
-    public void login(String userName, ArrayList<Account> accounts){
+    public void login(){
+        System.out.println("Username: ");
+        String userName = scanner.nextLine();
         for (Account account : accounts) {
             if (account.getUserName().equals(userName)) {
-                String passWord = Request.getPassWordForLogin();
+                String passWord = scanner.nextLine();
                 /*while*/ if(!passWord.equals(account.getPassWord())) {
-                    View.showInvalidPassWordForLogin();
+                    System.out.println("Invalid password!");
                     return;
                 }
                     //passWord = Request.getPassWordForLogin();
@@ -46,7 +51,7 @@ public class AccountMenu extends Menus{
                 return;
             }
         }
-        View.showInvalidUserNameForLogin();
+        System.out.println("Invalid Username!");
     }
 
     private String getPassWord() {
@@ -58,7 +63,7 @@ public class AccountMenu extends Menus{
         String passWord = scanner.nextLine();
         Matcher characterMatcher = characterPattern.matcher(passWord);
         Matcher digitMatcher = digitPattern.matcher(passWord);
-        while (!characterMatcher.find() || !digitMatcher.find()){
+        if (!characterMatcher.find() || !digitMatcher.find()){
             System.out.println("Password should have both alphabetic characters and digits!");
             passWord = scanner.nextLine();
             characterMatcher = characterPattern.matcher(passWord);
@@ -80,7 +85,14 @@ public class AccountMenu extends Menus{
     }
 
     @Override
-    public void handleRequest() {
+    public void handleRequest(String request) {
+        if (request.equals("Create Account")){
+            createAccount();
+        }
+    }
+
+    @Override
+    public void open() {
 
     }
 

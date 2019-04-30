@@ -1,12 +1,12 @@
 package model;
 
-public class CardOrItem {
+public abstract class CardOrItem {
     private String name;
     private int money;
     private int x;
     private int y;
     private Account owner;
-    private String cardID;
+    private String ID;
 
     public int getX() {
         return x;
@@ -34,11 +34,11 @@ public class CardOrItem {
     }
 
 
-    public String getCardID() {
-        return cardID;
+    public String getID() {
+        return ID;
     }
 
-    public void setCardID(String cardID) {
-        this.cardID = cardID;
+    public void setID(String cardID) {
+        this.ID = cardID;
     }
 }

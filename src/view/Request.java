@@ -3,20 +3,21 @@ package view;
 import java.util.Scanner;
 
 public class Request {
-    //probability of error
-    private Menus relatedMenu;
-    //probability of error
     private static Scanner scanner = new Scanner(System.in);
+    private String command;
+    private Menus relatedMenu;//probability of error
 
     public Request(Menus relatedMenu) {
         this.relatedMenu = relatedMenu;
     }
-
-    public static String getPassWordForLogin(){
-        return scanner.nextLine();
+    public Menus getRelatedMenu() {
+        return relatedMenu;
+    }
+    public void setNewCommand(){
+        this.command = scanner.nextLine();
+    }
+    public String getCommand() {
+        return command;
     }
 
-    public void accountMenuRequest(){
-
-    }
 }

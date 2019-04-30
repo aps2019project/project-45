@@ -16,4 +16,9 @@ public class MainMenu extends Menus {
     public void handleRequest() {
 
     }
+
+    @Override
+    public void open() {
+
+    }
 }
