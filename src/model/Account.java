@@ -18,8 +18,8 @@ public class Account {
     private ArrayList<CardOrItem> mainDeck;
     private ArrayList<CardOrItem> hand;
     private GraveYard playerGraveYard;
-    private ArrayList enemyName = new ArrayList();
-    private ArrayList matchStatuse = new ArrayList();
+    private ArrayList<String> enemyName = new ArrayList();
+    private ArrayList<String> matchStatuse = new ArrayList();
     private ArrayList<Date> matchTime = new ArrayList();
 
 

@@ -1,10 +1,8 @@
 package controller;
 
 import model.Account;
-import view.AccountMenu;
-import view.MainMenu;
-import view.Menus;
-import view.Request;
+import model.Square;
+import view.*;
 
 import java.util.ArrayList;
 import java.util.Deque;
@@ -12,22 +10,19 @@ import java.util.LinkedList;
 
 public class PlayController {
 
-    private static Deque<Menus> menus = new LinkedList<>();
-    private static ArrayList<Account> activeAccounts = new ArrayList<>();
+    public static Deque<Menus> menus = new LinkedList<>();
+    private static Square[][] square = new Square[5][9];
 
-    public static void setAnActiveAccount(Account account){
-        activeAccounts.add(account);
-    }
 
     public void firstToEnd(){
         AccountMenu accountMenu = new AccountMenu();
-        Request request = new Request();
+        menus.push(accountMenu);
+        Request request = new Request(accountMenu);
 
     }
 
-
-    public void getRequest(){
-
+    public static void addMenue (Menus menu){
+        menus.push(menu);
     }
 }
 

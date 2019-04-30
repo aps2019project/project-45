@@ -9,38 +9,44 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import controller.PlayController;
+import model.Battle;
 
 public class AccountMenu extends Menus{
     public static ArrayList<Account> accounts;
 
     public void createAccount(String userName , ArrayList<Account> accounts){
+        if (checkIfCreatedUserNameExisted(userName, accounts)) return;
+        String passWord = getPassWord();
+        accounts.add(new Account(userName , passWord));
+    }
+
+    private boolean checkIfCreatedUserNameExisted(String userName, ArrayList<Account> accounts) {
         for (Account account1 : accounts) {
             if (account1.getUserName().equals(userName)) {
-                System.out.println("The username has already existed.");
-                return;
+                View.createdUserNameExisted();
+                return true;
             }
         }
-
-        String passWord = getPassWord();
-
-        accounts.add(new Account(userName , passWord));
-
+        return false;
     }
 
     public void login(String userName, ArrayList<Account> accounts){
         for (Account account : accounts) {
             if (account.getUserName().equals(userName)) {
-                Scanner scanner = new Scanner(System.in);
-                String passWord = scanner.nextLine();
-                while (!passWord.equals(account.getPassWord())) {
-                    System.out.println("Invalid password!");
-                    passWord = scanner.nextLine();
+                String passWord = Request.getPassWordForLogin();
+                /*while*/ if(!passWord.equals(account.getPassWord())) {
+                    View.showInvalidPassWordForLogin();
+                    return;
                 }
-                PlayController.setAnActiveAccount(account);
-                break;
+                    //passWord = Request.getPassWordForLogin();
+                //}
+                Battle.setAnActiveAccount(account);
+                MainMenu mainMenu = MainMenu.getInstance();
+                PlayController.addMenue(mainMenu);
+                return;
             }
         }
-        System.out.println("Invalid username!");
+        View.showInvalidUserNameForLogin();
     }
 
     private String getPassWord() {
@@ -71,6 +77,11 @@ public class AccountMenu extends Menus{
     @Override
     public void help(){
         System.out.print("create account [user name]\nlogin [user name]\nshow leaderboard\n");
+    }
+
+    @Override
+    public void handleRequest() {
+
     }
 
 }
