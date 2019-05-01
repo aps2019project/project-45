@@ -5,7 +5,7 @@ import view.menus.Menus;
 import java.util.Scanner;
 
 public class Request {
-    private static Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
     private String command;
     private Menus relatedMenu;//probability of error
 

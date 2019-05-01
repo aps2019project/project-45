@@ -12,5 +12,4 @@ public abstract class Menus {
     public void exit() {
         PlayController.menus.pop();
     }
-
 }

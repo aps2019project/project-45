@@ -1,9 +1,12 @@
 package controller;
 
+import view.Battle;
 import model.Square;
 import view.*;
 import view.menus.AccountMenu;
 import view.menus.Menus;
+import view.menus.PlayerCollection;
+import view.menus.Shop;
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -22,25 +25,31 @@ public class PlayController {
                 currentMenu = menus.peek();
             }
             if (currentMenu == null) break;
-            currentMenu.open();
+            //currentMenu.open();
 
-            Request request = new Request(menus.peek());
+            Request request = new Request(currentMenu);
             request.setNewCommand();
 
             if (request.getCommand().equalsIgnoreCase("exit")){
                 currentMenu.exit();
                 continue;
             }
-
-            switch (request.getRelatedMenu().TYPE){
+            if (request.getCommand().equalsIgnoreCase("help")) {
+                request.getRelatedMenu().help();
+            }
+            switch (currentMenu.TYPE){
                 case "account menu":
                     accountMenuRequest(request.getCommand());
+                    break;
                 case "main menu":
-                    mainMunuRequest(request.getCommand());
+                    mainMenuRequest(request.getCommand());
+                    break;
                 case "grave yard":
                     graveYardRequest(request.getCommand());
+                    break;
                 case "player collection":
                     playerCollectionRequest(request.getCommand());
+                    break;
             }
 
         }
@@ -53,9 +62,17 @@ public class PlayController {
             AccountMenu.login();
         }
     }
-    public void mainMunuRequest(String command){
-        if (command.substring(0,5).equalsIgnoreCase("enter")) enterMenu(command);
-
+    public void mainMenuRequest(String command){
+        if (command.equalsIgnoreCase("Enter collection")) {
+            PlayerCollection playerCollection = new PlayerCollection();
+            playerCollection.open();
+        } else if (command.equalsIgnoreCase("Enter shop")) {
+            Shop shop = new Shop();
+            shop.open();
+        } else if (command.equalsIgnoreCase("Enter battle")){
+            Battle battle = new Battle();
+            battle.open();
+        }
     }
     public void graveYardRequest(String command){
 

@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 public class PlayerCollection extends Menus {
     static final String TYPE = "player collection";
+    private ArrayList<ArrayList<CardOrItem>> decks;
+    private ArrayList<CardOrItem> mainDeck;
 
     private ArrayList<CardOrItem> cardOrItems = new ArrayList<>();
 
-    public void show(Account account) {
-        for (int i = 0; i < account.getMainDeck().size(); i++) {
-            
-        }
+    public ArrayList<CardOrItem> getMainDeck() {
+        return mainDeck;
     }
 
     public void search(String CardOrItemName, Account account) {
@@ -31,4 +31,5 @@ public class PlayerCollection extends Menus {
     public void help() {
 
     }
+
 }

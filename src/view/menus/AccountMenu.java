@@ -8,13 +8,13 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import model.Battle;
+import view.Battle;
 
 public class AccountMenu extends Menus {
 
-    static Scanner scanner = new Scanner(System.in);
-    public static ArrayList<Account> accounts;
-    static final String TYPE = "account menu";
+    private static Scanner scanner = new Scanner(System.in);
+    private static ArrayList<Account> accounts;
+    private static final String TYPE = "account menu";
 
     public static void createAccount(){
         System.out.println("Username: ");
