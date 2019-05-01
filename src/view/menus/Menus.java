@@ -1,12 +1,14 @@
-package view;
+package view.menus;
 
 import controller.PlayController;
 
 public abstract class Menus {
+    public static String TYPE;
     public abstract void help();
-    public abstract void handleRequest(String request);
-    public abstract void open();
 
+    public void open(){
+        PlayController.menus.push(this);
+    }
     public void exit() {
         PlayController.menus.pop();
     }

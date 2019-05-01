@@ -1,5 +1,4 @@
 import controller.PlayController;
-import view.MainMenu;
 
 public class Main {
 

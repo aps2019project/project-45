@@ -1,7 +1,7 @@
 package model;
 
-import view.GraveYard;
-import view.PlayerCollection;
+import view.menus.GraveYard;
+import view.menus.PlayerCollection;
 
 import java.util.ArrayList;
 import java.util.Date;

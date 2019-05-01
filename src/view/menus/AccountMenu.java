@@ -1,4 +1,4 @@
-package view;
+package view.menus;
 
 import model.Account;
 
@@ -8,32 +8,24 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import controller.PlayController;
 import model.Battle;
 
-public class AccountMenu extends Menus{
-    public static ArrayList<Account> accounts;
-    Scanner scanner = new Scanner(System.in);
+public class AccountMenu extends Menus {
 
-    public void createAccount(){
+    static Scanner scanner = new Scanner(System.in);
+    public static ArrayList<Account> accounts;
+    static final String TYPE = "account menu";
+
+    public static void createAccount(){
         System.out.println("Username: ");
         String userName = scanner.nextLine();
         if (checkIfCreatedUserNameExisted(userName, accounts)) return;
         String passWord = getPassWord();
         accounts.add(new Account(userName , passWord));
+        MainMenu mainMenu = new MainMenu();
+        mainMenu.open();
     }
-
-    private boolean checkIfCreatedUserNameExisted(String userName, ArrayList<Account> accounts) {
-        for (Account account1 : accounts) {
-            if (account1.getUserName().equals(userName)) {
-                System.out.println("The username has already existed.");
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void login(){
+    public static void login(){
         System.out.println("Username: ");
         String userName = scanner.nextLine();
         for (Account account : accounts) {
@@ -43,18 +35,29 @@ public class AccountMenu extends Menus{
                     System.out.println("Invalid password!");
                     return;
                 }
-                    //passWord = Request.getPassWordForLogin();
+                //passWord = Request.getPassWordForLogin();
                 //}
                 Battle.setAnActiveAccount(account);
-                MainMenu mainMenu = MainMenu.getInstance();
-                PlayController.addMenue(mainMenu);
+                MainMenu mainMenu = new MainMenu();
+                mainMenu.open();
+                /*MainMenu mainMenu = MainMenu.getInstance();
+                PlayController.addMenue(mainMenu);*/
                 return;
             }
         }
         System.out.println("Invalid Username!");
     }
 
-    private String getPassWord() {
+    private static boolean checkIfCreatedUserNameExisted(String userName, ArrayList<Account> accounts) {
+        for (Account account1 : accounts) {
+            if (account1.getUserName().equals(userName)) {
+                System.out.println("The username has already existed.");
+                return true;
+            }
+        }
+        return false;
+    }
+    private static String getPassWord() {
         Scanner scanner = new Scanner(System.in);
         Pattern characterPattern = Pattern.compile("\\w+");
         Pattern digitPattern = Pattern.compile("\\d+");
@@ -82,18 +85,6 @@ public class AccountMenu extends Menus{
     @Override
     public void help(){
         System.out.print("create account [user name]\nlogin [user name]\nshow leaderboard\n");
-    }
-
-    @Override
-    public void handleRequest(String request) {
-        if (request.equals("Create Account")){
-            createAccount();
-        }
-    }
-
-    @Override
-    public void open() {
-
     }
 
 }

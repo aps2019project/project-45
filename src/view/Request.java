@@ -1,5 +1,7 @@
 package view;
 
+import view.menus.Menus;
+
 import java.util.Scanner;
 
 public class Request {

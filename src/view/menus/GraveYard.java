@@ -1,10 +1,10 @@
-package view;
+package view.menus;
 
 import model.CardOrItem;
 
 import java.util.ArrayList;
 
-public class GraveYard extends Menus{
+public class GraveYard extends Menus {
     private ArrayList<CardOrItem> cards;
 
     public void add(CardOrItem CardOrItem){
@@ -15,4 +15,5 @@ public class GraveYard extends Menus{
     public void help() {
 
     }
+
 }
