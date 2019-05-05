@@ -2,10 +2,10 @@ package model;
 
 public class CardOrItem {
     private String name;
-    private int money;
-    private int x;
-    private int y;
+    private int cost;
+    private Square square;
     private Account userAccount;
+    private String cardID;
 
     public String getName() {
         return name;
@@ -13,21 +13,17 @@ public class CardOrItem {
     public void setName(String name) {
         this.name = name;
     }
-    public int getMoney() {
-        return money;
+    public int getCost() {
+        return cost;
     }
-    public void setMoney(int money) {
-        this.money = money;
+    public void setCost(int cost) {
+        this.cost = cost;
     }
-    public int getX(){ return x; }
-    public void setX(int x) {
-        this.x = x;
+    public Square getSquare() {
+        return square;
     }
-    public int getY() {
-        return y;
-    }
-    public void setY(int y) {
-        this.y = y;
+    public void setSquare(Square square) {
+        this.square = square;
     }
     public Account getUserAccountOwner() {
         return userAccount;
@@ -35,8 +31,12 @@ public class CardOrItem {
     public void setUserAccountOwner(Account accountOwner) {
         this.userAccount = accountOwner;
     }
-
-
+    public String getCardID() {
+        return cardID;
+    }
+    public void setCardID(String cardID) {
+        this.cardID = cardID;
+    }
 
 
 }

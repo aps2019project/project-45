@@ -2,6 +2,8 @@ package model;
 
 import view.menus.GraveYard;
 import view.menus.PlayerCollection;
+import view.menus.GraveYard;
+import view.menus.PlayerCollection;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,12 +12,13 @@ public class Account {
     private String userName;
     private String passWord;
     private int mana;
+    private int money;
     private int wins;
     private int losts;
+    private Card selectedCardInBattle;
 
     private PlayerCollection collection;
-    //private ArrayList<ArrayList<CardOrItem>> decks;
-    //private ArrayList<CardOrItem> mainDeck;
+
     private ArrayList<CardOrItem> hand;
     private GraveYard playerGraveYard;
     private ArrayList<String> lastEnemyNames = new ArrayList<>();
@@ -42,6 +45,12 @@ public class Account {
     public void setMana(int mana) {
         this.mana = mana;
     }
+    public int getMoney() {
+        return money;
+    }
+    public void setMoney(int money) {
+        this.money = money;
+    }
     public int getLosts() {
         return losts;
     }
@@ -66,6 +75,13 @@ public class Account {
     public PlayerCollection getCollection() {
         return collection;
     }
+    public Card getSelectedCardInBattle() {
+        return selectedCardInBattle;
+    }
+    public void setSelectedCardInBattle(Card selectedCardInBattle) {
+        this.selectedCardInBattle = selectedCardInBattle;
+    }
+
 
     /*public GraveYard getPlayerGraveYard() {
         return playerGraveYard;

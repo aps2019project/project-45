@@ -1,18 +1,18 @@
 package view;
 
-import view.menus.Menus;
+import view.menus.Menu;
 
 import java.util.Scanner;
 
 public class Request {
     private Scanner scanner = new Scanner(System.in);
     private String command;
-    private Menus relatedMenu;//probability of error
+    private Menu relatedMenu;//probability of error
 
-    public Request(Menus relatedMenu) {
+    public Request(Menu relatedMenu) {
         this.relatedMenu = relatedMenu;
     }
-    public Menus getRelatedMenu() {
+    public Menu getRelatedMenu() {
         return relatedMenu;
     }
     public void setNewCommand(){
