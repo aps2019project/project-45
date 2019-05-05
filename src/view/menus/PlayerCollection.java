@@ -1,5 +1,4 @@
-MAli Seif Kashani,[05.05.19 19:51]
-        package view.menus;
+package view.menus;
 
 import model.*;
 import view.View;
@@ -107,8 +106,6 @@ public class PlayerCollection extends Menu {
                     }
                 }
                 decks.get(deckName).add(hero);
-
-                MAli Seif Kashani, [05.05 .19 19:51]
                 return;
             }
         }

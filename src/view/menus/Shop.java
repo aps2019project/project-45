@@ -1,5 +1,4 @@
-MAli Seif Kashani,[05.05.19 19:53]
-        package view.menus;
+package view.menus;
 
 import model.*;
 import view.View;
@@ -104,7 +103,7 @@ public class Shop extends Menu {
             if (spell.getCardID().equals(cardID)) {
                 account.setMoney(account.getMoney() + spell.getCost());
 
-                MAli Seif Kashani, [05.05 .19 19:53]
+
                 account.getCollection().getSpells().remove(spell);
                 System.out.println("successful task :)");
                 return;
