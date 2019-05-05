@@ -4,19 +4,18 @@ import view.Battle;
 import model.Square;
 import view.*;
 import view.menus.*;
-
 import java.util.ArrayList;
 
 public class PlayController {
     public static ArrayList<Menu> menus = new ArrayList<>();
 
-    public void firstToEnd(){
+    public void firstToEnd() {
         Menu currentMenu = null;
         menus.add(AccountMenu.getInstance());
 
         while (true) {
             if (menus.size() == 0) break;
-            if (currentMenu != menus.get(menus.size() - 1)){
+            if (currentMenu != menus.get(menus.size() - 1)) {
                 currentMenu = menus.get(menus.size() - 1);
                 //if (currentMenu == null) break;
             }
@@ -37,36 +36,42 @@ public class PlayController {
     }
 
 
-    private void accountMenuRequest(String command){
-        if (command.equalsIgnoreCase("create account")){
+    private void accountMenuRequest(String command) {
+        if (command.equalsIgnoreCase("create account")) {
 
-        } else if (command.equalsIgnoreCase("login")){
+        } else if (command.equalsIgnoreCase("login")) {
 
         }
     }
-    private void createAccountMenuRequest(String command){
+
+    private void createAccountMenuRequest(String command) {
 
     }
-    private void loginMenuRequest(String command){
+
+    private void loginMenuRequest(String command) {
 
     }
-    private void playingModeMenuRequest(String command){
+
+    private void playingModeMenuRequest(String command) {
 
     }
-    private void mainMenuRequest(String command){
+
+    private void mainMenuRequest(String command) {
         if (command.equalsIgnoreCase("Enter collection")) {
             menus.add(new PlayerCollection());
         } else if (command.equalsIgnoreCase("Enter shop")) {
             menus.add(Shop.getInstance());
-        } else if (command.equalsIgnoreCase("Enter battle") && Battle.actvieAccounts[1] != null){ //need for attention
+        } else if (command.equalsIgnoreCase("Enter battle") && Battle.actvieAccounts[1] != null) { //need for attention
             //menus.add(new Battle());
             menus.add(PlayingModeMenu.getInstance());
         }
     }
-    private void graveYardRequest(String command){
+
+    private void graveYardRequest(String command) {
 
     }
-    private void playerCollectionRequest(String command){
+
+    private void playerCollectionRequest(String command) {
 
     }
 

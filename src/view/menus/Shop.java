@@ -7,8 +7,10 @@ import java.util.ArrayList;
 
 public class Shop extends Menu {
     private static final Shop SHOP = new Shop();
+
     private Shop() {
     }
+
     public static Shop getInstance() {
         return SHOP;
     }
@@ -23,6 +25,7 @@ public class Shop extends Menu {
     public void showCollection(Account account) {
         account.getCollection().show();
     }
+
     public void search(String name) {
         for (CardOrItem cardOrItem : allAvailableCardOrItemsInShop) {
             if (cardOrItem.getName().equals(name)) {
@@ -32,10 +35,12 @@ public class Shop extends Menu {
         }
         System.out.println("Not existing!");
     }
-    public void searchCollection(String name , Account account) {
+
+    public void searchCollection(String name, Account account) {
         account.getCollection().search(name);
     }
-    public void buy(String name , Account account) {
+
+    public void buy(String name, Account account) {
         boolean available = false;
         CardOrItem availableCardOrItem = null;
         for (CardOrItem cardOrItem : allAvailableCardOrItemsInShop) {
@@ -68,7 +73,8 @@ public class Shop extends Menu {
         }
         account.setMoney(account.getMoney() - availableCardOrItem.getCost());
     }
-    public void sell(String cardID , Account account) {
+
+    public void sell(String cardID, Account account) {
         for (Hero hero : account.getCollection().getHeroes()) {
             if (hero.getCardID().equals(cardID)) {
                 account.setMoney(account.getMoney() + hero.getCost());
@@ -103,27 +109,28 @@ public class Shop extends Menu {
         }
         System.out.println("You don't have this card/item! :(");
     }
+
     public void show() {
         int i = 0;
         System.out.println("Heroes :");
         for (Hero hero : allAvailableHeros) {
-            View.showCardOrItemInformationWithCost(hero , i);
+            View.showCardOrItemInformationWithCost(hero, i);
             i++;
         }
         i = 0;
         System.out.println("Items :");
         for (Item item : allAvailableItems) {
-            View.showCardOrItemInformationWithCost(item , i);
+            View.showCardOrItemInformationWithCost(item, i);
             i++;
         }
         i = 0;
         System.out.println("Cards :");
         for (Minion minion : allAvailableMinions) {
-            View.showCardOrItemInformationWithCost(minion , i);
+            View.showCardOrItemInformationWithCost(minion, i);
             i++;
         }
         for (Spell spell : allAvailableSpells) {
-            View.showCardOrItemInformationWithCost(spell , i);
+            View.showCardOrItemInformationWithCost(spell, i);
             i++;
         }
     }

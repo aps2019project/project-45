@@ -36,48 +36,63 @@ public class Account {
     public String getUserName() {
         return userName;
     }
+
     public String getPassWord() {
         return passWord;
     }
+
     public int getMana() {
         return mana;
     }
+
     public void setMana(int mana) {
         this.mana = mana;
     }
+
     public int getMoney() {
         return money;
     }
+
     public void setMoney(int money) {
         this.money = money;
     }
+
     public int getLosts() {
         return losts;
     }
+
     public void setLosts(int losts) {
         this.losts = losts;
     }
+
     public int getWins() {
         return wins;
     }
+
     public void setWins(int wins) {
         this.wins = wins;
     }
+
     public Hero getHero() {
         return hero;
     }
+
     public ArrayList<Minion> getActiveMinions() {
         return activeMinions;
     }
+
     public ArrayList<Spell> getActiveSpells() {
         return activeSpells;
     }
+
     public PlayerCollection getCollection() {
         return collection;
     }
+
     public Card getSelectedCardInBattle() {
         return selectedCardInBattle;
     }
+
     public void setSelectedCardInBattle(Card selectedCardInBattle) {
         this.selectedCardInBattle = selectedCardInBattle;
     }
