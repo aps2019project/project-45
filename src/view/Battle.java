@@ -2,22 +2,24 @@ package view;
 
 import model.*;
 import view.menus.Menu;
+import model.PlayingType;
 
 import java.util.ArrayList;
 
 public class Battle extends Menu {
-    public static Account[] actvieAccounts = new Account[2];
-    private static Square[][] square = new Square[5][9];
+    private static final Battle BATTLE = new Battle();
+    private Battle() {
+    }
+    public static Battle getInstance() {
+        return BATTLE;
+    }
+
+    private Account[] actvieAccounts = new Account[2];
+    private Square[][] square = new Square[5][9];
     private ArrayList<Item> flags = new ArrayList<>();
     private Card selectedCard;
+    private PlayingType playingType;
 
-    public static void setAnActiveAccount(Account account){
-        if (actvieAccounts[0] == null) {
-            actvieAccounts[0] = account;
-            return;
-        }
-        actvieAccounts[1] = account;
-    }
     public void gameInfo(int mode) {
         System.out.println(actvieAccounts[0].getUserName() + " mana : " + actvieAccounts[0].getMana());
         System.out.println(actvieAccounts[1].getUserName() + " mana : " + actvieAccounts[1].getMana());
@@ -124,6 +126,16 @@ public class Battle extends Menu {
         }
         return false;
     }
+    public Account[] getActvieAccounts() {
+        return actvieAccounts;
+    }
+    public PlayingType getPlayingType() {
+        return playingType;
+    }
+    public void setPlayingType(PlayingType playingType) {
+        this.playingType = playingType;
+    }
+
 
     @Override
     public void help() {
@@ -135,4 +147,11 @@ public class Battle extends Menu {
     public MenuType getType() {
         return MenuType.BATTLE;
     }
+
+    @Override
+    public void open() {
+        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * Battle" +
+                " * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
+    }
+
 }

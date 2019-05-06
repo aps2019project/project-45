@@ -16,6 +16,7 @@ public class Account {
     private int wins;
     private int losts;
     private Card selectedCardInBattle;
+    private boolean activeAtTheMoment;
 
     private PlayerCollection collection;
 
@@ -95,6 +96,13 @@ public class Account {
 
     public void setSelectedCardInBattle(Card selectedCardInBattle) {
         this.selectedCardInBattle = selectedCardInBattle;
+    }
+
+    public boolean isActiveAtTheMoment() {
+        return activeAtTheMoment;
+    }
+    public void setActiveAtTheMoment(boolean activeAtTheMoment) {
+        this.activeAtTheMoment = activeAtTheMoment;
     }
 
 

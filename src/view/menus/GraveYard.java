@@ -23,4 +23,10 @@ public class GraveYard extends Menu {
         return MenuType.GRAVE_YARD;
     }
 
+    @Override
+    public void open() {
+        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * Grave Yard " +
+                "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
+    }
+
 }

@@ -138,11 +138,17 @@ public class Shop extends Menu {
     @Override
     public void help() {
         System.out.print("exit\nshow collection\nsearch [item name | card name]\nsearch collection [item name | card name]\n" +
-                "buy [card name | item name]\nsell [card id | card id]\nshow\nhelp");
+                "buy [card name | item name]\nsell [card id | card id]\nshow\nhelp\n");
     }
 
     @Override
     public MenuType getType() {
         return MenuType.SHOP;
+    }
+
+    @Override
+    public void open() {
+        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * Shop " +
+                "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
     }
 }

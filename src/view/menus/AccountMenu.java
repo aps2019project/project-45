@@ -1,5 +1,6 @@
 package view.menus;
 
+import controller.PlayController;
 import model.Account;
 
 import java.util.ArrayList;
@@ -22,28 +23,12 @@ public class AccountMenu extends Menu {
     private static Scanner scanner = new Scanner(System.in);
     public ArrayList<Account> accounts;
 
-    //both need to recode
-
-
-
-    private static String getPassWord() {
-        Scanner scanner = new Scanner(System.in);
-        Pattern characterPattern = Pattern.compile("\\w+");
-        Pattern digitPattern = Pattern.compile("\\d+");
-
-        System.out.print("Password: ");
-        String passWord = scanner.nextLine();
-        Matcher characterMatcher = characterPattern.matcher(passWord);
-        Matcher digitMatcher = digitPattern.matcher(passWord);
-        if (!characterMatcher.find() || !digitMatcher.find()){
-            System.out.println("Password should have both alphabetic characters and digits!");
-            passWord = scanner.nextLine();
-            characterMatcher = characterPattern.matcher(passWord);
-            digitMatcher = digitPattern.matcher(passWord);
-        }
-        return passWord;
+    public void createAccount() {
+        PlayController.menus.add(CreateAccount.getInstance());
     }
-
+    public void login() {
+        PlayController.menus.add(Login.getInstance());
+    }
     public void showLeaderBoard(){
         accounts.sort(new AccountWinComparator());
         for (int i = 0; i < accounts.size() ; i++) {
@@ -53,12 +38,18 @@ public class AccountMenu extends Menu {
 
     @Override
     public void help(){
-        System.out.print("create account [user name]\nlogin [user name]\nshow leaderboard\n");
+        System.out.print("create account [user name]\nlogin [user name]\nshow leaderboard\nhelp\n");
     }
 
     @Override
     public MenuType getType() {
         return MenuType.ACCOUNT_MENU;
+    }
+
+    //@Override
+    public void open() {
+        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * Account Menu " +
+                "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
     }
 
 }

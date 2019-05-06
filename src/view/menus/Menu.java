@@ -6,6 +6,7 @@ import model.MenuType;
 public abstract class Menu {
     public abstract void help();
     public abstract MenuType getType();
+    public abstract void open();
 
     public void exit() {
         PlayController.menus.remove(PlayController.menus.size() - 1);

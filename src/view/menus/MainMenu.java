@@ -12,12 +12,18 @@ public class MainMenu extends Menu {
 
     @Override
     public void help() {
-        System.out.print("1. Collection\n2. Shop\n3. Battle\n4. Exit\n5. Help");
+        System.out.print("1. Collection\n2. Shop\n3. Battle\n4. Exit\n5. Help\n");
     }
 
     @Override
     public MenuType getType() {
         return MenuType.MAIN_MENU;
+    }
+
+    @Override
+    public void open() {
+        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * Main Menu " +
+                "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
     }
 
 }

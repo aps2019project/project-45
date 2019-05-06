@@ -233,12 +233,18 @@ public class PlayerCollection extends Menu {
     public void help() {
         System.out.print("exit\nshow\nsearch [card name | item name]\nsave\ncreate deck[deck name]\ndelete deck[deck name]\n" +
                 "add [card id | card id | hero id] to deck [deck name]\nremove [card id | card id | hero id]from deck [deck name]" +
-                "\nvalidate deck[deck name]\nselect deck[deck name]\nshow all decks\nshow deck[deck name]\nhelp");
+                "\nvalidate deck[deck name]\nselect deck[deck name]\nshow all decks\nshow deck[deck name]\nhelp\n");
     }
 
     @Override
     public MenuType getType() {
         return MenuType.PLAYER_COLLECTION;
+    }
+
+    @Override
+    public void open() {
+        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * Collection " +
+                "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
     }
 
 }
