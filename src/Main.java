@@ -10,6 +10,4 @@ public class Main {
         PlayController playController = new PlayController();
         playController.firstToEnd();
     }
-
-
 }

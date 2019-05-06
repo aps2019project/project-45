@@ -4,21 +4,26 @@ import model.Account;
 import model.MenuType;
 import view.Battle;
 
+import java.util.Scanner;
+
 public class Login extends Menu {
     private static final Login LOGIN = new Login();
+    static Scanner scanner=new Scanner(System.in); //Define Scanner
     private Login() {
     }
+
     public static Login getInstance() {
         return LOGIN;
     }
 
-    public void login(){
+    public void login() {
         System.out.println("Username: ");
         String userName = scanner.nextLine();
-        for (Account account : accounts) {
+        for (Account account : CreateAccount.accounts) {  //using list of accounts
             if (account.getUserName().equals(userName)) {
                 String passWord = scanner.nextLine();
-                /*while*/ if(!passWord.equals(account.getPassWord())) {
+                /*while*/
+                if (!passWord.equals(account.getPassWord())) {
                     System.out.println("Invalid password!");
                     return;
                 }
