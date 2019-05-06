@@ -42,6 +42,9 @@ public class PlayingTypeMenu extends Menu{
         Pattern modePattern = Pattern.compile("Start multiplayer game (FIRST|SECOND|THIRD) *(\\d)*");
         Matcher modeMatcher = modePattern.matcher(request1.getCommand());
         if (modeMatcher.matches()) {
+            if (modeMatcher.group(1).equalsIgnoreCase(PlayingMode.FIRST.toString())){
+
+            }
 
         }
     }
