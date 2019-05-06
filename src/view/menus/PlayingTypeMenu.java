@@ -1,10 +1,15 @@
 package view.menus;
 
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import model.Account;
 import model.MenuType;
+import model.PlayingMode;
 import model.PlayingType;
 import view.Battle;
 import view.Request;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PlayingTypeMenu extends Menu{
     private static final PlayingTypeMenu PLAYING_MODE_MENU = new PlayingTypeMenu();
@@ -28,7 +33,17 @@ public class PlayingTypeMenu extends Menu{
                 break;
             }
         }
+        System.out.println("Set the mode of play:");
+        System.out.println(PlayingMode.FIRST + " : " + PlayingMode.FIRST.getMessage());
+        System.out.println(PlayingMode.SECOND + " : " + PlayingMode.SECOND.getMessage());
+        System.out.println(PlayingMode.THIRD + " : " + PlayingMode.THIRD.getMessage());
+        Request request1 = new Request(PlayingTypeMenu.getInstance());
+        request1.setNewCommand();
+        Pattern modePattern = Pattern.compile("Start multiplayer game (FIRST|SECOND|THIRD) *(\\d)*");
+        Matcher modeMatcher = modePattern.matcher(request1.getCommand());
+        if (modeMatcher.matches()) {
 
+        }
     }
 
     @Override

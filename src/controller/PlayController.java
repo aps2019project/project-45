@@ -34,7 +34,9 @@ public class PlayController {
 
     private void accountMenuRequest(String command){
         if (command.equalsIgnoreCase("create account")){
+            AccountMenu.getInstance().createAccount();
         } else if (command.equalsIgnoreCase("login")){
+            AccountMenu.getInstance().login();
         } else if (command.equalsIgnoreCase("show leaderboard")) {
             AccountMenu.getInstance().showLeaderBoard();
         }
