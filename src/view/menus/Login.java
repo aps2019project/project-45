@@ -17,27 +17,35 @@ public class Login extends Menu {
     }
 
     public void login() {
-        System.out.println("Username: ");
-        String userName = scanner.nextLine();
-        for (Account account : CreateAccount.accounts) {  //using list of accounts
-            if (account.getUserName().equals(userName)) {
-                String passWord = scanner.nextLine();
-                /*while*/
-                if (!passWord.equals(account.getPassWord())) {
-                    System.out.println("Invalid password!");
+        boolean checkLogin=false;
+        do {
+            System.out.println("Enter Your Username: ");
+            String userName = scanner.nextLine();
+            for (Account account : CreateAccount.accounts) {  //using list of accounts
+                if (account.getUserName().equals(userName)) {
+                    System.out.println("Enter Your Password: ");
+                    String passWord = scanner.nextLine();
+                    /*while*/
+                    if (passWord.equals(account.getPassWord())) {
+
+                        checkLogin=true;
+                        return;
+                    }
+                    //passWord = Request.getPassWordForLogin();
+                    //}
+                    //Battle.setAnActiveAccount(account);
+                    //MainMenu mainMenu = MainMenu.getInstance();
+                    //mainMenu.open();
+                    /*MainMenu mainMenu = MainMenu.getInstance();
+                    PlayController.addMenue(mainMenu);*/
                     return;
                 }
-                //passWord = Request.getPassWordForLogin();
-                //}
-                Battle.setAnActiveAccount(account);
-                MainMenu mainMenu = MainMenu.getInstance();
-                //mainMenu.open();
-                /*MainMenu mainMenu = MainMenu.getInstance();
-                PlayController.addMenue(mainMenu);*/
-                return;
+                else {
+                    System.out.println("Invalid Username or Password");
+                    checkLogin=false;
+                }
             }
-        }
-        System.out.println("Invalid Username!");
+        }while (checkLogin==false);
     }
 
     @Override

@@ -7,11 +7,13 @@ import view.View;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class CreateAccount extends Menu{
-    public static ArrayList<Account> accounts=new ArrayList<>(); //List of accounts
+public class CreateAccount extends Menu {
+    public static ArrayList<Account> accounts = new ArrayList<>(); //List of accounts
     private static final CreateAccount CREATE_ACCOUNT = new CreateAccount();
+
     private CreateAccount() {
     }
+
     public static CreateAccount getInstance() {
         return CREATE_ACCOUNT;
     }
