@@ -101,6 +101,7 @@ public class Account {
     public boolean isActiveAtTheMoment() {
         return activeAtTheMoment;
     }
+
     public void setActiveAtTheMoment(boolean activeAtTheMoment) {
         this.activeAtTheMoment = activeAtTheMoment;
     }

@@ -1,6 +1,5 @@
 package view.menus;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import model.Account;
 import model.MenuType;
 import model.PlayingMode;
@@ -29,7 +28,7 @@ public class PlayingTypeMenu extends Menu{
         String userName = request.getCommand().substring(12);
         for (Account account : AccountMenu.getInstance().accounts) {
             if (account.getUserName().equals(userName)) {
-                Battle.getInstance().getActvieAccounts()[1] = account;
+                Battle.getInstance().getActiveAccounts()[1] = account;
                 break;
             }
         }
