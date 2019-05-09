@@ -19,16 +19,15 @@ public class CreateAccount extends Menu{
         return CREATE_ACCOUNT;
     }
 
-    private AccountMenu accountMenu = AccountMenu.getInstance();
     private Scanner scanner = new Scanner(System.in);
 
     public void createAccount () {
         System.out.println("Username: ");
         Request request = new Request(new CreateAccount());
         request.setNewCommand();
-        if (!checkIfCreatedUserNameExisted(request.getCommand(), accountMenu.accounts)) return;
+        if (!checkIfCreatedUserNameExisted(request.getCommand(), AccountMenu.accounts)) return;
         String passWord = getPassWord();
-        accountMenu.accounts.add(new Account(request.getCommand() , passWord));
+        AccountMenu.accounts.add(new Account(request.getCommand() , passWord));
         PlayController.menus.add(PlayingTypeMenu.getInstance());
     }
 

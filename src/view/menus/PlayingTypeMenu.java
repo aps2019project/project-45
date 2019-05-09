@@ -27,7 +27,7 @@ public class PlayingTypeMenu extends Menu{
     }
     public void providingForMultiPlayer() {
         battle.setPlayingType(PlayingType.MULTI_PLAYER);
-        for (Account account : AccountMenu.getInstance().accounts) {
+        for (Account account : AccountMenu.accounts) {
             System.out.println(account.getUserName());
         }
         boolean badRequest = false;
@@ -40,25 +40,24 @@ public class PlayingTypeMenu extends Menu{
                 return;
             }
             String userName = request.getCommand().substring(12); // ask please   Select user [user name]
-            for (Account account : AccountMenu.getInstance().accounts) {
+            for (Account account : AccountMenu.accounts) {
                 if (account.getUserName().equals(userName)) {
-                    //battle.getActvieAccounts()[1] = account;
-                    //break;
                     System.out.println("Password :");
                     Request request1 = new Request(PlayingTypeMenu.getInstance());
                     request1.setNewCommand();
-                    if (!request1.getCommand().equals(battle.getActvieAccounts()[1].getPassWord())) {
+                    if (!request1.getCommand().equals(battle.getActiveAccounts()[1].getPassWord())) {
                         System.out.println("incorrect password :(\nTry again or exit!");
                         continue label;
                     } else {
-                        battle.getActvieAccounts()[1] = account;
+                        battle.getActiveAccounts()[1] = account;
                         badRequest = true;
+                        PlayController.menus.add(MainMenu.getInstance());
                         break ;
                     }
                 }
             }
         }
-        System.out.println("Set the mode of play:");
+        /*System.out.println("Set the mode of play:");
         System.out.println(PlayingMode.FIRST + " : " + PlayingMode.FIRST.getMessage());
         System.out.println(PlayingMode.SECOND + " : " + PlayingMode.SECOND.getMessage());
         System.out.println(PlayingMode.THIRD + " : " + PlayingMode.THIRD.getMessage());
@@ -75,7 +74,7 @@ public class PlayingTypeMenu extends Menu{
                 battle.setPlayingMode(PlayingMode.THIRD);
             }
             //need to complete
-        }
+        }*/
     }
 
     @Override

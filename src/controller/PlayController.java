@@ -47,20 +47,24 @@ public class PlayController {
     private void loginMenuRequest(String command){
         Login.getInstance().login();
     }
-    private void playingTypeMenuRequest(String command){
+    private void playingTypeMenuRequest(String command) {
         if (command.equalsIgnoreCase("Single player")){
             PlayingTypeMenu.getInstance().openSiglePlayerMenu();
         } else if (command.equalsIgnoreCase("Multi player")){
             PlayingTypeMenu.getInstance().providingForMultiPlayer();
         }
     }
-    private void mainMenuRequest(String command){
+    private void mainMenuRequest(String command) {
         if (command.equalsIgnoreCase("Enter collection")) {
-            menus.add(new PlayerCollection());
+            MainMenu.getInstance().enterCollection();
         } else if (command.equalsIgnoreCase("Enter shop")) {
-            menus.add(Shop.getInstance());
-        } else if (command.equalsIgnoreCase("Enter battle") && battle.getActiveAccounts()[1] != null){ //need for attention
-            menus.add(PlayingTypeMenu.getInstance());
+            MainMenu.getInstance().enterShop();
+        } else if (command.equalsIgnoreCase("Enter battle")){ //attention
+            if (battle.getActiveAccounts()[1] != null) {
+                menus.add(battle);
+                return;
+            }
+            MainMenu.getInstance().enterPlayingTypeMenu();
         }
     }
     private void graveYardRequest(String command){
@@ -135,12 +139,12 @@ public class PlayController {
             case ACCOUNT_MENU:
                 accountMenuRequest(command);
                 break;
-            /*case CREATE_ACCOUNT:
+            case CREATE_ACCOUNT:
                 createAccountMenuRequest(command);
                 break;
             case LOGIN:
                 loginMenuRequest(command);
-                break;*/
+                break;
             case PLAYING_MODE_MENU:
                 playingTypeMenuRequest(command);
                 break;

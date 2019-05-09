@@ -1,5 +1,6 @@
 package view.menus;
 
+import controller.PlayController;
 import model.MenuType;
 
 public class MainMenu extends Menu {
@@ -8,6 +9,16 @@ public class MainMenu extends Menu {
     }
     public static MainMenu getInstance() {
         return MAIN_MENU;
+    }
+
+    public void enterCollection() {
+        PlayController.menus.add(new PlayerCollection());
+    }
+    public void enterShop() {
+        PlayController.menus.add(Shop.getInstance());
+    }
+    public void enterPlayingTypeMenu() {
+        PlayController.menus.add(PlayingTypeMenu.getInstance());
     }
 
     @Override

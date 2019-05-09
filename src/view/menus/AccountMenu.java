@@ -21,7 +21,7 @@ public class AccountMenu extends Menu {
     }
 
     private static Scanner scanner = new Scanner(System.in);
-    public ArrayList<Account> accounts;
+    public static ArrayList<Account> accounts;
 
     public void createAccount() {
         PlayController.menus.add(CreateAccount.getInstance());
