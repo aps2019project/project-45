@@ -41,13 +41,17 @@ public class PlayController {
             AccountMenu.getInstance().showLeaderBoard();
         }
     }
-    /*private void createAccountMenuRequest(String command){}
-    private void loginMenuRequest(String command){}*/
+    private void createAccountMenuRequest(String command){
+        CreateAccount.getInstance().createAccount();
+    }
+    private void loginMenuRequest(String command){
+        Login.getInstance().login();
+    }
     private void playingTypeMenuRequest(String command){
         if (command.equalsIgnoreCase("Single player")){
-
+            PlayingTypeMenu.getInstance().openSiglePlayerMenu();
         } else if (command.equalsIgnoreCase("Multi player")){
-
+            PlayingTypeMenu.getInstance().providingForMultiPlayer();
         }
     }
     private void mainMenuRequest(String command){
@@ -153,7 +157,7 @@ public class PlayController {
     }
 
     private void checkForHelpOrExit(String command) {
-        if (command.equalsIgnoreCase("help")) {
+        if (command.equalsIgnoreCase("help") || command.equalsIgnoreCase("Show munu")) {
             menus.get(menus.size() - 1).help();
         } else if (command.equalsIgnoreCase("exit")) {
             menus.get(menus.size() - 1).exit();

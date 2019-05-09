@@ -114,23 +114,23 @@ public class Shop extends Menu {
         int i = 0;
         System.out.println("Heroes :");
         for (Hero hero : allAvailableHeros) {
-            View.showCardOrItemInformationWithCost(hero, i);
+            View.showCardOrItemInfoWithCost(hero, i);
             i++;
         }
         i = 0;
         System.out.println("Items :");
         for (Item item : allAvailableItems) {
-            View.showCardOrItemInformationWithCost(item, i);
+            View.showCardOrItemInfoWithCost(item, i);
             i++;
         }
         i = 0;
         System.out.println("Cards :");
         for (Minion minion : allAvailableMinions) {
-            View.showCardOrItemInformationWithCost(minion, i);
+            View.showCardOrItemInfoWithCost(minion, i);
             i++;
         }
         for (Spell spell : allAvailableSpells) {
-            View.showCardOrItemInformationWithCost(spell, i);
+            View.showCardOrItemInfoWithCost(spell, i);
             i++;
         }
     }

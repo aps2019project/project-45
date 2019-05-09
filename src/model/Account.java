@@ -7,32 +7,35 @@ import view.menus.PlayerCollection;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 public class Account {
+    public Account(String userName, String passWord) {
+        this.userName = userName;
+        this.passWord = passWord;
+    }
+
     private String userName;
     private String passWord;
     private int mana;
     private int money;
     private int wins;
     private int losts;
-    private Card selectedCardInBattle;
+    private CardOrItem selectedCardOrItem;
     private boolean activeAtTheMoment;
 
     private PlayerCollection collection;
 
-    private ArrayList<CardOrItem> hand;
-    private GraveYard playerGraveYard;
+    private ArrayList<CardOrItem> selectedDeck;
+    private ArrayList<Card> hand;
+    private Card nextCardForHand;
+    private GraveYard graveYard;
     private ArrayList<String> lastEnemyNames = new ArrayList<>();
     private ArrayList<String> matchStatuses = new ArrayList<>();
     private ArrayList<Date> matchTimes = new ArrayList<>();
     private Hero hero;
     private ArrayList<Minion> activeMinions = new ArrayList<>();
     private ArrayList<Spell> activeSpells = new ArrayList<>();
-
-    public Account(String userName, String passWord) {
-        this.userName = userName;
-        this.passWord = passWord;
-    }
 
     public String getUserName() {
         return userName;
@@ -74,6 +77,27 @@ public class Account {
         this.wins = wins;
     }
 
+    public ArrayList<CardOrItem> getSelectedDeck() {
+        return collection.getDecks().get(collection.getSelectedDeckName());
+    }
+
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
+
+    public Card getNextCardForHand() {
+        Random random = new Random();
+        while (true) {
+            int randInt = random.nextInt(20) - 1; //age nafahmidi bepors khaheshan
+            if (getSelectedDeck().get(randInt) instanceof Minion || getSelectedDeck().get(randInt) instanceof Spell)
+                return (Card)getSelectedDeck().get(randInt);
+        }
+    }
+
+    public GraveYard getGraveYard() {
+        return graveYard;
+    }
+
     public Hero getHero() {
         return hero;
     }
@@ -90,12 +114,12 @@ public class Account {
         return collection;
     }
 
-    public Card getSelectedCardInBattle() {
-        return selectedCardInBattle;
+    public CardOrItem getSelectedCardOrItem() {
+        return selectedCardOrItem;
     }
 
-    public void setSelectedCardInBattle(Card selectedCardInBattle) {
-        this.selectedCardInBattle = selectedCardInBattle;
+    public void setSelectedCardOrItem(Card selectedCardOrItem) {
+        this.selectedCardOrItem = selectedCardOrItem;
     }
 
     public boolean isActiveAtTheMoment() {
@@ -104,7 +128,6 @@ public class Account {
     public void setActiveAtTheMoment(boolean activeAtTheMoment) {
         this.activeAtTheMoment = activeAtTheMoment;
     }
-
 
     /*public GraveYard getPlayerGraveYard() {
         return playerGraveYard;

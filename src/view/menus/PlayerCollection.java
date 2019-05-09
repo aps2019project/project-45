@@ -7,9 +7,9 @@ import view.menus.Menu;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Random;
 
 public class PlayerCollection extends Menu {
-    private static final int VALID_DECK_SIZE = 20 + 1;
     private HashMap<String, ArrayList<CardOrItem>> decks = new HashMap<>();
     private String selectedDeckName;
     private ArrayList<Hero> heroes = new ArrayList<>();
@@ -20,18 +20,18 @@ public class PlayerCollection extends Menu {
     public void show() {
         System.out.println("Heroes :");
         for (int i = 0; i < heroes.size(); i++) {
-            View.showCardOrItemInformationWithCost(heroes.get(i), i);
+            View.showCardOrItemInfoWithCost(heroes.get(i), i);
         }
         System.out.println("Items :");
         for (int i = 0; i < items.size(); i++) {
-            View.showCardOrItemInformationWithCost(items.get(i), i);
+            View.showCardOrItemInfoWithCost(items.get(i), i);
         }
         System.out.println("Cards :");
         for (int i = 0; i < minions.size(); i++) {
-            View.showCardOrItemInformationWithCost(minions.get(i), i);
+            View.showCardOrItemInfoWithCost(minions.get(i), i);
         }
         for (int i = 0; i < spells.size(); i++) {
-            View.showCardOrItemInformationWithCost(spells.get(i), i);
+            View.showCardOrItemInfoWithCost(spells.get(i), i);
         }
     }
 
@@ -87,10 +87,6 @@ public class PlayerCollection extends Menu {
     }
 
     public void add(String cardID, String deckName) {
-        if (decks.get(deckName).size() == VALID_DECK_SIZE) {
-            System.out.println("Your deck is full! You cannot add any more card or item to it.");
-            return;
-        }
         for (CardOrItem cardOrItem : decks.get(deckName)) {
             if (cardOrItem.getCardID().equals(cardID)) {
                 System.out.println("Sorry! The deck already has the card/item!");
@@ -114,6 +110,16 @@ public class PlayerCollection extends Menu {
                 decks.get(deckName).add(item);
                 return;
             }
+        }
+        int cardNum = 0;
+        for (CardOrItem cardOrItem : decks.get(deckName)) {
+            if (cardOrItem instanceof Minion || cardOrItem instanceof Spell) {
+                cardNum++;
+            }
+        }
+        if (cardNum == 20) {
+            System.out.println("Sorry! Your deck is full enough for adding another card.");
+            return;
         }
         for (Minion minion : minions) {
             if (minion.getCardID().equals(cardID)) {
@@ -143,19 +149,14 @@ public class PlayerCollection extends Menu {
     public boolean validateDeck(String deckName) {
         int heroNum = 0;
         int cardNum = 0;
-        if (decks.get(deckName).size() != VALID_DECK_SIZE) {
-            return false;
-        }
+        int itemNum = 0;
         for (CardOrItem cardOrItem : decks.get(deckName)) {
-            if (cardOrItem instanceof Hero) {
-                heroNum++;
-                if (heroNum > 1) return false;
-            }
-            if (cardOrItem instanceof Minion || cardOrItem instanceof Spell) {
-                cardNum++;
-            }
+            if (cardOrItem instanceof Hero) heroNum++;
+            if (cardOrItem instanceof Item) itemNum++;
+            if (cardOrItem instanceof Minion || cardOrItem instanceof Spell) cardNum++;
         }
-        if (heroNum == 0) return false;
+        if (heroNum != 1) return false;
+        if (itemNum > 1) return false;
         if (cardNum != 20) return false;
         return true;
     }
@@ -165,6 +166,24 @@ public class PlayerCollection extends Menu {
             System.out.println("Invalid deck!");
             return;
         }
+
+        Collections.shuffle(decks.get(deckName));
+        for (int i = 0; i < decks.get(deckName).size(); i++) {
+            if (decks.get(deckName).get(decks.get(deckName).size() - 1) instanceof Hero &&
+                    decks.get(deckName).get(decks.get(deckName).size() - 2) instanceof Item) {
+                break;
+            }
+            if (decks.get(deckName).get(i) instanceof Hero){
+                Collections.swap(decks.get(deckName) , i , decks.get(deckName).size() - 1);
+                i--;
+                continue;
+            }
+            if (decks.get(deckName).get(i) instanceof Item) {
+                Collections.swap(decks.get(deckName) , i , decks.get(deckName).size() - 2);
+                i--;
+                continue;
+            }
+        }
         selectedDeckName = deckName;
     }
 
@@ -173,7 +192,7 @@ public class PlayerCollection extends Menu {
         System.out.println("Heroes :");
         for (CardOrItem cardOrItem : decks.get(deckName)) {
             if (cardOrItem instanceof Hero) {
-                View.showCardOrItemInformationWithCost(cardOrItem, num);
+                View.showCardOrItemInfoWithCost(cardOrItem, num);
                 num++;
             }
         }
@@ -181,7 +200,7 @@ public class PlayerCollection extends Menu {
         System.out.println("Items :");
         for (CardOrItem cardOrItem : decks.get(deckName)) {
             if (cardOrItem instanceof Item) {
-                View.showCardOrItemInformationWithCost(cardOrItem, num);
+                View.showCardOrItemInfoWithCost(cardOrItem, num);
                 num++;
             }
         }
@@ -189,10 +208,10 @@ public class PlayerCollection extends Menu {
         System.out.println("Cards :");
         for (CardOrItem cardOrItem : decks.get(deckName)) {
             if (cardOrItem instanceof Minion) {
-                View.showCardOrItemInformationWithCost(cardOrItem, num);
+                View.showCardOrItemInfoWithCost(cardOrItem, num);
                 num++;
             } else if (cardOrItem instanceof Spell) {
-                View.showCardOrItemInformationWithCost(cardOrItem, num);
+                View.showCardOrItemInfoWithCost(cardOrItem, num);
                 num++;
             }
         }
@@ -213,6 +232,10 @@ public class PlayerCollection extends Menu {
         }
     }
 
+    public HashMap<String, ArrayList<CardOrItem>> getDecks() {
+        return decks;
+    }
+
     public ArrayList<Hero> getHeroes() {
         return heroes;
     }
@@ -227,6 +250,14 @@ public class PlayerCollection extends Menu {
 
     public ArrayList<Spell> getSpells() {
         return spells;
+    }
+
+
+    public String getSelectedDeckName() {
+        return selectedDeckName;
+    }
+    public void setSelectedDeckName(String selectedDeckName) {
+        this.selectedDeckName = selectedDeckName;
     }
 
     @Override

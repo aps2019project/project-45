@@ -13,6 +13,10 @@ public class GraveYard extends Menu {
         this.cards.add(card);
     }
 
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
+
     @Override
     public void help() {
 

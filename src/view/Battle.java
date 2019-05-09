@@ -19,6 +19,7 @@ public class Battle extends Menu {
     private ArrayList<Item> flags = new ArrayList<>();
     private Card selectedCard;
     private PlayingType playingType;
+    private PlayingMode playingMode;
 
     public void gameInfo(int mode) {
         System.out.println(actvieAccounts[0].getUserName() + " mana : " + actvieAccounts[0].getMana());
@@ -44,21 +45,24 @@ public class Battle extends Menu {
                 break;
         }
     }
-    public void showMyMinions(boolean turn){
-        Account account;
-        if (turn) account = actvieAccounts[0];
-        else account = actvieAccounts[1];
-        Hero hero = account.getHero();
+    public void showMyMinions(){
+        Hero hero = getActiveAccount().getHero();
         System.out.printf("%s : %s, health : %d, location : (%d, %d), power : %d\n", hero.getCardID() ,
                 hero.getName() , hero.getHealth() , hero.getSquare().getX() , hero.getSquare().getY() , hero.getAP());
-        for (Minion minion : account.getActiveMinions()){
+        for (Minion minion : getActiveAccount().getActiveMinions()){
         //for (int i = 0; i < account.getActiveMinions().size(); i++) {
             //Minion minion = account.getActiveMinions().get(i);
             System.out.printf("%s : %s, health : %d, location : (%d, %d), power : %d\n" , minion.getCardID() , minion.getName() ,
                     minion.getHealth() , minion.getSquare().getX() , minion.getSquare().getY() , minion.getAP());
         }
     }
-    public void showOpponentMinions(boolean turn) { showMyMinions(!turn); } // need to modify in Request
+    public void showOpponentMinions() {
+        actvieAccounts[0].setActiveAtTheMoment(!actvieAccounts[0].isActiveAtTheMoment());
+        actvieAccounts[1].setActiveAtTheMoment(!actvieAccounts[1].isActiveAtTheMoment());
+        showMyMinions();
+        actvieAccounts[0].setActiveAtTheMoment(!actvieAccounts[0].isActiveAtTheMoment());
+        actvieAccounts[1].setActiveAtTheMoment(!actvieAccounts[1].isActiveAtTheMoment());
+    } // hatman baiad beporsi
     public void select(boolean turn , String cardID){
         Account account;
         if (turn) account = actvieAccounts[0];
@@ -74,7 +78,7 @@ public class Battle extends Menu {
             System.out.println("Invalid card id");
             return;
         }
-        account.setSelectedCardInBattle(selectedCard);
+        account.setSelectedCardOrItem(selectedCard);
     }
     public void moveTo(int x , int y){
         if (checkForValidMoving(x, y)) return;
@@ -91,8 +95,69 @@ public class Battle extends Menu {
 
     }
     public void showHand(){
+        Account account = null;
+        if (actvieAccounts[0].isActiveAtTheMoment()) account = actvieAccounts[0];
+        else account = actvieAccounts[1];
+
+        for (Card card : account.getHand()) {
+            System.out.println(card.getCardID());
+        }
+        System.out.printf("\nNext card in hand : %s\n" , account.getNextCardForHand().getCardID());
+    }
+    public void insert(String cardID , int x , int y) {
+        for (Card card : getActiveAccount().getHand()){
+            if (card.getCardID().equalsIgnoreCase(cardID)) {
+
+                //later
+
+            }
+        }
+        System.out.println("Invalid card name!");
+    }
+    public void endTurn(){
+        int neededCards = 5 - getActiveAccount().getHand().size();
+        for (int i = 0; i < neededCards; i++) {
+            getActiveAccount().getHand().add((Card) getActiveAccount().getSelectedDeck().get(0));
+            getActiveAccount().getSelectedDeck().remove(0);
+        }
+        actvieAccounts[0].setActiveAtTheMoment(!actvieAccounts[0].isActiveAtTheMoment());
+        actvieAccounts[1].setActiveAtTheMoment(!actvieAccounts[1].isActiveAtTheMoment());
 
     }
+    public void showCollectables() {
+        for (Item item : getActiveAccount().getCollection().getItems()) {
+            if (item.isCollectable()) System.out.println(item.getCardID());
+        }
+    }
+    public void selectItem (String cardID) {
+        //
+    }
+    public void showInfo() {//don't make mistake with the lower function
+
+    }
+    public void useItem(int x , int y) {
+
+    }
+    public void showNextCard() {
+        View.showCardOrItemInfoWithCost(getActiveAccount().getNextCardForHand() , 0);
+    }
+    public void showInfo(String cardID) {
+        for (Card card : getActiveAccount().getGraveYard().getCards()) {
+            if (card.getCardID().equals(cardID)) {
+                View.showCardOrItemInfoWithCost(card , 0);
+                return;
+            }
+        }
+    }
+    public void showCards() {
+        for (int i = 0; i < getActiveAccount().getGraveYard().getCards().size(); i++) {
+            View.showCardOrItemInfoWithCost(getActiveAccount().getGraveYard().getCards().get(i) , i);
+        }
+    }
+    public void endGame() {
+
+    }
+
 
 
     //almozakhrafat
@@ -135,7 +200,12 @@ public class Battle extends Menu {
     public void setPlayingType(PlayingType playingType) {
         this.playingType = playingType;
     }
-
+    public PlayingMode getPlayingMode() {
+        return playingMode;
+    }
+    public void setPlayingMode(PlayingMode playingMode) {
+        this.playingMode = playingMode;
+    }
 
     @Override
     public void help() {
@@ -154,4 +224,9 @@ public class Battle extends Menu {
                 " * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
     }
 
+
+    public Account getActiveAccount() {
+        if (actvieAccounts[0].isActiveAtTheMoment()) return actvieAccounts[0];
+        else return actvieAccounts[1];
+    }
 }
