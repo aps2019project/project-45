@@ -59,7 +59,7 @@ public class PlayController {
             menus.add(new PlayerCollection());
         } else if (command.equalsIgnoreCase("Enter shop")) {
             menus.add(Shop.getInstance());
-        } else if (command.equalsIgnoreCase("Enter battle") && battle.getActvieAccounts()[1] != null){ //need for attention
+        } else if (command.equalsIgnoreCase("Enter battle") && battle.getActiveAccounts()[1] != null){ //need for attention
             menus.add(PlayingTypeMenu.getInstance());
         }
     }
@@ -164,8 +164,8 @@ public class PlayController {
         }
     }
     private PlayerCollection getRelatingCollection () {
-        if (battle.getActvieAccounts()[0].isActiveAtTheMoment()) return battle.getActvieAccounts()[0].getCollection();
-        else return battle.getActvieAccounts()[1].getCollection();
+        if (battle.getActiveAccounts()[0].isActiveAtTheMoment()) return battle.getActiveAccounts()[0].getCollection();
+        else return battle.getActiveAccounts()[1].getCollection();
     }
 
 

@@ -191,7 +191,7 @@ public class Battle extends Menu {
         }
         return false;
     }
-    public Account[] getActvieAccounts() {
+    public Account[] getActiveAccounts() {
         return actvieAccounts;
     }
     public PlayingType getPlayingType() {
