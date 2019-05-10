@@ -19,9 +19,10 @@ public class Login extends Menu {
 
     public void login() {
 
-        Request requestUser = new Request(new Login());
+
         do {
             System.out.println("Enter Your Username: ");
+            Request requestUser = new Request(Login.getInstance());
             requestUser.setNewCommand();
             for (Account account : AccountMenu.accounts) {
                 if (account.getUserName().equals(requestUser.getCommand())) {
@@ -29,6 +30,7 @@ public class Login extends Menu {
                     Request requestPass = new Request(new Login());
                     requestPass.setNewCommand();
                     if (requestPass.getCommand().equals(account.getPassWord())) {
+                        PlayController.menus.add(MainMenu.getInstance());
 
                         return;
                     }else {
