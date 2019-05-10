@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class PlayerCollection extends Menu {
-    private HashMap<String, ArrayList<CardOrItem>> decks = new HashMap<>();
+    private static HashMap<String, ArrayList<CardOrItem>> decks = new HashMap<>();
     private String selectedDeckName;
     private ArrayList<Hero> heroes = new ArrayList<>();
     private ArrayList<Item> items = new ArrayList<>();
@@ -146,7 +146,8 @@ public class PlayerCollection extends Menu {
         System.out.println("The card/item doesn't exist in the deck!");
     }
 
-    public boolean validateDeck(String deckName) {
+    public static boolean validateDeck(String deckName) {
+        if (decks.get(deckName).size() == 0) return false;
         int heroNum = 0;
         int cardNum = 0;
         int itemNum = 0;

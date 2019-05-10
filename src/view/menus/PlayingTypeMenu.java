@@ -51,13 +51,15 @@ public class PlayingTypeMenu extends Menu{
                     } else {
                         battle.getActiveAccounts()[1] = account;
                         badRequest = true;
-                        PlayController.menus.add(MainMenu.getInstance());
+                        PlayController.menus.add(MainMenu.getInstance()); //need to debug whole of the project approximately
                         break ;
                     }
                 }
             }
         }
-        /*System.out.println("Set the mode of play:");
+    }
+    public void modeForMultiPlayer() {
+        System.out.println("Set the mode of play:");
         System.out.println(PlayingMode.FIRST + " : " + PlayingMode.FIRST.getMessage());
         System.out.println(PlayingMode.SECOND + " : " + PlayingMode.SECOND.getMessage());
         System.out.println(PlayingMode.THIRD + " : " + PlayingMode.THIRD.getMessage());
@@ -73,8 +75,16 @@ public class PlayingTypeMenu extends Menu{
             } else if (modeMatcher.group(1).equalsIgnoreCase(PlayingMode.THIRD.toString())){
                 battle.setPlayingMode(PlayingMode.THIRD);
             }
-            //need to complete
-        }*/
+            //maybe need to complete
+        }
+    }
+
+    public boolean checkSecondPlayerDeckValidation() {
+        if (!PlayerCollection.validateDeck(battle.getActiveAccount().getSelectedDeckName())) {
+            System.out.println("selected deck for second player is invalid");
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -84,7 +94,7 @@ public class PlayingTypeMenu extends Menu{
 
     @Override
     public MenuType getType() {
-        return MenuType.PLAYING_MODE_MENU;
+        return MenuType.PLAYING_TYPE_MENU;
     }
 
     @Override

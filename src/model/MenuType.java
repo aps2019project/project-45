@@ -8,6 +8,7 @@ public enum MenuType {
     GRAVE_YARD,
     SHOP,
     PLAYER_COLLECTION,
-    PLAYING_MODE_MENU,
+    PLAYING_TYPE_MENU,
+    SINGLE_PLAYER_MENU,
     BATTLE,
 }

@@ -81,6 +81,10 @@ public class Account {
         return collection.getDecks().get(collection.getSelectedDeckName());
     }
 
+    public String getSelectedDeckName() {
+        return collection.getSelectedDeckName();
+    }
+
     public ArrayList<Card> getHand() {
         return hand;
     }

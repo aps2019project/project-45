@@ -3,6 +3,7 @@ package model;
 public class Spell extends Card {
     private String desc;
 
+
     public String getDesc() {
         return desc;
     }

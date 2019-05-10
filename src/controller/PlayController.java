@@ -1,5 +1,6 @@
 package controller;
 
+import model.PlayingType;
 import view.Battle;
 import view.*;
 import view.menus.*;
@@ -11,6 +12,7 @@ import java.util.regex.Pattern;
 public class PlayController {
     public static ArrayList<Menu> menus = new ArrayList<>();
     private Battle battle = Battle.getInstance();
+    private Shop shop = Shop.getInstance();
 
     public void firstToEnd(){
         Menu currentMenu = null;
@@ -54,6 +56,14 @@ public class PlayController {
             PlayingTypeMenu.getInstance().providingForMultiPlayer();
         }
     }
+    private void singlePlayerMenuRequest(String command) {
+        if (command.equalsIgnoreCase("Story")) {
+
+        } else if (command.equalsIgnoreCase("Custom game")) {
+
+        }
+    } //later
+
     private void mainMenuRequest(String command) {
         if (command.equalsIgnoreCase("Enter collection")) {
             MainMenu.getInstance().enterCollection();
@@ -61,14 +71,20 @@ public class PlayController {
             MainMenu.getInstance().enterShop();
         } else if (command.equalsIgnoreCase("Enter battle")){ //attention
             if (battle.getActiveAccounts()[1] != null) {
-                menus.add(battle);
+                if (PlayingTypeMenu.getInstance().checkSecondPlayerDeckValidation()) {
+                    PlayingTypeMenu.getInstance().modeForMultiPlayer();
+                    menus.add(battle);
+                    return;
+                } else {
+                    return;
+                }
+            }
+            if (!PlayerCollection.validateDeck(battle.getActiveAccount().getSelectedDeckName())) {
+                System.out.println("your selected deck is invalid!");
                 return;
             }
             MainMenu.getInstance().enterPlayingTypeMenu();
         }
-    }
-    private void graveYardRequest(String command){
-
     }
     private void playerCollectionRequest(String command){
         Pattern showPattern = Pattern.compile("show");
@@ -110,7 +126,7 @@ public class PlayController {
         Pattern validatePattern = Pattern.compile("validate deck (\\w+)");
         Matcher validateMatcher = validatePattern.matcher(command);
         if (validateMatcher.matches()) {
-            getRelatingCollection().validateDeck(validateMatcher.group(1));
+            PlayerCollection.validateDeck(validateMatcher.group(1));
             return;
         }
         Pattern selectDeckPattern = Pattern.compile("select deck (\\w+)");
@@ -131,6 +147,54 @@ public class PlayController {
             getRelatingCollection().showDeck(showDeckMatcher.group(1));
         }
     } // need to be completed
+    private void shopRequest(String command) {
+        Pattern showCollectionPattern = Pattern.compile("show collection");
+        Matcher showCollectionMatcher = showCollectionPattern.matcher(command);
+        if (showCollectionMatcher.matches()){
+            shop.showCollection();
+            return;
+        }
+        Pattern searchPattern = Pattern.compile("search (\\w+)");
+        Matcher searchMatcher = searchPattern.matcher(command);
+        if (searchMatcher.matches()) {
+            shop.search(searchMatcher.group(1));
+            return;
+        }
+        Pattern searchCollectionPattern = Pattern.compile("search collection (\\w+)");
+        Matcher searchCollectionMatcher = searchCollectionPattern.matcher(command);
+        if (searchCollectionMatcher.matches()) {
+            shop.searchCollection(searchCollectionMatcher.group(1));
+            return;
+        }
+        Pattern buyPattern = Pattern.compile("buy (\\w+)");
+        Matcher buyMatcher = buyPattern.matcher(command);
+        if (buyMatcher.matches()) {
+            shop.buy(buyMatcher.group(1));
+            return;
+        }
+        Pattern sellPattern = Pattern.compile("sell (\\w+)");
+        Matcher sellMatcher = sellPattern.matcher(command);
+        if (sellMatcher.matches()) {
+            shop.sell(sellMatcher.group(1));
+            return;
+        }
+        Pattern showPattern = Pattern.compile("show");
+        Matcher showMatcher = showPattern.matcher(command);
+        if (showMatcher.matches()) {
+            shop.show();
+            return;
+        }
+    }
+
+    private void battleRequest(String command) {
+
+    } //later
+
+    private void graveYardRequest(String command){
+
+    } //later
+
+
 
     //almozakhrafat
     private void handleRequestInRelatingMenu(Menu currentMenu, String command) {
@@ -145,17 +209,29 @@ public class PlayController {
             case LOGIN:
                 loginMenuRequest(command);
                 break;
-            case PLAYING_MODE_MENU:
+            case PLAYING_TYPE_MENU:
                 playingTypeMenuRequest(command);
                 break;
+            case SINGLE_PLAYER_MENU:
+                singlePlayerMenuRequest(command);
+                break;
+
             case MAIN_MENU:
                 mainMenuRequest(command);
                 break;
-            case GRAVE_YARD:
-                graveYardRequest(command);
-                break;
             case PLAYER_COLLECTION:
                 playerCollectionRequest(command);
+                break;
+            case SHOP:
+                shopRequest(command);
+                break;
+
+            case BATTLE:
+                battleRequest(command);
+                break;
+
+            case GRAVE_YARD:
+                graveYardRequest(command);
                 break;
         }
     }

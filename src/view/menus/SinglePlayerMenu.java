@@ -11,6 +11,7 @@ public class SinglePlayerMenu extends Menu {
     }
 
 
+
     @Override
     public void help() {
 
@@ -18,7 +19,7 @@ public class SinglePlayerMenu extends Menu {
 
     @Override
     public MenuType getType() {
-        return null;
+        return MenuType.SINGLE_PLAYER_MENU;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package view.menus;
 
 import model.*;
+import view.Battle;
 import view.View;
 
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ public class Shop extends Menu {
         return SHOP;
     }
 
+    private Battle battle = Battle.getInstance();
+
     private static ArrayList<CardOrItem> allAvailableCardOrItemsInShop = new ArrayList<>();
     private static ArrayList<Hero> allAvailableHeros = new ArrayList<>();
     private static ArrayList<Item> allAvailableItems = new ArrayList<>();
@@ -22,8 +25,8 @@ public class Shop extends Menu {
     private static ArrayList<Spell> allAvailableSpells = new ArrayList<>();
 
 
-    public void showCollection(Account account) {
-        account.getCollection().show();
+    public void showCollection() {
+        battle.getActiveAccount().getCollection().show();
     }
 
     public void search(String name) {
@@ -36,11 +39,11 @@ public class Shop extends Menu {
         System.out.println("Not existing!");
     }
 
-    public void searchCollection(String name, Account account) {
-        account.getCollection().search(name);
+    public void searchCollection(String name) {
+        battle.getActiveAccount().getCollection().search(name);
     }
 
-    public void buy(String name, Account account) {
+    public void buy(String name) {
         boolean available = false;
         CardOrItem availableCardOrItem = null;
         for (CardOrItem cardOrItem : allAvailableCardOrItemsInShop) {
@@ -54,55 +57,55 @@ public class Shop extends Menu {
             System.out.println("Not existing in the shop!");
             return;
         }
-        if (availableCardOrItem.getCost() > account.getMoney()) {
+        if (availableCardOrItem.getCost() > battle.getActiveAccount().getMoney()) {
             System.out.println("inadequate money for buying this card/item!");
             return;
         }
-        if (account.getCollection().getItems().size() == 3 && availableCardOrItem instanceof Item) {
+        if (battle.getActiveAccount().getCollection().getItems().size() == 3 && availableCardOrItem instanceof Item) {
             System.out.println("You can't have more than 3 items in your collection.");
             return;
         }
         if (availableCardOrItem instanceof Hero) {
-            account.getCollection().getHeroes().add((Hero) availableCardOrItem);
+            battle.getActiveAccount().getCollection().getHeroes().add((Hero) availableCardOrItem);
         } else if (availableCardOrItem instanceof Item) {
-            account.getCollection().getItems().add((Item) availableCardOrItem);
+            battle.getActiveAccount().getCollection().getItems().add((Item) availableCardOrItem);
         } else if (availableCardOrItem instanceof Minion) {
-            account.getCollection().getMinions().add((Minion) availableCardOrItem);
+            battle.getActiveAccount().getCollection().getMinions().add((Minion) availableCardOrItem);
         } else if (availableCardOrItem instanceof Spell) {
-            account.getCollection().getSpells().add((Spell) availableCardOrItem);
+            battle.getActiveAccount().getCollection().getSpells().add((Spell) availableCardOrItem);
         }
-        account.setMoney(account.getMoney() - availableCardOrItem.getCost());
+        battle.getActiveAccount().setMoney(battle.getActiveAccount().getMoney() - availableCardOrItem.getCost());
     }
 
-    public void sell(String cardID, Account account) {
-        for (Hero hero : account.getCollection().getHeroes()) {
+    public void sell(String cardID) {
+        for (Hero hero : battle.getActiveAccount().getCollection().getHeroes()) {
             if (hero.getCardID().equals(cardID)) {
-                account.setMoney(account.getMoney() + hero.getCost());
-                account.getCollection().getHeroes().remove(hero);
+                battle.getActiveAccount().setMoney(battle.getActiveAccount().getMoney() + hero.getCost());
+                battle.getActiveAccount().getCollection().getHeroes().remove(hero);
                 System.out.println("successful task :)");
                 return;
             }
         }
-        for (Item item : account.getCollection().getItems()) {
+        for (Item item : battle.getActiveAccount().getCollection().getItems()) {
             if (item.getCardID().equals(cardID)) {
-                account.setMoney(account.getMoney() + item.getCost());
-                account.getCollection().getItems().remove(item);
+                battle.getActiveAccount().setMoney(battle.getActiveAccount().getMoney() + item.getCost());
+                battle.getActiveAccount().getCollection().getItems().remove(item);
                 System.out.println("successful task :)");
                 return;
             }
         }
-        for (Minion minion : account.getCollection().getMinions()) {
+        for (Minion minion : battle.getActiveAccount().getCollection().getMinions()) {
             if (minion.getCardID().equals(cardID)) {
-                account.setMoney(account.getMoney() + minion.getCost());
-                account.getCollection().getMinions().remove(minion);
+                battle.getActiveAccount().setMoney(battle.getActiveAccount().getMoney() + minion.getCost());
+                battle.getActiveAccount().getCollection().getMinions().remove(minion);
                 System.out.println("successful task :)");
                 return;
             }
         }
-        for (Spell spell : account.getCollection().getSpells()) {
+        for (Spell spell : battle.getActiveAccount().getCollection().getSpells()) {
             if (spell.getCardID().equals(cardID)) {
-                account.setMoney(account.getMoney() + spell.getCost());
-                account.getCollection().getSpells().remove(spell);
+                battle.getActiveAccount().setMoney(battle.getActiveAccount().getMoney() + spell.getCost());
+                battle.getActiveAccount().getCollection().getSpells().remove(spell);
                 System.out.println("successful task :)");
                 return;
             }
