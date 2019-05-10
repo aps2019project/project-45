@@ -14,13 +14,13 @@ public class PlayController {
     private Battle battle = Battle.getInstance();
     private Shop shop = Shop.getInstance();
 
-    public void firstToEnd(){
+    public void firstToEnd() {
         Menu currentMenu = null;
         menus.add(AccountMenu.getInstance());
 
         while (true) {
             if (menus.size() == 0) break;
-            if (currentMenu != menus.get(menus.size() - 1)){
+            if (currentMenu != menus.get(menus.size() - 1)) {
                 currentMenu = menus.get(menus.size() - 1);
                 currentMenu.open();
                 //if (currentMenu == null) break;
@@ -34,28 +34,32 @@ public class PlayController {
     }
 
 
-    private void accountMenuRequest(String command){
-        if (command.equalsIgnoreCase("create account")){
+    private void accountMenuRequest(String command) {
+        if (command.equalsIgnoreCase("create account")) {
             AccountMenu.getInstance().createAccount();
-        } else if (command.equalsIgnoreCase("login")){
+        } else if (command.equalsIgnoreCase("login")) {
             AccountMenu.getInstance().login();
         } else if (command.equalsIgnoreCase("show leaderboard")) {
             AccountMenu.getInstance().showLeaderBoard();
         }
     }
-    private void createAccountMenuRequest(String command){
+
+    private void createAccountMenuRequest(String command) {
         CreateAccount.getInstance().createAccount();
     }
-    private void loginMenuRequest(String command){
+
+    private void loginMenuRequest(String command) {
         Login.getInstance().login();
     }
+
     private void playingTypeMenuRequest(String command) {
-        if (command.equalsIgnoreCase("Single player")){
+        if (command.equalsIgnoreCase("Single player")) {
             PlayingTypeMenu.getInstance().openSiglePlayerMenu();
-        } else if (command.equalsIgnoreCase("Multi player")){
+        } else if (command.equalsIgnoreCase("Multi player")) {
             PlayingTypeMenu.getInstance().providingForMultiPlayer();
         }
     }
+
     private void singlePlayerMenuRequest(String command) {
         if (command.equalsIgnoreCase("Story")) {
 
@@ -69,7 +73,7 @@ public class PlayController {
             MainMenu.getInstance().enterCollection();
         } else if (command.equalsIgnoreCase("Enter shop")) {
             MainMenu.getInstance().enterShop();
-        } else if (command.equalsIgnoreCase("Enter battle")){ //attention
+        } else if (command.equalsIgnoreCase("Enter battle")) { //attention
             if (battle.getActiveAccounts()[1] != null) {
                 if (PlayingTypeMenu.getInstance().checkSecondPlayerDeckValidation()) {
                     PlayingTypeMenu.getInstance().modeForMultiPlayer();
@@ -86,7 +90,8 @@ public class PlayController {
             MainMenu.getInstance().enterPlayingTypeMenu();
         }
     }
-    private void playerCollectionRequest(String command){
+
+    private void playerCollectionRequest(String command) {
         Pattern showPattern = Pattern.compile("show");
         Matcher showMatcher = showPattern.matcher(command);
         if (showMatcher.matches()) {
@@ -114,13 +119,13 @@ public class PlayController {
         Pattern addPattern = Pattern.compile("add (\\w+) to deck (\\w+)");
         Matcher addMatcher = addPattern.matcher(command);
         if (addMatcher.matches()) {
-            getRelatingCollection().add(addMatcher.group(1) , addMatcher.group(2));
+            getRelatingCollection().add(addMatcher.group(1), addMatcher.group(2));
             return;
         }
         Pattern removePattern = Pattern.compile("remoeve (\\w+) from deck (\\w+)");
         Matcher removeMatcher = removePattern.matcher(command);
         if (removeMatcher.matches()) {
-            getRelatingCollection().remove(removeMatcher.group(1) , removeMatcher.group(2));
+            getRelatingCollection().remove(removeMatcher.group(1), removeMatcher.group(2));
             return;
         }
         Pattern validatePattern = Pattern.compile("validate deck (\\w+)");
@@ -145,12 +150,13 @@ public class PlayController {
         Matcher showDeckMatcher = showDeckPattern.matcher(command);
         if (showDeckMatcher.matches()) {
             getRelatingCollection().showDeck(showDeckMatcher.group(1));
-        } //new comment man
+        } //new comment manls;jfsdghslkdfsdfjsd;lfjskdfsd
     } // need to be completed
+
     private void shopRequest(String command) {
         Pattern showCollectionPattern = Pattern.compile("show collection");
         Matcher showCollectionMatcher = showCollectionPattern.matcher(command);
-        if (showCollectionMatcher.matches()){
+        if (showCollectionMatcher.matches()) {
             shop.showCollection();
             return;
         }
@@ -190,10 +196,9 @@ public class PlayController {
 
     } //later
 
-    private void graveYardRequest(String command){
+    private void graveYardRequest(String command) {
 
     } //later
-
 
 
     //almozakhrafat
@@ -243,7 +248,8 @@ public class PlayController {
             menus.get(menus.size() - 1).exit();
         }
     }
-    private PlayerCollection getRelatingCollection () {
+
+    private PlayerCollection getRelatingCollection() {
         if (battle.getActiveAccounts()[0].isActiveAtTheMoment()) return battle.getActiveAccounts()[0].getCollection();
         else return battle.getActiveAccounts()[1].getCollection();
     }
