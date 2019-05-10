@@ -145,7 +145,7 @@ public class PlayController {
         Matcher showDeckMatcher = showDeckPattern.matcher(command);
         if (showDeckMatcher.matches()) {
             getRelatingCollection().showDeck(showDeckMatcher.group(1));
-        }//this is a new comment
+        } //new comment man
     } // need to be completed
     private void shopRequest(String command) {
         Pattern showCollectionPattern = Pattern.compile("show collection");
