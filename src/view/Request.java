@@ -22,4 +22,14 @@ public class Request {
         return command;
     }
 
+    public boolean exitOrHelp(Menu menu , String exitOrHelp) {
+        if (exitOrHelp.equalsIgnoreCase("exit")) {
+            menu.exit();
+            return false;
+        } else if (exitOrHelp.equalsIgnoreCase("help")) {
+            menu.help();
+            return true;
+        }
+        return true;
+    }
 }
