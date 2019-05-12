@@ -1,6 +1,5 @@
 package view.menus;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import controller.PlayController;
 import model.Account;
 import model.MenuType;
@@ -9,7 +8,6 @@ import model.PlayingType;
 import view.Battle;
 import view.Request;
 
-import java.awt.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,7 +38,8 @@ public class PlayingTypeMenu extends Menu{
                 return;
             }
             String userName = request.getCommand().substring(12); // ask please   Select user [user name]
-            for (Account account : AccountMenu.accounts) {
+            Login.getInstance().setSecondUserName(userName);
+            /*for (Account account : AccountMenu.accounts) {
                 if (account.getUserName().equals(userName)) {
                     System.out.println("Password :");
                     Request request1 = new Request(PlayingTypeMenu.getInstance());
@@ -55,7 +54,7 @@ public class PlayingTypeMenu extends Menu{
                         break ;
                     }
                 }
-            }
+            }*/
         }
     }
     public void modeForMultiPlayer() {

@@ -8,22 +8,60 @@ public class Card extends CardOrItem {
     private int AP;
     private int MP;
 
-    public int getHealth() {
+    private int disarmTurns = 0;
+    private int powerBuffTurns = 0;
+    private int holyBuffTurns = 0;
+    private int stunTurns = 0;
+    private boolean attacked; // should be handled
+
+
+    int getHealth() {
         return health;
     }
-    public void setHealth(int health) {
+    void setHealth(int health) {
         this.health = health;
     }
-    public int getAP() {
+    int getAP() {
         return AP;
     }
-    public void setAP(int AP) {
+    void setAP(int AP) {
         this.AP = AP;
     }
-    public int getMP() {
+    int getMP() {
         return MP;
     }
-    public void setMP(int MP) {
+    void setMP(int MP) {
         this.MP = MP;
+    }
+
+    int getDisarmTurns() {
+        return disarmTurns;
+    }
+    void setDisarmTurns(int disarmTurns) {
+        this.disarmTurns = disarmTurns;
+    }
+    int getPowerBuffTurns() {
+        return powerBuffTurns;
+    }
+    void setPowerBuffTurns(int powerBuffTurns) {
+        this.powerBuffTurns = powerBuffTurns;
+    }
+    int getHolyBuffTurns() {
+        return holyBuffTurns;
+    }
+    void setHolyBuffTurns(int holyBuffTurns) {
+        this.holyBuffTurns = holyBuffTurns;
+    }
+    public int getStunTurns() {
+        return stunTurns;
+    }
+    public void setStunTurns(int stunTurns) {
+        this.stunTurns = stunTurns;
+    }
+    boolean isAttacked() {
+        return attacked;
+    }
+    void setAttacked(boolean attacked) {
+        this.attacked = attacked;
     }
 }

@@ -4,6 +4,8 @@ public class Square {
     private int x;
     private int y;
     private boolean isOccupied;
+    private int effectTurns;
+    private String effect;
 
     public int getX() {
         return x;
@@ -22,5 +24,17 @@ public class Square {
     }
     public void setOccupied(boolean occupied) {
         isOccupied = occupied;
+    }
+    public int getEffectTurns() {
+        return effectTurns;
+    }
+    public void setEffectTurns(int effectTurns) {
+        this.effectTurns = effectTurns;
+    }
+    public String getEffect() {
+        return effect;
+    }
+    public void setEffect(String effect) {
+        this.effect = effect;
     }
 }

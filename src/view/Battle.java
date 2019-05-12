@@ -14,7 +14,7 @@ public class Battle extends Menu {
         return BATTLE;
     }
 
-    private Account[] actvieAccounts = new Account[2];
+    private Account[] battlePlayers = new Account[2];
     private Square[][] square = new Square[5][9];
     private ArrayList<Item> flags = new ArrayList<>();
     private Card selectedCard;
@@ -22,12 +22,12 @@ public class Battle extends Menu {
     private PlayingMode playingMode;
 
     public void gameInfo(int mode) {
-        System.out.println(actvieAccounts[0].getUserName() + " mana : " + actvieAccounts[0].getMana());
-        System.out.println(actvieAccounts[1].getUserName() + " mana : " + actvieAccounts[1].getMana());
+        System.out.println(battlePlayers[0].getUserName() + " mana : " + battlePlayers[0].getMana());
+        System.out.println(battlePlayers[1].getUserName() + " mana : " + battlePlayers[1].getMana());
         switch (mode) {
             case 1:
-                System.out.println(actvieAccounts[0].getUserName() + " health : " + actvieAccounts[0].getHero().getHealth());
-                System.out.println(actvieAccounts[1].getUserName() + " health : " + actvieAccounts[0].getHero().getHealth());
+                System.out.println(battlePlayers[0].getUserName() + " health : " + battlePlayers[0].getHero().getHealth());
+                System.out.println(battlePlayers[1].getUserName() + " health : " + battlePlayers[0].getHero().getHealth());
                 break;
             case 2:
                 System.out.printf("flag is in (%d , %d) house.\n", flags.get(0).getSquare().getX(), flags.get(0).getSquare().getY());
@@ -57,16 +57,16 @@ public class Battle extends Menu {
         }
     }
     public void showOpponentMinions() {
-        actvieAccounts[0].setActiveAtTheMoment(!actvieAccounts[0].isActiveAtTheMoment());
-        actvieAccounts[1].setActiveAtTheMoment(!actvieAccounts[1].isActiveAtTheMoment());
+        battlePlayers[0].setActiveAtTheMoment(!battlePlayers[0].isActiveAtTheMoment());
+        battlePlayers[1].setActiveAtTheMoment(!battlePlayers[1].isActiveAtTheMoment());
         showMyMinions();
-        actvieAccounts[0].setActiveAtTheMoment(!actvieAccounts[0].isActiveAtTheMoment());
-        actvieAccounts[1].setActiveAtTheMoment(!actvieAccounts[1].isActiveAtTheMoment());
+        battlePlayers[0].setActiveAtTheMoment(!battlePlayers[0].isActiveAtTheMoment());
+        battlePlayers[1].setActiveAtTheMoment(!battlePlayers[1].isActiveAtTheMoment());
     } // hatman baiad beporsi
     public void select(boolean turn , String cardID){
         Account account;
-        if (turn) account = actvieAccounts[0];
-        else account = actvieAccounts[1];
+        if (turn) account = battlePlayers[0];
+        else account = battlePlayers[1];
         if (account.getHero().getCardID().equals(cardID)) selectedCard = account.getHero();
         for (Minion minion : account.getActiveMinions()){
             if (minion.getCardID().equals(cardID)){
@@ -96,8 +96,8 @@ public class Battle extends Menu {
     }
     public void showHand(){
         Account account = null;
-        if (actvieAccounts[0].isActiveAtTheMoment()) account = actvieAccounts[0];
-        else account = actvieAccounts[1];
+        if (battlePlayers[0].isActiveAtTheMoment()) account = battlePlayers[0];
+        else account = battlePlayers[1];
 
         for (Card card : account.getHand()) {
             System.out.println(card.getCardID());
@@ -120,8 +120,8 @@ public class Battle extends Menu {
             getActiveAccount().getHand().add((Card) getActiveAccount().getSelectedDeck().get(0));
             getActiveAccount().getSelectedDeck().remove(0);
         }
-        actvieAccounts[0].setActiveAtTheMoment(!actvieAccounts[0].isActiveAtTheMoment());
-        actvieAccounts[1].setActiveAtTheMoment(!actvieAccounts[1].isActiveAtTheMoment());
+        battlePlayers[0].setActiveAtTheMoment(!battlePlayers[0].isActiveAtTheMoment());
+        battlePlayers[1].setActiveAtTheMoment(!battlePlayers[1].isActiveAtTheMoment());
 
     }
     public void showCollectables() {
@@ -192,7 +192,10 @@ public class Battle extends Menu {
         return false;
     }
     public Account[] getActiveAccounts() {
-        return actvieAccounts;
+        return battlePlayers;
+    }
+    public Square[][] getSquare() {
+        return square;
     }
     public PlayingType getPlayingType() {
         return playingType;
@@ -226,7 +229,11 @@ public class Battle extends Menu {
 
 
     public Account getActiveAccount() {
-        if (actvieAccounts[0].isActiveAtTheMoment()) return actvieAccounts[0];
-        else return actvieAccounts[1];
+        if (battlePlayers[0].isActiveAtTheMoment()) return battlePlayers[0];
+        else return battlePlayers[1];
+    }
+    public Account getInActiveAccount() {
+        if (battlePlayers[0].isActiveAtTheMoment()) return battlePlayers[1];
+        else return battlePlayers[0];
     }
 }

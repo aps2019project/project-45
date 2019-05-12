@@ -1,6 +1,5 @@
 package controller;
 
-import model.PlayingType;
 import view.Battle;
 import view.*;
 import view.menus.*;
