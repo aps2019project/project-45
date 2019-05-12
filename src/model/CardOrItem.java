@@ -6,6 +6,7 @@ public class CardOrItem {
     private Square square;
     private Account userAccount;
     private String cardID;
+    private String desk;
 
     public String getName() {
         return name;
@@ -25,17 +26,23 @@ public class CardOrItem {
     public void setSquare(Square square) {
         this.square = square;
     }
-    public Account getUserAccountOwner() {
+    public Account getUserAccount() {
         return userAccount;
     }
-    public void setUserAccountOwner(Account accountOwner) {
-        this.userAccount = accountOwner;
+    public void setUserAccount(Account userAccount) {
+        this.userAccount = userAccount;
     }
     public String getCardID() {
         return cardID;
     }
     public void setCardID(String cardID) {
         this.cardID = cardID;
+    }
+    public String getDesk() {
+        return desk;
+    }
+    public void setDesk(String desk) {
+        this.desk = desk;
     }
 
 

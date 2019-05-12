@@ -20,6 +20,7 @@ public class Battle extends Menu {
     private Card selectedCard;
     private PlayingType playingType;
     private PlayingMode playingMode;
+    private int turn;
 
     public void gameInfo(int mode) {
         System.out.println(battlePlayers[0].getUserName() + " mana : " + battlePlayers[0].getMana());
@@ -31,16 +32,16 @@ public class Battle extends Menu {
                 break;
             case 2:
                 System.out.printf("flag is in (%d , %d) house.\n", flags.get(0).getSquare().getX(), flags.get(0).getSquare().getY());
-                if (flags.get(0).getOwner() == null) System.out.println("Flag isn't owned by any player!");
+                if (flags.get(0).getFlagOwner() == null) System.out.println("Flag isn't owned by any player!");
                 else
-                    System.out.printf("flag owner is %s from player %s\n", flags.get(0).getOwner().getCardID() ,
-                            flags.get(0).getUserAccountOwner().getUserName());
+                    System.out.printf("flag owner is %s from player %s\n", flags.get(0).getFlagOwner().getCardID() ,
+                            flags.get(0).getUserAccount().getUserName());
                 break;
             case 3:
                 System.out.println("owners of flags : ");
                 for (int i = 0; i < flags.size(); i++) {
-                    System.out.printf("%d. %s from player %s\n", i + 1 , flags.get(i).getOwner().getCardID() ,
-                            flags.get(i).getUserAccountOwner().getUserName());
+                    System.out.printf("%d. %s from player %s\n", i + 1 , flags.get(i).getFlagOwner().getCardID() ,
+                            flags.get(i).getUserAccount().getUserName());
                 }
                 break;
         }
@@ -166,25 +167,25 @@ public class Battle extends Menu {
             System.out.println("Invalid target");
             return true;
         }
-        if (square[x][y].getIsOccupied()) {
+        if (square[x][y].getCard() == null) {
             System.out.println("Invalid target");
             return true;
         }
         if (x != selectedCard.getSquare().getX() && y != selectedCard.getSquare().getY()){
-            if (square[selectedCard.getSquare().getX()][y].getIsOccupied() &&
-                    square[x][selectedCard.getSquare().getY()].getIsOccupied()){
+            if (square[selectedCard.getSquare().getX()][y].getCard() != null &&
+                    square[x][selectedCard.getSquare().getY()].getCard() != null){
                 System.out.println("Invalid target");
                 return true;
             }
         }
         if (y == selectedCard.getSquare().getY()) {
-            if (square[selectedCard.getSquare().getX() + (x - selectedCard.getSquare().getX()) / 2][y].getIsOccupied()){
+            if (square[selectedCard.getSquare().getX() + (x - selectedCard.getSquare().getX()) / 2][y].getCard() != null){
                 System.out.println("Invalid target");
                 return true;
             }
         }
         if (x == selectedCard.getSquare().getX()) {
-            if (square[x][selectedCard.getSquare().getY() + (y - selectedCard.getSquare().getY()) / 2].getIsOccupied()){
+            if (square[x][selectedCard.getSquare().getY() + (y - selectedCard.getSquare().getY()) / 2].getCard() != null){
                 System.out.println("Invalid target");
                 return true;
             }
@@ -235,5 +236,11 @@ public class Battle extends Menu {
     public Account getInActiveAccount() {
         if (battlePlayers[0].isActiveAtTheMoment()) return battlePlayers[1];
         else return battlePlayers[0];
+    }
+    public int getTurn() {
+        return turn;
+    }
+    public void setTurn(int turn) {
+        this.turn = turn;
     }
 }

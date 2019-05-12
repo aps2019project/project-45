@@ -1,22 +1,41 @@
 package model;
 
+import view.Battle;
+
 public class Item extends CardOrItem {
-    private Card owner;
-    private String desc;
+    private Battle battle = Battle.getInstance();
     private boolean Collectable;
     private boolean Usable;
+    private Card flagOwner;
 
-    public Card getOwner() {
-        return owner;
+    public void setIncreaseMPturns(String cardID , int increaseMPturns) {
+        effectedCard(cardID).increaseMPturns += increaseMPturns;
     }
-    public void setOwner(Card owner) {
-        this.owner = owner;
+
+    public void increaseMP(String cardID , int increaseAmount){
+        effectedCard(cardID).setMP(effectedCard(cardID).getAP() + increaseAmount);
     }
-    public String getDesc() {
-        return desc;
+
+    public void setHolyBuffTurns(String cardID , int holyBuffTurns){
+        effectedCard(cardID).holyBuffTurns += holyBuffTurns;
     }
-    public void setDesc(String desc) {
-        this.desc = desc;
+
+
+
+
+
+    private Card effectedCard(String cardID) {
+        for (CardOrItem cardOrItem : battle.getInActiveAccount().getSelectedDeck()) {
+            if (cardOrItem.getCardID().equals(cardID)) {
+                return (Card) cardOrItem;
+            }
+        }
+        for (CardOrItem cardOrItem : battle.getActiveAccount().getSelectedDeck()) {
+            if (cardOrItem.getCardID().equals(cardID)) {
+                return (Card) cardOrItem;
+            }
+        }
+        return null;
     }
 
     public boolean isCollectable() {
@@ -30,5 +49,11 @@ public class Item extends CardOrItem {
     }
     public void setUsable(boolean usable) {
         Usable = usable;
+    }
+    public Card getFlagOwner() {
+        return flagOwner;
+    }
+    public void setFlagOwner(Card flagOwner) {
+        this.flagOwner = flagOwner;
     }
 }

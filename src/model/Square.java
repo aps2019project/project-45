@@ -3,9 +3,9 @@ package model;
 public class Square {
     private int x;
     private int y;
-    private boolean isOccupied;
     private int effectTurns;
     private String effect;
+    private Card card;
 
     public int getX() {
         return x;
@@ -19,12 +19,6 @@ public class Square {
     public void setY(int y) {
         this.y = y;
     }
-    public boolean getIsOccupied() {
-        return isOccupied;
-    }
-    public void setOccupied(boolean occupied) {
-        isOccupied = occupied;
-    }
     public int getEffectTurns() {
         return effectTurns;
     }
@@ -36,5 +30,11 @@ public class Square {
     }
     public void setEffect(String effect) {
         this.effect = effect;
+    }
+    public Card getCard() {
+        return card;
+    }
+    public void setCard(Card card) {
+        this.card = card;
     }
 }

@@ -10,22 +10,65 @@ public class Spell extends Card {
 
     private Battle battle = Battle.getInstance();
 
-    private String desc;
 
-    public void disarmBuff(String cardID, int disarmTurns) {
-        effectedCard(cardID).setDisarmTurns(disarmTurns);
+    public void setDisarmBuffTurns(String cardID, int disarmTurns) {
+        if (disarmTurns > effectedCard(cardID).disarmTurns) {
+            effectedCard(cardID).disarmTurns = disarmTurns;
+        }
+    }
+
+    public void setStunBuffTurns(String cardID , int stunBuffTurns) {
+        if (stunBuffTurns > effectedCard(cardID).stunBuffTurns)  {
+            effectedCard(cardID).stunBuffTurns = stunBuffTurns;
+        }
+    }
+
+    public void setPowerBuffTurns(String cardId , int powerBuffTurns) {
+        effectedCard(cardId).powerBuffTurns += powerBuffTurns;
     }
 
     public void powerBuff(String cardID, int increaseAmount) {
         effectedCard(cardID).setAP(effectedCard(cardID).getAP() + increaseAmount);
     }
 
+    public void setHealthBuffTurns(String cardID , int healthBuffTurns){
+        effectedCard(cardID).healthBuffTurns += healthBuffTurns;
+    }
+
+    public void healthBuff(String cardID , int increaseAmount) {
+        effectedCard(cardID).setHealth(effectedCard(cardID).getHealth() + increaseAmount);
+    }
+
+    public void setPowerWeaknessBuffTurns(String cardID , int powerWeaknessBuffTurns){
+        effectedCard(cardID).powerWeaknessBuffTurns += powerWeaknessBuffTurns;
+
+    }
+
     public void powerWeaknessBuff(String cardID, int decreaseAmount) {
         effectedCard(cardID).setMP(effectedCard(cardID).getAP() - decreaseAmount);
     }
 
+    public void setHealthWeaknessBuffTurns (String cardID , int healthWeaknessBuffTurns){
+        effectedCard(cardID).healthWeaknessBuffTurns += healthWeaknessBuffTurns;
+    }
+
     public void healthWeaknessBuff(String cardID, int healthWeaknessAmount) {
         effectedCard(cardID).setHealth(effectedCard(cardID).getHealth() - healthWeaknessAmount);
+    }
+
+    public void setHolyBuffTurns(String cardID , int holyBuffTurns){
+        effectedCard(cardID).holyBuffTurns += holyBuffTurns;
+    }
+
+    public void holyBuff(String cardID) {
+        if (effectedCard(cardID).attacked) {
+            effectedCard(cardID).setHealth(effectedCard(cardID).getHealth() + 1);
+        }
+    }
+
+    public void kill(String cardID){
+        effectedCard(cardID).getUserAccount().getGraveYard().add(effectedCard(cardID));
+        effectedCard(cardID).getSquare().setCard(null);
     }
 
     public void squareEffect(int x, int y, String squareEffect, int squareEffectTurns, int squaresNum) {
@@ -50,16 +93,6 @@ public class Spell extends Card {
         }
     }
 
-    public void holyBuff(String cardID) {
-        if (effectedCard(cardID).isAttacked()) {
-            effectedCard(cardID).setHealth(effectedCard(cardID).getHealth() + 1);
-        }
-    }
-
-    public void stunBuff(String cardID) {
-
-    }
-
     //almozakhrafat
     private Card effectedCard(String cardID) {
         for (CardOrItem cardOrItem : battle.getInActiveAccount().getSelectedDeck()) {
@@ -75,11 +108,4 @@ public class Spell extends Card {
         return null;
     }
 
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
 }

@@ -8,60 +8,36 @@ public class Card extends CardOrItem {
     private int AP;
     private int MP;
 
-    private int disarmTurns = 0;
-    private int powerBuffTurns = 0;
-    private int holyBuffTurns = 0;
-    private int stunTurns = 0;
-    private boolean attacked; // should be handled
 
+    int disarmTurns = 0;
+    int powerBuffTurns = 0;
+    int healthBuffTurns = 0;
+    int powerWeaknessBuffTurns = 0;
+    int healthWeaknessBuffTurns = 0;
+    int holyBuffTurns = 0;
+    int stunBuffTurns = 0;
+    boolean attacked; // should be handled // should be false after anywhere it was true
 
-    int getHealth() {
+    int increaseMPturns = 0;
+
+    public int getHealth() {
         return health;
     }
-    void setHealth(int health) {
+    public void setHealth(int health) {
         this.health = health;
     }
-    int getAP() {
+    public int getAP() {
         return AP;
     }
-    void setAP(int AP) {
+    public void setAP(int AP) {
         this.AP = AP;
     }
-    int getMP() {
+    public int getMP() {
         return MP;
     }
-    void setMP(int MP) {
+    public void setMP(int MP) {
         this.MP = MP;
     }
 
-    int getDisarmTurns() {
-        return disarmTurns;
-    }
-    void setDisarmTurns(int disarmTurns) {
-        this.disarmTurns = disarmTurns;
-    }
-    int getPowerBuffTurns() {
-        return powerBuffTurns;
-    }
-    void setPowerBuffTurns(int powerBuffTurns) {
-        this.powerBuffTurns = powerBuffTurns;
-    }
-    int getHolyBuffTurns() {
-        return holyBuffTurns;
-    }
-    void setHolyBuffTurns(int holyBuffTurns) {
-        this.holyBuffTurns = holyBuffTurns;
-    }
-    public int getStunTurns() {
-        return stunTurns;
-    }
-    public void setStunTurns(int stunTurns) {
-        this.stunTurns = stunTurns;
-    }
-    boolean isAttacked() {
-        return attacked;
-    }
-    void setAttacked(boolean attacked) {
-        this.attacked = attacked;
-    }
+
 }
