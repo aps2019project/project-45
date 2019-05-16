@@ -2,15 +2,13 @@ package view.menus;
 
 import model.*;
 import view.View;
-import view.menus.Menu;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Random;
 
 public class PlayerCollection extends Menu {
-    private static HashMap<String, ArrayList<CardOrItem>> decks = new HashMap<>();
+    private static HashMap<String, ArrayList<Card>> decks = new HashMap<>();
     private String selectedDeckName;
     private ArrayList<Hero> heroes = new ArrayList<>();
     private ArrayList<Item> items = new ArrayList<>();
@@ -72,7 +70,7 @@ public class PlayerCollection extends Menu {
                 return;
             }
         }
-        ArrayList<CardOrItem> deck = new ArrayList<>();
+        ArrayList<Card> deck = new ArrayList<>();
         decks.put(name, deck);
     }
 
@@ -87,7 +85,7 @@ public class PlayerCollection extends Menu {
     }
 
     public void add(String cardID, String deckName) {
-        for (CardOrItem cardOrItem : decks.get(deckName)) {
+        for (Card cardOrItem : decks.get(deckName)) {
             if (cardOrItem.getCardID().equals(cardID)) {
                 System.out.println("Sorry! The deck already has the card/item!");
                 return;
@@ -95,7 +93,7 @@ public class PlayerCollection extends Menu {
         }
         for (Hero hero : heroes) {
             if (hero.getCardID().equals(cardID)) {
-                for (CardOrItem cardOrItem : decks.get(deckName)) {
+                for (Card cardOrItem : decks.get(deckName)) {
                     if (cardOrItem instanceof Hero) {
                         System.out.println("Sorry! You had already a hero in your deck.");
                         return;
@@ -112,7 +110,7 @@ public class PlayerCollection extends Menu {
             }
         }
         int cardNum = 0;
-        for (CardOrItem cardOrItem : decks.get(deckName)) {
+        for (Card cardOrItem : decks.get(deckName)) {
             if (cardOrItem instanceof Minion || cardOrItem instanceof Spell) {
                 cardNum++;
             }
@@ -137,7 +135,7 @@ public class PlayerCollection extends Menu {
     }
 
     public void remove(String cardID, String deckName) {
-        for (CardOrItem cardOrItem : decks.get(deckName)) {
+        for (Card cardOrItem : decks.get(deckName)) {
             if (cardOrItem.getCardID().equals(cardID)) {
                 decks.get(deckName).remove(cardOrItem);
                 return;
@@ -151,7 +149,7 @@ public class PlayerCollection extends Menu {
         int heroNum = 0;
         int cardNum = 0;
         int itemNum = 0;
-        for (CardOrItem cardOrItem : decks.get(deckName)) {
+        for (Card cardOrItem : decks.get(deckName)) {
             if (cardOrItem instanceof Hero) heroNum++;
             if (cardOrItem instanceof Item) itemNum++;
             if (cardOrItem instanceof Minion || cardOrItem instanceof Spell) cardNum++;
@@ -191,7 +189,7 @@ public class PlayerCollection extends Menu {
     public void showDeck(String deckName) {
         int num = 0;
         System.out.println("Heroes :");
-        for (CardOrItem cardOrItem : decks.get(deckName)) {
+        for (Card cardOrItem : decks.get(deckName)) {
             if (cardOrItem instanceof Hero) {
                 View.showCardOrItemInfoWithCost(cardOrItem, num);
                 num++;
@@ -199,7 +197,7 @@ public class PlayerCollection extends Menu {
         }
         num = 0;
         System.out.println("Items :");
-        for (CardOrItem cardOrItem : decks.get(deckName)) {
+        for (Card cardOrItem : decks.get(deckName)) {
             if (cardOrItem instanceof Item) {
                 View.showCardOrItemInfoWithCost(cardOrItem, num);
                 num++;
@@ -207,7 +205,7 @@ public class PlayerCollection extends Menu {
         }
         num = 0;
         System.out.println("Cards :");
-        for (CardOrItem cardOrItem : decks.get(deckName)) {
+        for (Card cardOrItem : decks.get(deckName)) {
             if (cardOrItem instanceof Minion) {
                 View.showCardOrItemInfoWithCost(cardOrItem, num);
                 num++;
@@ -233,7 +231,7 @@ public class PlayerCollection extends Menu {
         }
     }
 
-    public HashMap<String, ArrayList<CardOrItem>> getDecks() {
+    public HashMap<String, ArrayList<Card>> getDecks() {
         return decks;
     }
 

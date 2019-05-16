@@ -83,8 +83,9 @@ public class Battle extends Menu {
     }
     public void moveTo(int x , int y){
         if (checkForValidMoving(x, y)) return;
-        selectedCard.getSquare().setX(x);
-        selectedCard.getSquare().setY(y);
+        selectedCard.setSquare(square[x][y]);
+        selectedCard.getUserAccount().getHand().remove(selectedCard);
+        selectedCard.getSquare().setCard(selectedCard);
     }
     public void attack(String cardID){
 
@@ -192,6 +193,17 @@ public class Battle extends Menu {
         }
         return false;
     }
+    private Card attackedCard(String cardID) {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (square[i][j].getCard().getCardID().equals(cardID)){
+                    return square[i][j].getCard();
+                }
+            }
+        }
+        return new Card();
+    }
+
     public Account[] getActiveAccounts() {
         return battlePlayers;
     }
@@ -243,4 +255,6 @@ public class Battle extends Menu {
     public void setTurn(int turn) {
         this.turn = turn;
     }
+
+
 }

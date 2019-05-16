@@ -1,7 +1,6 @@
 package view.menus;
 
 import model.Card;
-import model.CardOrItem;
 import model.MenuType;
 
 import java.util.ArrayList;

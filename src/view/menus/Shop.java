@@ -18,7 +18,7 @@ public class Shop extends Menu {
 
     private Battle battle = Battle.getInstance();
 
-    private static ArrayList<CardOrItem> allAvailableCardOrItemsInShop = new ArrayList<>();
+    private static ArrayList<Card> allAvailableCardOrItemsInShop = new ArrayList<>();
     private static ArrayList<Hero> allAvailableHeros = new ArrayList<>();
     private static ArrayList<Item> allAvailableItems = new ArrayList<>();
     private static ArrayList<Minion> allAvailableMinions = new ArrayList<>();
@@ -30,7 +30,7 @@ public class Shop extends Menu {
     }
 
     public void search(String name) {
-        for (CardOrItem cardOrItem : allAvailableCardOrItemsInShop) {
+        for (Card cardOrItem : allAvailableCardOrItemsInShop) {
             if (cardOrItem.getName().equals(name)) {
                 System.out.println(cardOrItem.getCardID());
                 return;
@@ -45,8 +45,8 @@ public class Shop extends Menu {
 
     public void buy(String name) {
         boolean available = false;
-        CardOrItem availableCardOrItem = null;
-        for (CardOrItem cardOrItem : allAvailableCardOrItemsInShop) {
+        Card availableCardOrItem = null;
+        for (Card cardOrItem : allAvailableCardOrItemsInShop) {
             if (cardOrItem.getName().equals(name)) {
                 availableCardOrItem = cardOrItem;
                 available = true;

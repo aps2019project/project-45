@@ -31,7 +31,7 @@ public class View {
         System.out.printf("Type : Spell - Name : %s - MP : %d - Desc : %s", spell.getName(), spell.getMP(), spell.getDesc());
     }
 
-    public static void showCardOrItemInfoWithCost(CardOrItem cardOrItem, int i) {
+    public static void showCardOrItemInfoWithCost(Card cardOrItem, int i) {
         if (cardOrItem instanceof Hero) {
             System.out.printf("           %d : ", i + 1);
             showHeroInfo((Hero) cardOrItem);

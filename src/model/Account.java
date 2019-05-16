@@ -2,8 +2,6 @@ package model;
 
 import view.menus.GraveYard;
 import view.menus.PlayerCollection;
-import view.menus.GraveYard;
-import view.menus.PlayerCollection;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,21 +19,23 @@ public class Account {
     private int money;
     private int wins;
     private int losts;
-    private CardOrItem selectedCardOrItem;
+    private int MP;
+    private Card selectedCardOrItem;
     private boolean activeAtTheMoment;
 
     private PlayerCollection collection;
 
-    private ArrayList<CardOrItem> selectedDeck;
+    private ArrayList<Card> selectedDeck;
     private ArrayList<Card> hand;
     private Card nextCardForHand;
     private GraveYard graveYard;
     private ArrayList<String> lastEnemyNames = new ArrayList<>();
     private ArrayList<String> matchStatuses = new ArrayList<>();
     private ArrayList<Date> matchTimes = new ArrayList<>();
-    private Hero hero;
+    private ArrayList<Card> activeCardsOnGround = new ArrayList<>();
+    /*private Hero hero;
     private ArrayList<Minion> activeMinions = new ArrayList<>();
-    private ArrayList<Spell> activeSpells = new ArrayList<>();
+    private ArrayList<Spell> activeSpells = new ArrayList<>();*/
 
     public String getUserName() {
         return userName;
@@ -77,7 +77,7 @@ public class Account {
         this.wins = wins;
     }
 
-    public ArrayList<CardOrItem> getSelectedDeck() {
+    public ArrayList<Card> getSelectedDeck() {
         return collection.getDecks().get(collection.getSelectedDeckName());
     }
 
@@ -102,23 +102,11 @@ public class Account {
         return graveYard;
     }
 
-    public Hero getHero() {
-        return hero;
-    }
-
-    public ArrayList<Minion> getActiveMinions() {
-        return activeMinions;
-    }
-
-    public ArrayList<Spell> getActiveSpells() {
-        return activeSpells;
-    }
-
     public PlayerCollection getCollection() {
         return collection;
     }
 
-    public CardOrItem getSelectedCardOrItem() {
+    public Card getSelectedCardOrItem() {
         return selectedCardOrItem;
     }
 
@@ -134,11 +122,23 @@ public class Account {
         this.activeAtTheMoment = activeAtTheMoment;
     }
 
+    public int getMP() {
+        return MP;
+    }
+
+    public void setMP(int MP) {
+        this.MP = MP;
+    }
+
+    public ArrayList<Card> getActiveCardsOnGround() {
+        return activeCardsOnGround;
+    }
+
     /*public GraveYard getPlayerGraveYard() {
         return playerGraveYard;
     }*/
 
-    /*public void setMainDeck(ArrayList<CardOrItem> mainDeck) {
+    /*public void setMainDeck(ArrayList<Card> mainDeck) {
         this.mainDeck = mainDeck;
     }*/
 
