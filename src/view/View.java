@@ -18,7 +18,7 @@ public class View {
     }
 
     public static void showItemInfo(Item item) {
-        System.out.printf("Name : %s - Desc : %s", item.getName(), item.getDesc());
+        System.out.printf("Name : %s - Desc : %s", item. getName(), item.getDesc());
     }
 
     public static void showMinionInfo(Minion minion) {

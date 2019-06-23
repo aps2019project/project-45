@@ -20,7 +20,7 @@ public class Account {
     private int wins;
     private int losts;
     private int MP;
-    private Card selectedCardOrItem;
+    private Card selectedCard;
     private boolean activeAtTheMoment;
 
     private PlayerCollection collection;
@@ -32,10 +32,10 @@ public class Account {
     private ArrayList<String> lastEnemyNames = new ArrayList<>();
     private ArrayList<String> matchStatuses = new ArrayList<>();
     private ArrayList<Date> matchTimes = new ArrayList<>();
-    private ArrayList<Card> activeCardsOnGround = new ArrayList<>();
-    /*private Hero hero;
+    //private ArrayList<Card> activeCardsOnGround = new ArrayList<>();
+    private Hero hero = new Hero();
     private ArrayList<Minion> activeMinions = new ArrayList<>();
-    private ArrayList<Spell> activeSpells = new ArrayList<>();*/
+    private ArrayList<Spell> activeSpells = new ArrayList<>();
 
     public String getUserName() {
         return userName;
@@ -94,7 +94,7 @@ public class Account {
         while (true) {
             int randInt = random.nextInt(20) - 1; //age nafahmidi bepors khaheshan
             if (getSelectedDeck().get(randInt) instanceof Minion || getSelectedDeck().get(randInt) instanceof Spell)
-                return (Card)getSelectedDeck().get(randInt);
+                return (Card) getSelectedDeck().get(randInt);
         }
     }
 
@@ -106,12 +106,12 @@ public class Account {
         return collection;
     }
 
-    public Card getSelectedCardOrItem() {
-        return selectedCardOrItem;
+    public Card getSelectedCard() {
+        return selectedCard;
     }
 
-    public void setSelectedCardOrItem(Card selectedCardOrItem) {
-        this.selectedCardOrItem = selectedCardOrItem;
+    public void setSelectedCard(Card selectedCard) {
+        this.selectedCard = selectedCard;
     }
 
     public boolean isActiveAtTheMoment() {
@@ -130,9 +130,33 @@ public class Account {
         this.MP = MP;
     }
 
-    public ArrayList<Card> getActiveCardsOnGround() {
-        return activeCardsOnGround;
+    public Hero getHero() {
+        return hero;
     }
+
+    public void setHero(Hero hero) {
+        this.hero = hero;
+    }
+
+    public ArrayList<Minion> getActiveMinions() {
+        return activeMinions;
+    }
+
+    public void setActiveMinions(ArrayList<Minion> activeMinions) {
+        this.activeMinions = activeMinions;
+    }
+
+    public ArrayList<Spell> getActiveSpells() {
+        return activeSpells;
+    }
+
+    public void setActiveSpells(ArrayList<Spell> activeSpells) {
+        this.activeSpells = activeSpells;
+    }
+
+    /*public ArrayList<Card> getActiveCardsOnGround() {
+        return activeCardsOnGround;
+    }*/
 
     /*public GraveYard getPlayerGraveYard() {
         return playerGraveYard;

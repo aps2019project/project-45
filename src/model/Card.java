@@ -1,13 +1,11 @@
 package model;
 
 import view.Battle;
-
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Card {
     private Battle battle = Battle.getInstance();
-
     private String name;
     private int cost;
     private int neededMana;
@@ -24,10 +22,6 @@ public class Card {
     private int AP;
 
 
-
-
-
-
     private int disarmTurns;
     private int stunTurns;
     private ArrayList<Integer> increaseAPturns = new ArrayList<>();
@@ -36,19 +30,14 @@ public class Card {
     private ArrayList<Integer> decreaseAPamount = new ArrayList<>();
     private ArrayList<Integer> increaseHealthTurns = new ArrayList<>();
     private ArrayList<Integer> increaseHealthAmount = new ArrayList<>();
-    private ArrayList<Integer> decreaseHealthTurns  = new ArrayList<>();
+    private ArrayList<Integer> decreaseHealthTurns = new ArrayList<>();
     private ArrayList<Integer> decreaseHealthAmount = new ArrayList<>();
     private boolean attacked;
-    private String effectTime;
+    private EffectTime effectTime;
 
 
-
-
-
-
-
-    public void setDisarmTurns(int disarmTurns){
-        if (disarmTurns == -1){
+    public void setDisarmTurns(int disarmTurns) {
+        if (disarmTurns == -1) {
             this.disarmTurns = -1;
             return;
         }
@@ -56,16 +45,18 @@ public class Card {
             this.disarmTurns = disarmTurns;
         }
     } //kollan disarm piyade sazi shod
-    public void setStunTurns(int stunTurns){
+
+    public void setStunTurns(int stunTurns) {
         if (stunTurns == -1) {
             this.stunTurns = -1;
             return;
         }
-        if (this.stunTurns < stunTurns){
+        if (this.stunTurns < stunTurns) {
             this.stunTurns = stunTurns;
         }
     } //kollan stun piyade sazi shod
-    public void setIncreaseAP(int increaseAPturns , int increaseAPamount){
+
+    public void setIncreaseAP(int increaseAPturns, int increaseAPamount) {
         if (increaseAPturns == -1) {
             this.increaseAPturns.add(-1);
             this.increaseAPamount.add(increaseAPamount);
@@ -74,12 +65,14 @@ public class Card {
         this.increaseAPturns.add(increaseAPturns);
         this.increaseAPamount.add(increaseAPamount);
     }
-    public void increaseAP(){
+
+    public void increaseAP() {
         for (Integer integer : increaseAPamount) {
             this.AP += integer;
         }
     }
-    public void setDecreaseAP(int decreaseAPturns , int decreaseAPamount){
+
+    public void setDecreaseAP(int decreaseAPturns, int decreaseAPamount) {
         if (decreaseAPturns == -1) {
             this.decreaseAPturns.add(-1);
             this.decreaseAPamount.add(decreaseAPamount);
@@ -88,12 +81,14 @@ public class Card {
         this.decreaseAPturns.add(decreaseAPturns);
         this.decreaseAPamount.add(decreaseAPamount);
     }
-    public void decreaseAP(){
+
+    public void decreaseAP() {
         for (Integer integer : decreaseAPamount) {
             this.AP -= integer;
         }
     }
-    public void setIncreaseHealthTurns(int increaseHealthTurns , int increaseHealthAmount){
+
+    public void setIncreaseHealthTurns(int increaseHealthTurns, int increaseHealthAmount) {
         if (increaseHealthTurns == -1) {
             this.increaseHealthTurns.add(-1);
             this.increaseHealthAmount.add(increaseHealthAmount);
@@ -102,12 +97,14 @@ public class Card {
         this.increaseHealthTurns.add(increaseHealthTurns);
         this.increaseHealthAmount.add(increaseHealthAmount);
     }
-    public void increaseHealth(){
+
+    public void increaseHealth() {
         for (Integer integer : increaseHealthAmount) {
             this.AP += integer;
         }
     }
-    public void setDecreaseHealthTurns(int decreaseHealthTurns , int decreaseHealthAmount){
+
+    public void setDecreaseHealthTurns(int decreaseHealthTurns, int decreaseHealthAmount) {
         if (decreaseHealthTurns == -1) {
             this.decreaseHealthTurns.add(-1);
             this.decreaseHealthAmount.add(decreaseHealthAmount);
@@ -116,27 +113,31 @@ public class Card {
         this.decreaseHealthTurns.add(decreaseHealthTurns);
         this.decreaseHealthAmount.add(decreaseHealthAmount);
     }
-    public void decreaseHealth(){
+
+    public void decreaseHealth() {
         for (Integer integer : decreaseHealthAmount) {
             this.AP -= integer;
         }
     }
-    public void setSquareEffectTurns(int squareEffectTurns , int x , int y){
+
+    public void setSquareEffectTurns(int squareEffectTurns, int x, int y) {
         battle.getSquare()[x][y].setSquareEffectTurns(squareEffectTurns);
     }
-    public void setSquareEffect(String squareEffect , int x , int y) {
-        if (squareEffect.equalsIgnoreCase("fiery")){
+
+    public void setSquareEffect(String squareEffect, int x, int y) {
+        if (squareEffect.equalsIgnoreCase("fiery")) {
             battle.getSquare()[x][y].setSquareEffect(SquareEffect.FIERY);
-        } else if (squareEffect.equalsIgnoreCase("poisonous")){
+        } else if (squareEffect.equalsIgnoreCase("poisonous")) {
             battle.getSquare()[x][y].setSquareEffect(SquareEffect.POISONOUS);
-        } else if (squareEffect.equalsIgnoreCase("holy")){
+        } else if (squareEffect.equalsIgnoreCase("holy")) {
             battle.getSquare()[x][y].setSquareEffect(SquareEffect.HOLY);
         }
     }//it can contain int squareEffectTurns
-    public void frustratrBuffs(){
-        if (!this.getUserAccount().getUserName().equals(battle.getActiveAccount().getUserName())){
+
+    public void frustratrBuffs() {
+        if (!this.getUserAccount().getUserName().equals(battle.getActiveAccount().getUserName())) {
             for (int i = 0; i < increaseAPamount.size(); i++) {
-                if (increaseAPamount.get(i) != -1){
+                if (increaseAPamount.get(i) != -1) {
                     increaseAPamount.remove(i);
                     increaseAPturns.remove(i);
                 }
@@ -149,7 +150,7 @@ public class Card {
             }
         } else {
             for (int i = 0; i < decreaseAPamount.size(); i++) {
-                if (decreaseAPamount.get(i) != -1){
+                if (decreaseAPamount.get(i) != -1) {
                     decreaseAPamount.remove(i);
                     decreaseAPturns.remove(i);
                 }
@@ -162,37 +163,28 @@ public class Card {
             }
         }
     }
-    public void handleEffectTime(String time){
+
+    public void handleEffectTime(String time) {
         if (true) {
 
         }
     }
-    public void kill(){
+
+    public void kill() {
         this.setSquare(null);
         this.getUserAccount().getGraveYard().add(this);
-        this.getUserAccount().getActiveCardsOnGround().remove(this);
+        this.getUserAccount().getActiveMinions().remove(this);
+        if (this instanceof Hero){
+            this.getUserAccount().setHero(null);
+        }
     }
 
 
-
-
-
-
-    public Card randomCard(ArrayList<Card> cards){
+    public Card randomCard(ArrayList<Card> cards) {
         Random rand = new Random();
         int random = rand.nextInt(cards.size());
         return cards.get(random);
     }
-
-
-
-
-
-
-
-
-
-
 
 
     public String getName() {
@@ -313,6 +305,14 @@ public class Card {
 
     public void setAttacked(boolean attacked) {
         this.attacked = attacked;
+    }
+
+    public EffectTime getEffectTime() {
+        return effectTime;
+    }
+
+    public void setEffectTime(EffectTime effectTime) {
+        this.effectTime = effectTime;
     }
 
 }

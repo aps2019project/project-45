@@ -16,7 +16,7 @@ public class Battle extends Menu {
 
     private Account[] battlePlayers = new Account[2];
     private Square[][] square = new Square[5][9];
-    private ArrayList<Item> flags = new ArrayList<>();
+    private ArrayList<Card> flags = new ArrayList<>();
     private Card selectedCard;
     private PlayingType playingType;
     private PlayingMode playingMode;
@@ -79,7 +79,7 @@ public class Battle extends Menu {
             System.out.println("Invalid card id");
             return;
         }
-        account.setSelectedCardOrItem(selectedCard);
+        account.setSelectedCard(selectedCard);
     }
     public void moveTo(int x , int y){
         if (checkForValidMoving(x, y)) return;
