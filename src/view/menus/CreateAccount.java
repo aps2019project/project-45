@@ -23,10 +23,10 @@ public class CreateAccount extends Menu{
 
     public void createAccount () {
         System.out.println("Username: ");
-        Request request = new Request(new CreateAccount());
+        Request request = new Request();
         request.setNewCommand();
         if (!checkIfCreatedUserNameExisted(request.getCommand(), AccountMenu.accounts)) return;
-        String passWord = getPassWord();
+        String passWord = setPassWord();
         AccountMenu.accounts.add(new Account(request.getCommand() , passWord));
         PlayController.menus.add(PlayingTypeMenu.getInstance());
     }
@@ -40,11 +40,11 @@ public class CreateAccount extends Menu{
         }
         return false;
     }
-    private String getPassWord() {
+    private String setPassWord() {
         Pattern characterPattern = Pattern.compile("\\w+");
         Pattern digitPattern = Pattern.compile("\\d+");
         System.out.println("Password: ");
-        Request request = new Request(new CreateAccount());
+        Request request = new Request();
         request.setNewCommand();
         Matcher characterMatcher = characterPattern.matcher(request.getCommand());
         Matcher digitMatcher = digitPattern.matcher(request.getCommand());

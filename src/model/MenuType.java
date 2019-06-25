@@ -3,6 +3,7 @@ package model;
 public enum MenuType {
     ACCOUNT_MENU,
     CREATE_ACCOUNT,
+    CUSTOM_CARD_MENU,
     LOGIN,
     MAIN_MENU,
     GRAVE_YARD,

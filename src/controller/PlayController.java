@@ -33,6 +33,52 @@ public class PlayController {
     }
 
 
+
+    private void handleRequestInRelatingMenu(Menu currentMenu, String command) {
+        checkForHelpOrExit(command);
+        switch (currentMenu.getType()) {
+            case ACCOUNT_MENU:
+                accountMenuRequest(command);
+                break;
+            case CREATE_ACCOUNT:
+                createAccountMenuRequest(command);
+                break;
+            case CUSTOM_CARD_MENU:
+
+                break;
+            case LOGIN:
+                loginMenuRequest(command);
+                break;
+            case PLAYING_TYPE_MENU:
+                playingTypeMenuRequest(command);
+                break;
+            case SINGLE_PLAYER_MENU:
+                singlePlayerMenuRequest(command);
+                break;
+
+            case MAIN_MENU:
+                mainMenuRequest(command);
+                break;
+            case PLAYER_COLLECTION:
+                playerCollectionRequest(command);
+                break;
+            case SHOP:
+                shopRequest(command);
+                break;
+
+            case BATTLE:
+                battleRequest(command);
+                break;
+
+            case GRAVE_YARD:
+                graveYardRequest(command);
+                break;
+        }
+    }
+
+
+
+
     private void accountMenuRequest(String command) {
         if (command.equalsIgnoreCase("create account")) {
             AccountMenu.getInstance().createAccount();
@@ -45,6 +91,10 @@ public class PlayController {
 
     private void createAccountMenuRequest(String command) {
         CreateAccount.getInstance().createAccount();
+    }
+
+    private void customCardMenuRequest(String command) {
+        CustomCardMenu.getInstance().create();
     }
 
     private void loginMenuRequest(String command) {
@@ -198,47 +248,6 @@ public class PlayController {
     private void graveYardRequest(String command) {
 
     } //later
-
-
-    //almozakhrafat
-    private void handleRequestInRelatingMenu(Menu currentMenu, String command) {
-        checkForHelpOrExit(command);
-        switch (currentMenu.getType()) {
-            case ACCOUNT_MENU:
-                accountMenuRequest(command);
-                break;
-            case CREATE_ACCOUNT:
-                createAccountMenuRequest(command);
-                break;
-            case LOGIN:
-                loginMenuRequest(command);
-                break;
-            case PLAYING_TYPE_MENU:
-                playingTypeMenuRequest(command);
-                break;
-            case SINGLE_PLAYER_MENU:
-                singlePlayerMenuRequest(command);
-                break;
-
-            case MAIN_MENU:
-                mainMenuRequest(command);
-                break;
-            case PLAYER_COLLECTION:
-                playerCollectionRequest(command);
-                break;
-            case SHOP:
-                shopRequest(command);
-                break;
-
-            case BATTLE:
-                battleRequest(command);
-                break;
-
-            case GRAVE_YARD:
-                graveYardRequest(command);
-                break;
-        }
-    }
 
     private void checkForHelpOrExit(String command) {
         if (command.equalsIgnoreCase("help") || command.equalsIgnoreCase("Show munu")) {

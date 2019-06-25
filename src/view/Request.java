@@ -9,6 +9,7 @@ public class Request {
     private String command;
     private Menu relatedMenu;//probability of error
 
+    public Request() {}
     public Request(Menu relatedMenu) {
         this.relatedMenu = relatedMenu;
     }

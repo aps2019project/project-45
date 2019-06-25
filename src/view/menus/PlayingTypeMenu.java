@@ -18,6 +18,7 @@ public class PlayingTypeMenu extends Menu{
     public static PlayingTypeMenu getInstance() {
         return PLAYING_MODE_MENU;
     }
+
     private Battle battle = Battle.getInstance();
 
     public void openSiglePlayerMenu(){
@@ -31,7 +32,7 @@ public class PlayingTypeMenu extends Menu{
         boolean badRequest = false;
         label:
         while (!badRequest) {
-            Request request = new Request(PlayingTypeMenu.getInstance());
+            Request request = new Request();
             request.setNewCommand();
             if (request.getCommand().equals("exit")) {
                 exit();
@@ -62,7 +63,7 @@ public class PlayingTypeMenu extends Menu{
         System.out.println(PlayingMode.FIRST + " : " + PlayingMode.FIRST.getMessage());
         System.out.println(PlayingMode.SECOND + " : " + PlayingMode.SECOND.getMessage());
         System.out.println(PlayingMode.THIRD + " : " + PlayingMode.THIRD.getMessage());
-        Request request1 = new Request(PlayingTypeMenu.getInstance());
+        Request request1 = new Request();
         request1.setNewCommand();
         Pattern modePattern = Pattern.compile("Start multiplayer game (FIRST|SECOND|THIRD) *(\\d)*");
         Matcher modeMatcher = modePattern.matcher(request1.getCommand());

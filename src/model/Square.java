@@ -5,17 +5,9 @@ public class Square {
     private int y;
     private Card card;
 
+    private SquareEffect effect;
+    private int effectTurns;
 
-
-
-    private SquareEffect squareEffect;
-    private int squareEffectTurns;
-
-
-
-    public void setSquareEffect(SquareEffect squareEffect) {
-        this.squareEffect = squareEffect;
-    }
     public void fieryEffect(Card effectedCard){
         effectedCard.setHealth(effectedCard.getHealth() - 2);
     }
@@ -29,23 +21,34 @@ public class Square {
             effectedCard.setHealth(effectedCard.getHealth() + 1);
         }
     }
-    public void setSquareEffectTurns(int squareEffectTurns) {
-        this.squareEffectTurns = squareEffectTurns;
+
+    public void setEffect(SquareEffect squareEffect, int effectTurns) {
+        this.effect = squareEffect;
+        this.effectTurns = effectTurns;
     }
-
-
 
 
     public int getX() {
         return x;
     }
+
     public int getY() {
         return y;
     }
+
     public Card getCard() {
         return card;
     }
+
     public void setCard(Card card) {
         this.card = card;
+    }
+
+    public SquareEffect getEffect() {
+        return effect;
+    }
+
+    public int getEffectTurns() {
+        return effectTurns;
     }
 }

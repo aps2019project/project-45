@@ -128,7 +128,7 @@ public class Battle extends Menu {
     }
     public void showCollectables() {
         for (Item item : getActiveAccount().getCollection().getItems()) {
-            if (item.isCollectable()) System.out.println(item.getCardID());
+            if (item.isCollectible()) System.out.println(item.getCardID());
         }
     }
     public void selectItem (String cardID) {
@@ -225,8 +225,8 @@ public class Battle extends Menu {
 
     @Override
     public void help() {
-        System.out.print("Game info\nShow my minions\nShow opponent minions\nShow card info [card id]\nSelect [card id]\n" +
-                "");
+        System.out.print("Game info\nShow my minions\nShow opponent minions\nShow card info [card id]\nSelect [card id]"
+                + "\n");
     }
 
     @Override
@@ -236,8 +236,8 @@ public class Battle extends Menu {
 
     @Override
     public void open() {
-        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * Battle" +
-                " * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
+        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * Battle"
+                + " * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
     }
 
 

@@ -3,9 +3,7 @@ package model;
 import view.menus.GraveYard;
 import view.menus.PlayerCollection;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Random;
+import java.util.*;
 
 public class Account {
     public Account(String userName, String passWord) {
@@ -23,19 +21,17 @@ public class Account {
     private Card selectedCard;
     private boolean activeAtTheMoment;
 
-    private PlayerCollection collection;
-
-    private ArrayList<Card> selectedDeck;
-    private ArrayList<Card> hand;
+    private Map<String, Card> selectedDeck = new HashMap<>();
+    private Map<String, Card> hand = new HashMap<>();
     private Card nextCardForHand;
-    private GraveYard graveYard;
+    private ArrayList<Card> graveYard = new ArrayList<>();
     private ArrayList<String> lastEnemyNames = new ArrayList<>();
     private ArrayList<String> matchStatuses = new ArrayList<>();
     private ArrayList<Date> matchTimes = new ArrayList<>();
-    //private ArrayList<Card> activeCardsOnGround = new ArrayList<>();
+    private Map<String, Card> activeCardsOnGround = new HashMap<>();
     private Hero hero = new Hero();
-    private ArrayList<Minion> activeMinions = new ArrayList<>();
-    private ArrayList<Spell> activeSpells = new ArrayList<>();
+    private Map<String, Minion> activeMinions = new HashMap<>();
+    private Map<String, Spell> activeSpells = new HashMap<>();
 
     public String getUserName() {
         return userName;
@@ -77,18 +73,6 @@ public class Account {
         this.wins = wins;
     }
 
-    public ArrayList<Card> getSelectedDeck() {
-        return collection.getDecks().get(collection.getSelectedDeckName());
-    }
-
-    public String getSelectedDeckName() {
-        return collection.getSelectedDeckName();
-    }
-
-    public ArrayList<Card> getHand() {
-        return hand;
-    }
-
     public Card getNextCardForHand() {
         Random random = new Random();
         while (true) {
@@ -96,14 +80,6 @@ public class Account {
             if (getSelectedDeck().get(randInt) instanceof Minion || getSelectedDeck().get(randInt) instanceof Spell)
                 return (Card) getSelectedDeck().get(randInt);
         }
-    }
-
-    public GraveYard getGraveYard() {
-        return graveYard;
-    }
-
-    public PlayerCollection getCollection() {
-        return collection;
     }
 
     public Card getSelectedCard() {
@@ -138,32 +114,51 @@ public class Account {
         this.hero = hero;
     }
 
-    public ArrayList<Minion> getActiveMinions() {
+    public Map<String, Card> getSelectedDeck() {
+        return selectedDeck;
+    }
+
+    public void setSelectedDeck(Map<String, Card> selectedDeck) {
+        this.selectedDeck = selectedDeck;
+    }
+
+    public Map<String, Card> getHand() {
+        return hand;
+    }
+
+    public void setHand(Map<String, Card> hand) {
+        this.hand = hand;
+    }
+
+    public ArrayList<Card> getGraveYard() {
+        return graveYard;
+    }
+
+    public void setGraveYard(ArrayList<Card> graveYard) {
+        this.graveYard = graveYard;
+    }
+
+    public Map<String, Card> getActiveCardsOnGround() {
+        return activeCardsOnGround;
+    }
+
+    public void setActiveCardsOnGround(Map<String, Card> activeCardsOnGround) {
+        this.activeCardsOnGround = activeCardsOnGround;
+    }
+
+    public Map<String, Minion> getActiveMinions() {
         return activeMinions;
     }
 
-    public void setActiveMinions(ArrayList<Minion> activeMinions) {
+    public void setActiveMinions(Map<String, Minion> activeMinions) {
         this.activeMinions = activeMinions;
     }
 
-    public ArrayList<Spell> getActiveSpells() {
+    public Map<String, Spell> getActiveSpells() {
         return activeSpells;
     }
 
-    public void setActiveSpells(ArrayList<Spell> activeSpells) {
+    public void setActiveSpells(Map<String, Spell> activeSpells) {
         this.activeSpells = activeSpells;
     }
-
-    /*public ArrayList<Card> getActiveCardsOnGround() {
-        return activeCardsOnGround;
-    }*/
-
-    /*public GraveYard getPlayerGraveYard() {
-        return playerGraveYard;
-    }*/
-
-    /*public void setMainDeck(ArrayList<Card> mainDeck) {
-        this.mainDeck = mainDeck;
-    }*/
-
 }
