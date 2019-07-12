@@ -8,15 +8,14 @@ public class Card {
     Battle battle = Battle.getInstance();
     String name;
     int cost;
-    int neededMana;
+    int MP;
     Square square = new Square();
     Account userAccount;
     String cardID;
-    String desk;
+    String desc;
     CardType cardType;
     HeroOrMinionType heroOrMinionType;
-    boolean usableItem;
-    boolean collectible;
+    boolean usable;
     Card flagOwner;
     int health;
     int AP;
@@ -135,37 +134,14 @@ public class Card {
 
     void kill() {
         this.setSquare(null);
-        this.getUserAccount().getGraveYard().add(this);
-        this.getUserAccount().getActiveMinions().remove(this);
-        this.getUserAccount().getActiveCardsOnGround().remove(this);
+        this.userAccount.getGraveYard().add(this);
+        this.userAccount.getActiveMinions().remove(this);
+        this.userAccount.getActiveCardsOnGround().remove(this);
         if (this instanceof Hero){
-            this.getUserAccount().setHero(null);
+            this.userAccount.setHero(null);
         }
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getCost() {
-        return cost;
-    }
-
-    public void setCost(int cost) {
-        this.cost = cost;
-    }
-
-    public int getNeededMana() {
-        return neededMana;
-    }
-
-    public void setNeededMana(int neededMana) {
-        this.neededMana = neededMana;
-    }
 
     public Square getSquare() {
         return square;
@@ -191,44 +167,12 @@ public class Card {
         this.cardID = cardID;
     }
 
-    public String getDesk() {
-        return desk;
+    public String getdesc() {
+        return desc;
     }
 
-    public void setDesk(String desk) {
-        this.desk = desk;
-    }
-
-    public CardType getCardType() {
-        return cardType;
-    }
-
-    public void setCardType(CardType cardType) {
-        this.cardType = cardType;
-    }
-
-    public HeroOrMinionType getHeroOrMinionType() {
-        return heroOrMinionType;
-    }
-
-    public void setHeroOrMinionType(HeroOrMinionType heroOrMinionType) {
-        this.heroOrMinionType = heroOrMinionType;
-    }
-
-    public boolean isUsableItem() {
-        return usableItem;
-    }
-
-    public void setUsableItem(boolean usableItem) {
-        this.usableItem = usableItem;
-    }
-
-    public boolean isCollectible() {
-        return collectible;
-    }
-
-    public void setCollectible(boolean collectible) {
-        this.collectible = collectible;
+    public void setdesc(String desc) {
+        this.desc = desc;
     }
 
     public Card getFlagOwner() {
@@ -239,6 +183,14 @@ public class Card {
         this.flagOwner = flagOwner;
     }
 
+    public int getMP() {
+        return MP;
+    }
+
+    public void setMP(int MP) {
+        this.MP = MP;
+    }
+
     public int getHealth() {
         return health;
     }
@@ -247,28 +199,52 @@ public class Card {
         this.health = health;
     }
 
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
+    public CardType getCardType() {
+        return cardType;
+    }
+
+    public void setCardType(CardType cardType) {
+        this.cardType = cardType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public HeroOrMinionType getHeroOrMinionType() {
+        return heroOrMinionType;
+    }
+
+    public void setHeroOrMinionType(HeroOrMinionType heroOrMinionType) {
+        this.heroOrMinionType = heroOrMinionType;
+    }
+
+    public boolean isUsable() {
+        return usable;
+    }
+
+    public void setUsableItem(boolean usable) {
+        this.usable = usable;
+    }
+
     public int getAP() {
         return AP;
     }
 
     public void setAP(int AP) {
         this.AP = AP;
-    }
-
-    public boolean isAttacked() {
-        return attacked;
-    }
-
-    public void setAttacked(boolean attacked) {
-        this.attacked = attacked;
-    }
-
-    public EffectTime getEffectTime() {
-        return effectTime;
-    }
-
-    public void setEffectTime(EffectTime effectTime) {
-        this.effectTime = effectTime;
     }
 
 }

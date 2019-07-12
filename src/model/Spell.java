@@ -10,6 +10,12 @@ public class Spell extends Card {
     // so important ha
     private Battle battle = Battle.getInstance();
 
+    private ArrayList<BuffType> buffTypes = new ArrayList<>();
+    private ArrayList<Integer> effectValue = new ArrayList<>();
+    private ArrayList<Integer> delay = new ArrayList<>();
+    private ArrayList<Integer> last = new ArrayList<>();
+
+
     public void totalDisarm(String cardID) {
         battle.getInActiveAccount().getActiveCardsOnGround().get(cardID).setDisarmTurns(-1);
     }
@@ -177,6 +183,7 @@ public class Spell extends Card {
 
     //special powers
 
+    //minions spells
     public void farsSwordsman(String cardID) {
         battle.getInActiveAccount().getActiveCardsOnGround().get(cardID).setStunTurns(1);
     }
@@ -341,5 +348,89 @@ public class Spell extends Card {
 
     public void siavash() {
         battle.getInActiveAccount().getHero().setDecreaseHealth(1,6);
+    }
+
+
+    //hero spells
+    public void whiteOgre(String cardID) {
+        battle.getActiveAccount().getHero().setIncreaseAP(1, 4);
+    }
+
+    public void seemorgh() {
+        for (Card card : battle.getInActiveAccount().getActiveCardsOnGround().values()) {
+            card.setStunTurns(1);
+        }
+    }
+
+    public void seven_headed_dragon() {
+        int number = battle.getActiveAccount().getActiveCardsOnGround().size() + battle.getInActiveAccount().
+                getActiveCardsOnGround().size();
+        Random random = new Random();
+        int randomCard = random.nextInt(number);
+        int count = 0;
+        for (Card targetCard : battle.getActiveAccount().getActiveCardsOnGround().values()) {
+            if (randomCard == count) {
+                targetCard.setDisarmTurns(1);
+                return;
+            }
+            count++;
+        }
+        for (Card targetCard : battle.getInActiveAccount().getActiveCardsOnGround().values()) {
+            if (randomCard == count) {
+                targetCard.setDisarmTurns(1);
+                return;
+            }
+            count++;
+        }
+    }
+
+    public void rakhsh() {
+        Random random = new Random();
+        int randomCard = random.nextInt(battle.getInActiveAccount().getActiveCardsOnGround().size());
+        int count = 0;
+        for (Card targetCard : battle.getInActiveAccount().getActiveCardsOnGround().values()) {
+            if (count == randomCard) {
+                targetCard.setStunTurns(1);
+                return;
+            }
+            count++;
+        }
+    }
+
+    public void zahhak(String cardID) {
+        battle.getInActiveAccount().getActiveCardsOnGround().get(cardID).
+                setDecreaseHealth(3, 1);
+    }
+
+    public void kave(int x, int y) {
+        battle.getSquare()[y - 1][x - 1].setEffect(SquareEffect.HOLY, 3);
+    }
+
+    public void arash() {
+        int cardY = battle.getActiveAccount().getHero().getSquare().getY();
+        for (int i = 1; i < 10; i++) {
+            if (battle.getSquare()[cardY - 1][i].getCard() != null) {
+                battle.getSquare()[cardY - 1][i].getCard().
+                        setDecreaseHealth(1, 4);
+            }
+        }
+    }
+
+    public void fable() {
+        int number = battle.getInActiveAccount().getActiveCardsOnGround().size();
+        Random random = new Random();
+        int randomCard = random.nextInt(number);
+        int count = 0;
+        for (Card targetCard : battle.getInActiveAccount().getActiveCardsOnGround().values()) {
+            if (count == randomCard) {
+                dispel(targetCard.getCardID());
+                return;
+            }
+            count++;
+        }
+    }
+
+    public void esfandiyar() {
+        battle.getActiveAccount().getHero().setHolyBuff(-10, 3);
     }
 }

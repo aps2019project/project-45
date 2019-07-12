@@ -1,5 +1,6 @@
 package view;
 
+import javafx.stage.Stage;
 import model.*;
 import view.menus.Menu;
 import model.PlayingType;
@@ -20,28 +21,31 @@ public class Battle extends Menu {
     private Card selectedCard;
     private PlayingType playingType;
     private PlayingMode playingMode;
-    private int turn;
+    public static int turn;
 
     public void gameInfo(int mode) {
-        System.out.println(battlePlayers[0].getUserName() + " mana : " + battlePlayers[0].getMana());
-        System.out.println(battlePlayers[1].getUserName() + " mana : " + battlePlayers[1].getMana());
+        System.out.println(battlePlayers[0].getUsername() + " mana : " + battlePlayers[0].getMana());
+        System.out.println(battlePlayers[1].getUsername() + " mana : " + battlePlayers[1].getMana());
         switch (mode) {
             case 1:
-                System.out.println(battlePlayers[0].getUserName() + " health : " + battlePlayers[0].getHero().getHealth());
-                System.out.println(battlePlayers[1].getUserName() + " health : " + battlePlayers[0].getHero().getHealth());
+                System.out.println(battlePlayers[0].getUsername() + " health : " + battlePlayers[0].getHero().
+                        getHealth());
+                System.out.println(battlePlayers[1].getUsername() + " health : " + battlePlayers[0].getHero().
+                        getHealth());
                 break;
             case 2:
-                System.out.printf("flag is in (%d , %d) house.\n", flags.get(0).getSquare().getX(), flags.get(0).getSquare().getY());
+                System.out.printf("flag is in (%d , %d) house.\n", flags.get(0).getSquare().getX(), flags.get(0).
+                        getSquare().getY());
                 if (flags.get(0).getFlagOwner() == null) System.out.println("Flag isn't owned by any player!");
                 else
                     System.out.printf("flag owner is %s from player %s\n", flags.get(0).getFlagOwner().getCardID() ,
-                            flags.get(0).getUserAccount().getUserName());
+                            flags.get(0).getUserAccount().getUsername());
                 break;
             case 3:
                 System.out.println("owners of flags : ");
                 for (int i = 0; i < flags.size(); i++) {
                     System.out.printf("%d. %s from player %s\n", i + 1 , flags.get(i).getFlagOwner().getCardID() ,
-                            flags.get(i).getUserAccount().getUserName());
+                            flags.get(i).getUserAccount().getUsername());
                 }
                 break;
         }
@@ -50,11 +54,12 @@ public class Battle extends Menu {
         Hero hero = getActiveAccount().getHero();
         System.out.printf("%s : %s, health : %d, location : (%d, %d), power : %d\n", hero.getCardID() ,
                 hero.getName() , hero.getHealth() , hero.getSquare().getX() , hero.getSquare().getY() , hero.getAP());
-        for (Minion minion : getActiveAccount().getActiveMinions()){
+        for (Minion minion : getActiveAccount().getActiveMinions().values()){
         //for (int i = 0; i < account.getActiveMinions().size(); i++) {
             //Minion minion = account.getActiveMinions().get(i);
-            System.out.printf("%s : %s, health : %d, location : (%d, %d), power : %d\n" , minion.getCardID() , minion.getName() ,
-                    minion.getHealth() , minion.getSquare().getX() , minion.getSquare().getY() , minion.getAP());
+            System.out.printf("%s : %s, health : %d, location : (%d, %d), power : %d\n" , minion.getCardID() ,
+                    minion.getName() , minion.getHealth() , minion.getSquare().getX() , minion.getSquare().getY() ,
+                    minion.getAP());
         }
     }
     public void showOpponentMinions() {
@@ -69,7 +74,7 @@ public class Battle extends Menu {
         if (turn) account = battlePlayers[0];
         else account = battlePlayers[1];
         if (account.getHero().getCardID().equals(cardID)) selectedCard = account.getHero();
-        for (Minion minion : account.getActiveMinions()){
+        for (Minion minion : account.getActiveMinions().values()){
             if (minion.getCardID().equals(cardID)){
                 selectedCard = minion;
                 break;
@@ -101,13 +106,13 @@ public class Battle extends Menu {
         if (battlePlayers[0].isActiveAtTheMoment()) account = battlePlayers[0];
         else account = battlePlayers[1];
 
-        for (Card card : account.getHand()) {
+        for (Card card : account.getHand().values()) {
             System.out.println(card.getCardID());
         }
         System.out.printf("\nNext card in hand : %s\n" , account.getNextCardForHand().getCardID());
     }
     public void insert(String cardID , int x , int y) {
-        for (Card card : getActiveAccount().getHand()){
+        for (Card card : getActiveAccount().getHand().values()){
             if (card.getCardID().equalsIgnoreCase(cardID)) {
 
                 //later
@@ -119,18 +124,19 @@ public class Battle extends Menu {
     public void endTurn(){
         int neededCards = 5 - getActiveAccount().getHand().size();
         for (int i = 0; i < neededCards; i++) {
-            getActiveAccount().getHand().add((Card) getActiveAccount().getSelectedDeck().get(0));
+            getActiveAccount().getHand().put(getActiveAccount().getNextCardForHand().getCardID(), getActiveAccount().
+                    getNextCardForHand());
             getActiveAccount().getSelectedDeck().remove(0);
         }
         battlePlayers[0].setActiveAtTheMoment(!battlePlayers[0].isActiveAtTheMoment());
         battlePlayers[1].setActiveAtTheMoment(!battlePlayers[1].isActiveAtTheMoment());
 
     }
-    public void showCollectables() {
-        for (Item item : getActiveAccount().getCollection().getItems()) {
-            if (item.isCollectible()) System.out.println(item.getCardID());
+    /*public void showCollectables() {
+        for (Item item : getActiveAccount().getPlayerCollection().getItems()) {
+            if (!item.isUsable()) System.out.println(item.getCardID());
         }
-    }
+    }*/
     public void selectItem (String cardID) {
         //
     }
@@ -140,26 +146,26 @@ public class Battle extends Menu {
     public void useItem(int x , int y) {
 
     }
-    public void showNextCard() {
-        View.showCardOrItemInfoWithCost(getActiveAccount().getNextCardForHand() , 0);
+    /*public void showNextCard() {
+        View.showcardInfoWithCost(getActiveAccount().getNextCardForHand() , 0);
     }
     public void showInfo(String cardID) {
-        for (Card card : getActiveAccount().getGraveYard().getCards()) {
+        for (Card card : getActiveAccount().getGraveYard()) {
             if (card.getCardID().equals(cardID)) {
-                View.showCardOrItemInfoWithCost(card , 0);
+                View.showcardInfoWithCost(card , 0);
                 return;
             }
         }
     }
     public void showCards() {
-        for (int i = 0; i < getActiveAccount().getGraveYard().getCards().size(); i++) {
-            View.showCardOrItemInfoWithCost(getActiveAccount().getGraveYard().getCards().get(i) , i);
+        for (int i = 0; i < getActiveAccount().getGraveYard().size(); i++) {
+            View.showcardInfoWithCost(getActiveAccount().getGraveYard().get(i) , i);
         }
     }
     public void endGame() {
 
     }
-
+*/
 
 
     //almozakhrafat
@@ -180,13 +186,15 @@ public class Battle extends Menu {
             }
         }
         if (y == selectedCard.getSquare().getY()) {
-            if (square[selectedCard.getSquare().getX() + (x - selectedCard.getSquare().getX()) / 2][y].getCard() != null){
+            if (square[selectedCard.getSquare().getX() + (x - selectedCard.getSquare().getX()) / 2][y].getCard() !=
+                    null){
                 System.out.println("Invalid target");
                 return true;
             }
         }
         if (x == selectedCard.getSquare().getX()) {
-            if (square[x][selectedCard.getSquare().getY() + (y - selectedCard.getSquare().getY()) / 2].getCard() != null){
+            if (square[x][selectedCard.getSquare().getY() + (y - selectedCard.getSquare().getY()) / 2].getCard() !=
+                    null){
                 System.out.println("Invalid target");
                 return true;
             }
@@ -204,7 +212,7 @@ public class Battle extends Menu {
         return new Card();
     }
 
-    public Account[] getActiveAccounts() {
+    public Account[] getBattlePlayers() {
         return battlePlayers;
     }
     public Square[][] getSquare() {
@@ -223,21 +231,20 @@ public class Battle extends Menu {
         this.playingMode = playingMode;
     }
 
+
     @Override
-    public void help() {
-        System.out.print("Game info\nShow my minions\nShow opponent minions\nShow card info [card id]\nSelect [card id]"
-                + "\n");
+    public void help(Stage primaryStage) {
+
     }
 
     @Override
-    public MenuType getType() {
-        return MenuType.BATTLE;
+    public void open(Stage primaryStage) {
+
     }
 
     @Override
-    public void open() {
-        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * Battle"
-                + " * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
+    public void exit(Stage primaryStage) {
+
     }
 
 

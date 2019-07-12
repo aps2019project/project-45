@@ -1,6 +1,6 @@
 package view.menus;
 
-import model.MenuType;
+import javafx.stage.Stage;
 
 public class SinglePlayerMenu extends Menu {
     private static final SinglePlayerMenu SINGLE_PLAYER_MENU = new SinglePlayerMenu();
@@ -10,20 +10,19 @@ public class SinglePlayerMenu extends Menu {
         return SINGLE_PLAYER_MENU;
     }
 
-
-
     @Override
-    public void help() {
+    public void help(Stage primaryStage) {
 
     }
 
     @Override
-    public MenuType getType() {
-        return MenuType.SINGLE_PLAYER_MENU;
+    public void open(Stage primaryStage) {
+
     }
 
     @Override
-    public void open() {
+    public void exit(Stage primaryStage) {
 
     }
+
 }

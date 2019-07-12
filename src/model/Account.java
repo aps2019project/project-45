@@ -6,13 +6,14 @@ import view.menus.PlayerCollection;
 import java.util.*;
 
 public class Account {
-    public Account(String userName, String passWord) {
-        this.userName = userName;
+    public Account(String username, String passWord) {
+        this.username = username;
         this.passWord = passWord;
     }
 
-    private String userName;
+    private String username;
     private String passWord;
+    private String deckName;
     private int mana;
     private int money;
     private int wins;
@@ -21,6 +22,7 @@ public class Account {
     private Card selectedCard;
     private boolean activeAtTheMoment;
 
+    private PlayerCollection playerCollection = new PlayerCollection();
     private Map<String, Card> selectedDeck = new HashMap<>();
     private Map<String, Card> hand = new HashMap<>();
     private Card nextCardForHand;
@@ -33,8 +35,8 @@ public class Account {
     private Map<String, Minion> activeMinions = new HashMap<>();
     private Map<String, Spell> activeSpells = new HashMap<>();
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
     public String getPassWord() {
@@ -74,12 +76,8 @@ public class Account {
     }
 
     public Card getNextCardForHand() {
-        Random random = new Random();
-        while (true) {
-            int randInt = random.nextInt(20) - 1; //age nafahmidi bepors khaheshan
-            if (getSelectedDeck().get(randInt) instanceof Minion || getSelectedDeck().get(randInt) instanceof Spell)
-                return (Card) getSelectedDeck().get(randInt);
-        }
+        for (Card card : selectedDeck.values()) return card;
+        return null;
     }
 
     public Card getSelectedCard() {
@@ -160,5 +158,21 @@ public class Account {
 
     public void setActiveSpells(Map<String, Spell> activeSpells) {
         this.activeSpells = activeSpells;
+    }
+
+    public String getDeckName() {
+        return deckName;
+    }
+
+    public void setDeckName(String deckName) {
+        this.deckName = deckName;
+    }
+
+    public PlayerCollection getPlayerCollection() {
+        return playerCollection;
+    }
+
+    public void setPlayerCollection(PlayerCollection playerCollection) {
+        this.playerCollection = playerCollection;
     }
 }

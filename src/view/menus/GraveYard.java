@@ -1,7 +1,7 @@
 package view.menus;
 
+import javafx.stage.Stage;
 import model.Card;
-import model.MenuType;
 
 import java.util.ArrayList;
 
@@ -17,19 +17,18 @@ public class GraveYard extends Menu {
     }
 
     @Override
-    public void help() {
+    public void help(Stage primaryStage) {
 
     }
 
     @Override
-    public MenuType getType() {
-        return MenuType.GRAVE_YARD;
+    public void open(Stage primaryStage) {
+
     }
 
     @Override
-    public void open() {
-        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * Grave Yard " +
-                "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
+    public void exit(Stage primaryStage) {
+
     }
 
 }

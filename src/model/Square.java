@@ -8,7 +8,7 @@ public class Square {
     private SquareEffect effect;
     private int effectTurns;
 
-    public void fieryEffect(Card effectedCard){
+    /*public void fieryEffect(Card effectedCard){
         effectedCard.setHealth(effectedCard.getHealth() - 2);
     }
 
@@ -20,7 +20,7 @@ public class Square {
         if (effectedCard.isAttacked()) {
             effectedCard.setHealth(effectedCard.getHealth() + 1);
         }
-    }
+    }*/
 
     public void setEffect(SquareEffect squareEffect, int effectTurns) {
         this.effect = squareEffect;
