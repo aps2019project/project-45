@@ -20,7 +20,7 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class CustomCardMenu extends Menu {
+public class CustomCardMenu extends PlayMenu {
 
     private static final CustomCardMenu CUSTOM_CARD_MENU = new CustomCardMenu();
     private CustomCardMenu() {}

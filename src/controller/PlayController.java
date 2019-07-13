@@ -6,12 +6,12 @@ import view.menus.*;
 import java.util.ArrayList;
 
 public class PlayController{
-    public static ArrayList<Menu> menus = new ArrayList<>();
+    public static ArrayList<PlayMenu> menus = new ArrayList<>();
     private Battle battle = Battle.getInstance();
     private Shop shop = Shop.getInstance();
 
     /*public void firstToEnd(String[] args) {
-        Menu currentMenu = null;
+        PlayMenu currentMenu = null;
         menus.add(AccountMenu.getInstance());
 
         while (menus.size() != 0) {

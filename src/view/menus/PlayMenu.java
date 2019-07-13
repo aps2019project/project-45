@@ -14,8 +14,8 @@ import javafx.stage.Stage;
 
 import javax.sound.sampled.LineUnavailableException;
 
-public abstract class Menu {
-    public Menu lastMenu;
+public abstract class PlayMenu {
+    public PlayMenu lastMenu;
     public abstract void help(Stage primaryStage);
     public abstract void open(Stage primaryStage) throws LineUnavailableException;
     public void exit(Stage primaryStage) {

@@ -2,6 +2,8 @@ package view.menus;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -12,7 +14,7 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PlayerCollection extends Menu {
+public class PlayerCollection extends PlayMenu {
     private static HashMap<String, Map<String, Card>> decks = new HashMap<>();
 
     //private String selectedDeckName;
@@ -27,7 +29,6 @@ public class PlayerCollection extends Menu {
     public void open(Stage primaryStage) {
         Group root = (Group) primaryStage.getScene().getRoot();
 
-        Image image = null;
         Image image1 = null;
         Image image2 = null;
         Image image3 = null;
@@ -35,17 +36,21 @@ public class PlayerCollection extends Menu {
         Image image5 = null;
         Image image6 = null;
         try {
-            image = new Image(new FileInputStream("neutral_prismatic_unit@2x.png"));
-
+            image1 = new Image(new FileInputStream("card_back@2x.png"));
+            image2 = new Image(new FileInputStream("card_back_shimzar@2x.png"));
+            image3 = new Image(new FileInputStream("card_back_magma@2x.png"));
+            image4 = new Image(new FileInputStream("card_back_snowchaser@2x.png"));
+            image5 = new Image(new FileInputStream("card_back_lyonar_gears@2x.png"));
+            image6 = new Image(new FileInputStream("card_back_humble_bundle@2x.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        ImageView imageView1 = new ImageView(image);
-        ImageView imageView2 = new ImageView(image);
-        ImageView imageView3 = new ImageView(image);
-        ImageView imageView4 = new ImageView(image);
-        ImageView imageView5 = new ImageView(image);
-        ImageView imageView6 = new ImageView(image);
+        ImageView imageView1 = new ImageView(image1);
+        ImageView imageView2 = new ImageView(image2);
+        ImageView imageView3 = new ImageView(image3);
+        ImageView imageView4 = new ImageView(image4);
+        ImageView imageView5 = new ImageView(image5);
+        ImageView imageView6 = new ImageView(image6);
         imageView1.setFitWidth(150);
         imageView2.setFitWidth(150);
         imageView3.setFitWidth(150);
@@ -71,9 +76,12 @@ public class PlayerCollection extends Menu {
         imageView3.setLayoutY(80);
         imageView6.setLayoutY(380);
 
-        imageView1.setOnMouseClicked(event -> {
-            System.out.println(100);
-        });
+        MenuBar menubar = new MenuBar();
+        Menu heroMenu = new Menu("Hero");
+        Menu minionMenu = new Menu("Minion");
+        Menu spellMenu = new Menu("Spell");
+        Menu itemMenu = new Menu("Item");
+        menubar.getMenus().addAll(heroMenu, minionMenu, spellMenu, itemMenu);
 
         root.getChildren().addAll(imageView1, imageView2, imageView3, imageView4, imageView5, imageView6);
 

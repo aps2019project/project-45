@@ -12,7 +12,7 @@ import view.Battle;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class MainMenu extends Menu {
+public class MainMenu extends PlayMenu {
     private static final MainMenu MAIN_MENU = new MainMenu();
     private MainMenu() {
     }
@@ -83,8 +83,14 @@ public class MainMenu extends Menu {
         vBox.getChildren().addAll(collecttion, shop, battle, customCard);
         root.getChildren().addAll(imageView, imageView2, imageView1, vBox, exit, help);
 
-        collecttion.setOnAction(event -> BATTLE.getActiveAccount().getPlayerCollection().openWithButtons(primaryStage));
-        shop.setOnAction(event -> Shop.getInstance().openWithButtons(primaryStage));
+        collecttion.setOnAction(event -> {
+            BATTLE.getActiveAccount().getPlayerCollection().lastMenu = MainMenu.getInstance();
+            BATTLE.getActiveAccount().getPlayerCollection().openWithButtons(primaryStage);
+        });
+        shop.setOnAction(event -> {
+            Shop.getInstance().lastMenu = MainMenu.getInstance();
+            Shop.getInstance().openWithButtons(primaryStage);
+        });
         battle.setOnAction(event -> {
             if (BATTLE.getBattlePlayers()[1] == null) {
                 PlayingTypeMenu.getInstance().lastMenu = MainMenu.getInstance();

@@ -10,7 +10,7 @@ import view.Battle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PlayingTypeMenu extends Menu {
+public class PlayingTypeMenu extends PlayMenu {
     private static final PlayingTypeMenu PLAYING_MODE_MENU = new PlayingTypeMenu();
     private PlayingTypeMenu() {
     }

@@ -3,12 +3,17 @@ package view.menus;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.*;
 import view.Battle;
 import javafx.scene.image.Image;
+import view.menus.PlayMenu;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,7 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Shop extends Menu {
+public class Shop extends PlayMenu {
     private static final Shop SHOP = new Shop();
 
     private Shop() {
@@ -48,64 +53,73 @@ public class Shop extends Menu {
     @Override
     public void open(Stage primaryStage) {
         //Group root = (Group) primaryStage.getScene().getRoot();
-        Group root = (Group) primaryStage.getScene().getRoot();
 
-        Image image1 = null;
-        Image image2 = null;
-        Image image3 = null;
-        Image image4 = null;
-        Image image5 = null;
-        Image image6 = null;
+        Group root = (Group) primaryStage.getScene().getRoot();
+        primaryStage.getScene().getRoot().setStyle("-fx-font-size: 15");
+
+        Image image = null;
+        Image[] images = new Image[10];
         try {
-            image1 = new Image(new FileInputStream("card_back@2x.png"));
-            image2 = new Image(new FileInputStream("card_back_shimzar@2x.png"));
-            image3 = new Image(new FileInputStream("card_back_magma@2x.png"));
-            image4 = new Image(new FileInputStream("card_back_snowchaser@2x.png"));
-            image5 = new Image(new FileInputStream("card_back_lyonar_gears@2x.png"));
-            image6 = new Image(new FileInputStream("card_back_humble_bundle@2x.png"));
+            image = new Image(new FileInputStream("neutral_prismatic_unit@2x.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        ImageView imageView1 = new ImageView(image1);
-        ImageView imageView2 = new ImageView(image2);
-        ImageView imageView3 = new ImageView(image3);
-        ImageView imageView4 = new ImageView(image4);
-        ImageView imageView5 = new ImageView(image5);
-        ImageView imageView6 = new ImageView(image6);
-        imageView1.setFitWidth(150);
-        imageView2.setFitWidth(150);
-        imageView3.setFitWidth(150);
-        imageView4.setFitWidth(150);
-        imageView5.setFitWidth(150);
-        imageView6.setFitWidth(150);
-        imageView1.setFitHeight(250);
-        imageView2.setFitHeight(250);
-        imageView3.setFitHeight(250);
-        imageView4.setFitHeight(250);
-        imageView5.setFitHeight(250);
-        imageView6.setFitHeight(250);
-        imageView1.setLayoutX(400);
-        imageView4.setLayoutX(400);
-        imageView2.setLayoutX(600);
-        imageView5.setLayoutX(600);
-        imageView3.setLayoutX(800);
-        imageView6.setLayoutX(800);
-        imageView1.setLayoutY(80);
-        imageView4.setLayoutY(380);
-        imageView2.setLayoutY(80);
-        imageView5.setLayoutY(380);
-        imageView3.setLayoutY(80);
-        imageView6.setLayoutY(380);
 
-        imageView1.setOnMouseClicked(event -> {
-            System.out.println(100);
-        });
+        ImageView[] imageViews = new ImageView[10];
+        for (int i = 0; i < 10; i++) {
+            imageViews[i] = new ImageView(image);
+            imageViews[i].setFitWidth(200);
+            imageViews[i].setFitHeight(250);
+            if (i < 5) {
+                imageViews[i].setLayoutX(250 * i + 100);
+                imageViews[i].setLayoutY(80);
+            }
+            else {
+                imageViews[i].setLayoutX(imageViews[i - 5].getLayoutX());
+                imageViews[i].setLayoutY(380);
+            }
+        }
 
-        root.getChildren().addAll(imageView1, imageView2, imageView3, imageView4, imageView5, imageView6);
+        Label[] first = new Label[10];
+        Label[] second = new Label[10];
+        for (int i = 0; i < 10; i++) {
+            first[i] = new Label();
+            second[i] = new Label();
+            if (i < 5) {
+                first[i].setLayoutX(i * 250 + 135);
+                first[i].setLayoutY(219);
+                second[i].setLayoutX(i * 250 + 242);
+                second[i].setLayoutY(219);
+            } else {
+                first[i].setLayoutX(first[i - 5].getLayoutX());
+                first[i].setLayoutY(519);
+                second[i].setLayoutX(second[i - 5].getLayoutX());
+                second[i].setLayoutY(519);
+            }
+        }
+
+
+
+        MenuBar menubar = new MenuBar();
+        menubar.setMinWidth(Screen.getPrimary().getVisualBounds().getWidth());
+        Menu heroMenu = new Menu("Hero");
+        Menu minionMenu = new Menu("Minion");
+        Menu spellMenu = new Menu("Spell");
+        Menu itemMenu = new Menu("Item");
+        Menu changeMenutToRight = new Menu(">>");
+        Menu changeMenuToLeft = new Menu("<<");
+        menubar.getMenus().addAll(heroMenu, minionMenu, spellMenu, itemMenu, changeMenuToLeft, changeMenutToRight);
+
+        root.getChildren().add(menubar);
+        root.getChildren().addAll(imageViews);
 
         primaryStage.show();
-    }
 
+        heroMenu.setOnShowing(event -> {
+
+
+        });
+    }
 
 
 

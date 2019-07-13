@@ -20,7 +20,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Comparator;
 
-public class LeaderBoard extends Menu {
+public class LeaderBoard extends PlayMenu {
     private static final LeaderBoard LEADER_BOARD = new LeaderBoard();
     private LeaderBoard() {}
     public static LeaderBoard getInstance() { return LEADER_BOARD; }

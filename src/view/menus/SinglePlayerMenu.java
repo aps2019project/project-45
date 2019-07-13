@@ -2,7 +2,7 @@ package view.menus;
 
 import javafx.stage.Stage;
 
-public class SinglePlayerMenu extends Menu {
+public class SinglePlayerMenu extends PlayMenu {
     private static final SinglePlayerMenu SINGLE_PLAYER_MENU = new SinglePlayerMenu();
     private SinglePlayerMenu() {
     }

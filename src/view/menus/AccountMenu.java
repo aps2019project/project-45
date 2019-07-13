@@ -18,7 +18,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-public class AccountMenu extends Menu {
+public class AccountMenu extends PlayMenu {
     private static final AccountMenu ACCOUNT_MENU = new AccountMenu();
     private AccountMenu() {}
     public static AccountMenu getInstance() {

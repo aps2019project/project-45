@@ -18,7 +18,7 @@ import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class Login extends Menu {
+public class Login extends PlayMenu {
     private static final Login LOGIN = new Login();
     private Login() {
     }

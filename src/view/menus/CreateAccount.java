@@ -18,7 +18,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 
-public class CreateAccount extends Menu {
+public class CreateAccount extends PlayMenu {
     private static final CreateAccount CREATE_ACCOUNT = new CreateAccount();
     private CreateAccount() { }
     public static CreateAccount getInstance() {

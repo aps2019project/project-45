@@ -33,7 +33,7 @@ public class Main extends Application{
                 obj = (JSONObject) new JSONParser().parse(line);
                 json.add(obj);
                 Card[] card = new Card[1];
-
+                card[0] = new Card();
                 if (obj.containsKey("allDescs")) {
                     card[0] = new Spell();
                     ((Spell)card[0]).setAllDescs((ArrayList<String>) obj.get("allDescs"));

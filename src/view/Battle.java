@@ -2,12 +2,13 @@ package view;
 
 import javafx.stage.Stage;
 import model.*;
-import view.menus.Menu;
+import view.menus.PlayMenu;
 import model.PlayingType;
+import view.menus.PlayMenu;
 
 import java.util.ArrayList;
 
-public class Battle extends Menu {
+public class Battle extends PlayMenu {
     private static final Battle BATTLE = new Battle();
     private Battle() {
     }

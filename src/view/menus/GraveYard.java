@@ -5,7 +5,7 @@ import model.Card;
 
 import java.util.ArrayList;
 
-public class GraveYard extends Menu {
+public class GraveYard extends PlayMenu {
     private ArrayList<Card> cards = new ArrayList<>();
 
     public void add(Card card){
