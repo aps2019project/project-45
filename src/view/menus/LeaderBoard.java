@@ -39,14 +39,10 @@ public class LeaderBoard extends Menu {
         Image image2 = null;
         Image image3 = null;
         try {
-            image = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources\\app" +
-                    "\\src\\resources\\scenes\\magaari_ember_highlands\\magaari_ember_highlands_background@2x.jpg"));
-            image1 = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources" +
-                    "\\app\\src\\resources\\scenes\\magaari_ember_highlands\\magaari_ember_highlands_foreground@2x.png"));
-            image2 = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources" +
-                    "\\app\\src\\resources\\scenes\\magaari_ember_highlands\\magaari_ember_highlands_middleground@2x.png"));
-            image3 = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources" +
-                    "\\app\\src\\resources\\scenes\\magaari_ember_highlands\\magaari_ember_highlands_trees_002@2x.png"));
+            image = new Image(new FileInputStream("magaari_ember_highlands_background@2x.jpg"));
+            image1 = new Image(new FileInputStream("magaari_ember_highlands_foreground@2x.png"));
+            image2 = new Image(new FileInputStream("magaari_ember_highlands_middleground@2x.png"));
+            image3 = new Image(new FileInputStream("magaari_ember_highlands_trees_002@2x.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

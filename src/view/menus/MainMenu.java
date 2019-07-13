@@ -1,7 +1,5 @@
 package view.menus;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.geometry.Pos;
@@ -37,12 +35,9 @@ public class MainMenu extends Menu {
         Image image1 = null;
         Image image2 = null;
         try {
-            image = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources\\" +
-                    "app\\src\\resources\\scenes\\obsidian_woods\\obsidian_woods_background@2x.jpg"));
-            image1 = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources" +
-                    "\\app\\src\\resources\\scenes\\obsidian_woods\\obsidian_woods_cliff@2x.png"));
-            image2 = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources" +
-                    "\\app\\src\\resources\\scenes\\obsidian_woods\\obsidian_woods_pillar@2x.png"));
+            image = new Image(new FileInputStream("obsidian_woods_background@2x.jpg"));
+            image1 = new Image(new FileInputStream("obsidian_woods_cliff@2x.png"));
+            image2 = new Image(new FileInputStream("obsidian_woods_pillar@2x.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

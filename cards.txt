@@ -1,0 +1,1 @@
+{"name":"ff","cost":3,"square":{"x":0,"y":0,"card":null,"effect":null,"effectTurns":0},"userAccount":null,"cardID":"ff_ff_1","desc":null,"heroOrMinionType":null,"range":0,"usable":false,"flagOwner":null,"health":0,"target":"One Random Friend, Whole Enemies In Colum","ap":0,"mp":0}

@@ -40,12 +40,9 @@ public class CreateAccount extends Menu {
         Image image1 = null;
         Image image2 = null;
         try {
-            image = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources\\" +
-                    "app\\src\\resources\\scenes\\vetruvian\\bg@2x.jpg"));
-            image1 = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources" +
-                    "\\app\\src\\resources\\scenes\\vetruvian\\midground@2x.png"));
-            image2 = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources" +
-                    "\\app\\src\\resources\\scenes\\vetruvian\\foreground@2x.png"));
+            image = new Image(new FileInputStream("bg@2x.jpg"));
+            image1 = new Image(new FileInputStream("midground@2x.png"));
+            image2 = new Image(new FileInputStream("foreground1@2x.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

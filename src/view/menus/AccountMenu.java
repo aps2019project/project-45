@@ -47,12 +47,9 @@ public class AccountMenu extends Menu {
         Image image1 = null;
         Image image2 = null;
         try {
-            image = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\" +
-                    "resources\\app\\src\\resources\\scenes\\frostfire\\background@2x.jpg"));
-            image1 = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\" +
-                    "resources\\app\\src\\resources\\scenes\\frostfire\\pillars_near@2x.png"));
-            image2 = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\" +
-                    "resources\\app\\src\\resources\\scenes\\frostfire\\foreground@2x.png"));
+            image = new Image(new FileInputStream("background@2x.jpg"));
+            image1 = new Image(new FileInputStream("pillars_near@2x.png"));
+            image2 = new Image(new FileInputStream("foreground@2x.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

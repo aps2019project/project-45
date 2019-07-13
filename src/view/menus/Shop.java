@@ -57,18 +57,12 @@ public class Shop extends Menu {
         Image image5 = null;
         Image image6 = null;
         try {
-            image1 = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources" +
-                    "\\app\\src\\resources\\card_backgrounds\\card_back@2x.png"));
-            image2 = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources" +
-                    "\\app\\src\\resources\\card_backgrounds\\card_back_shimzar@2x.png"));
-            image3 = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources" +
-                    "\\app\\src\\resources\\card_backgrounds\\card_back_magma@2x.png"));
-            image4 = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources" +
-                    "\\app\\src\\resources\\card_backgrounds\\card_back_snowchaser@2x.png"));
-            image5 = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources" +
-                    "\\app\\src\\resources\\card_backgrounds\\card_back_lyonar_gears@2x.png"));
-            image6 = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources" +
-                    "\\app\\src\\resources\\card_backgrounds\\card_back_humble_bundle@2x.png"));
+            image1 = new Image(new FileInputStream("card_back@2x.png"));
+            image2 = new Image(new FileInputStream("card_back_shimzar@2x.png"));
+            image3 = new Image(new FileInputStream("card_back_magma@2x.png"));
+            image4 = new Image(new FileInputStream("card_back_snowchaser@2x.png"));
+            image5 = new Image(new FileInputStream("card_back_lyonar_gears@2x.png"));
+            image6 = new Image(new FileInputStream("card_back_humble_bundle@2x.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

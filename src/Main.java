@@ -1,19 +1,14 @@
-
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.*;
-import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import view.menus.AccountMenu;
 import view.menus.Shop;
-
 import java.io.*;
-import java.lang.annotation.Native;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Objects;
+
 
 public class Main extends Application{
 
@@ -23,9 +18,8 @@ public class Main extends Application{
 
     @Override
     public void start(Stage primaryStage) {
-        //handleSaves();
-        //AccountMenu.getInstance().openWithButtons(primaryStage);
-        Shop.getInstance().openWithButtons(primaryStage);
+        handleSaves();
+        AccountMenu.getInstance().openWithButtons(primaryStage);
     }
 
     private void handleSaves() {

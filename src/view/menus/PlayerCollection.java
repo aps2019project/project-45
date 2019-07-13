@@ -35,8 +35,7 @@ public class PlayerCollection extends Menu {
         Image image5 = null;
         Image image6 = null;
         try {
-            image = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources" +
-                    "\\app\\src\\resources\\card_backgrounds\\neutral_prismatic_unit@2x.png"));
+            image = new Image(new FileInputStream("neutral_prismatic_unit@2x.png"));
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
