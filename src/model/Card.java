@@ -1,10 +1,12 @@
 package model;
 
 import view.Battle;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Card {
+public class Card implements Cloneable {
     Battle battle = Battle.getInstance();
     String name;
     int cost;
@@ -12,14 +14,15 @@ public class Card {
     Square square = new Square();
     Account userAccount;
     String cardID;
-    String desc;
-    CardType cardType;
+    //String desc;
+    //CardType cardType;
     HeroOrMinionType heroOrMinionType;
-    boolean usable;
     Card flagOwner;
+    int range;
+    boolean usable;
     int health;
     int AP;
-
+    Image image;
 
     int disarmTurns;
     int stunTurns;
@@ -142,6 +145,11 @@ public class Card {
         }
     }
 
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+
 
     public Square getSquare() {
         return square;
@@ -167,22 +175,6 @@ public class Card {
         this.cardID = cardID;
     }
 
-    public String getdesc() {
-        return desc;
-    }
-
-    public void setdesc(String desc) {
-        this.desc = desc;
-    }
-
-    public Card getFlagOwner() {
-        return flagOwner;
-    }
-
-    public void setFlagOwner(Card flagOwner) {
-        this.flagOwner = flagOwner;
-    }
-
     public int getMP() {
         return MP;
     }
@@ -205,14 +197,6 @@ public class Card {
 
     public void setCost(int cost) {
         this.cost = cost;
-    }
-
-    public CardType getCardType() {
-        return cardType;
-    }
-
-    public void setCardType(CardType cardType) {
-        this.cardType = cardType;
     }
 
     public String getName() {
@@ -245,6 +229,78 @@ public class Card {
 
     public void setAP(int AP) {
         this.AP = AP;
+    }
+
+    public int getRange() {
+        return range;
+    }
+
+    public void setRange(int range) {
+        this.range = range;
+    }
+
+    public ArrayList<Integer> getDecreaseHealthAmount() {
+        return decreaseHealthAmount;
+    }
+
+    public ArrayList<Integer> getDecreaseHealthTurns() {
+        return decreaseHealthTurns;
+    }
+
+    public ArrayList<Integer> getIncreaseHealthAmount() {
+        return increaseHealthAmount;
+    }
+
+    public ArrayList<Integer> getIncreaseHealthTurns() {
+        return increaseHealthTurns;
+    }
+
+    public ArrayList<Integer> getHolyBuffAmount() {
+        return holyBuffAmount;
+    }
+
+    public ArrayList<Integer> getHolyBuffTurns() {
+        return holyBuffTurns;
+    }
+
+    public ArrayList<Integer> getDecreaseAPamount() {
+        return decreaseAPamount;
+    }
+
+    public ArrayList<Integer> getDecreaseAPturns() {
+        return decreaseAPturns;
+    }
+
+    public ArrayList<Integer> getIncreaseAPturns() {
+        return increaseAPturns;
+    }
+
+    public ArrayList<Integer> getIncreaseAPamount() {
+        return increaseAPamount;
+    }
+
+    public int getStunTurns() {
+        return stunTurns;
+    }
+
+    public int getDisarmTurns() {
+        return disarmTurns;
+    }
+
+    public Card getFlagOwner() {
+        return flagOwner;
+    }
+
+    public void setFlagOwner(Card flagOwner) {
+        this.flagOwner = flagOwner;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 
 }

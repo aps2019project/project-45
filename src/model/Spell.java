@@ -10,10 +10,12 @@ public class Spell extends Card {
     // so important ha
     private Battle battle = Battle.getInstance();
 
-    private ArrayList<BuffType> buffTypes = new ArrayList<>();
+    //private ArrayList<BuffType> buffTypes = new ArrayList<>();
     private ArrayList<Integer> effectValue = new ArrayList<>();
     private ArrayList<Integer> delay = new ArrayList<>();
     private ArrayList<Integer> last = new ArrayList<>();
+
+    private ArrayList<String> allDescs = new ArrayList<>();
 
 
     public void totalDisarm(String cardID) {
@@ -433,4 +435,13 @@ public class Spell extends Card {
     public void esfandiyar() {
         battle.getActiveAccount().getHero().setHolyBuff(-10, 3);
     }
+
+    public ArrayList<String> getAllDescs() {
+        return allDescs;
+    }
+
+    public void setAllDescs(ArrayList<String> allDescs) {
+        this.allDescs = allDescs;
+    }
+
 }

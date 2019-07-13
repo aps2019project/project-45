@@ -1,10 +1,17 @@
 package view.menus;
 
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.*;
 import view.Battle;
+import javafx.scene.image.Image;
 
-import java.security.acl.Group;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,9 +47,67 @@ public class Shop extends Menu {
 
     @Override
     public void open(Stage primaryStage) {
+        //Group root = (Group) primaryStage.getScene().getRoot();
         Group root = (Group) primaryStage.getScene().getRoot();
 
-        //Image ima
+        Image image1 = null;
+        Image image2 = null;
+        Image image3 = null;
+        Image image4 = null;
+        Image image5 = null;
+        Image image6 = null;
+        try {
+            image1 = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources" +
+                    "\\app\\src\\resources\\card_backgrounds\\card_back@2x.png"));
+            image2 = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources" +
+                    "\\app\\src\\resources\\card_backgrounds\\card_back_shimzar@2x.png"));
+            image3 = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources" +
+                    "\\app\\src\\resources\\card_backgrounds\\card_back_magma@2x.png"));
+            image4 = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources" +
+                    "\\app\\src\\resources\\card_backgrounds\\card_back_snowchaser@2x.png"));
+            image5 = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources" +
+                    "\\app\\src\\resources\\card_backgrounds\\card_back_lyonar_gears@2x.png"));
+            image6 = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources" +
+                    "\\app\\src\\resources\\card_backgrounds\\card_back_humble_bundle@2x.png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        ImageView imageView1 = new ImageView(image1);
+        ImageView imageView2 = new ImageView(image2);
+        ImageView imageView3 = new ImageView(image3);
+        ImageView imageView4 = new ImageView(image4);
+        ImageView imageView5 = new ImageView(image5);
+        ImageView imageView6 = new ImageView(image6);
+        imageView1.setFitWidth(150);
+        imageView2.setFitWidth(150);
+        imageView3.setFitWidth(150);
+        imageView4.setFitWidth(150);
+        imageView5.setFitWidth(150);
+        imageView6.setFitWidth(150);
+        imageView1.setFitHeight(250);
+        imageView2.setFitHeight(250);
+        imageView3.setFitHeight(250);
+        imageView4.setFitHeight(250);
+        imageView5.setFitHeight(250);
+        imageView6.setFitHeight(250);
+        imageView1.setLayoutX(400);
+        imageView4.setLayoutX(400);
+        imageView2.setLayoutX(600);
+        imageView5.setLayoutX(600);
+        imageView3.setLayoutX(800);
+        imageView6.setLayoutX(800);
+        imageView1.setLayoutY(80);
+        imageView4.setLayoutY(380);
+        imageView2.setLayoutY(80);
+        imageView5.setLayoutY(380);
+        imageView3.setLayoutY(80);
+        imageView6.setLayoutY(380);
+
+        imageView1.setOnMouseClicked(event -> {
+            System.out.println(100);
+        });
+
+        root.getChildren().addAll(imageView1, imageView2, imageView3, imageView4, imageView5, imageView6);
 
         primaryStage.show();
     }
@@ -55,7 +120,7 @@ public class Shop extends Menu {
         battle.getActiveAccount().getPlayerCollection().show();
     }
 
-    public String  search(String name) {
+   /* public String  search(String name) {
         for (Card card : cards.values()) {
             if (card.getName().equals(name)) {
                 System.out.println("existing");
@@ -64,7 +129,7 @@ public class Shop extends Menu {
         }
         System.out.println("Not existing!");
         return null;
-    }
+    }*/
 
     public ArrayList<String> searchCollection(String name) {
         ArrayList<String> result = new ArrayList<>();

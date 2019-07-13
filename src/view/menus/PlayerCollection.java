@@ -1,8 +1,14 @@
 package view.menus;
 
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.*;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +25,60 @@ public class PlayerCollection extends Menu {
 
     @Override
     public void open(Stage primaryStage) {
+        Group root = (Group) primaryStage.getScene().getRoot();
 
+        Image image = null;
+        Image image1 = null;
+        Image image2 = null;
+        Image image3 = null;
+        Image image4 = null;
+        Image image5 = null;
+        Image image6 = null;
+        try {
+            image = new Image(new FileInputStream("C:\\BANDAI NAMCO Entertainment America\\Duelyst\\resources" +
+                    "\\app\\src\\resources\\card_backgrounds\\neutral_prismatic_unit@2x.png"));
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        ImageView imageView1 = new ImageView(image);
+        ImageView imageView2 = new ImageView(image);
+        ImageView imageView3 = new ImageView(image);
+        ImageView imageView4 = new ImageView(image);
+        ImageView imageView5 = new ImageView(image);
+        ImageView imageView6 = new ImageView(image);
+        imageView1.setFitWidth(150);
+        imageView2.setFitWidth(150);
+        imageView3.setFitWidth(150);
+        imageView4.setFitWidth(150);
+        imageView5.setFitWidth(150);
+        imageView6.setFitWidth(150);
+        imageView1.setFitHeight(250);
+        imageView2.setFitHeight(250);
+        imageView3.setFitHeight(250);
+        imageView4.setFitHeight(250);
+        imageView5.setFitHeight(250);
+        imageView6.setFitHeight(250);
+        imageView1.setLayoutX(400);
+        imageView4.setLayoutX(400);
+        imageView2.setLayoutX(600);
+        imageView5.setLayoutX(600);
+        imageView3.setLayoutX(800);
+        imageView6.setLayoutX(800);
+        imageView1.setLayoutY(80);
+        imageView4.setLayoutY(380);
+        imageView2.setLayoutY(80);
+        imageView5.setLayoutY(380);
+        imageView3.setLayoutY(80);
+        imageView6.setLayoutY(380);
+
+        imageView1.setOnMouseClicked(event -> {
+            System.out.println(100);
+        });
+
+        root.getChildren().addAll(imageView1, imageView2, imageView3, imageView4, imageView5, imageView6);
+
+        primaryStage.show();
     }
 
     @Override
