@@ -24,7 +24,7 @@ public class Battle extends PlayMenu {
     private PlayingMode playingMode;
     public static int turn;
 
-    public void gameInfo(int mode) {
+    /*public void gameInfo(int mode) {
         System.out.println(battlePlayers[0].getUsername() + " mana : " + battlePlayers[0].getMana());
         System.out.println(battlePlayers[1].getUsername() + " mana : " + battlePlayers[1].getMana());
         switch (mode) {
@@ -50,7 +50,7 @@ public class Battle extends PlayMenu {
                 }
                 break;
         }
-    }
+    }*/
     public void showMyMinions(){
         Hero hero = getActiveAccount().getHero();
         System.out.printf("%s : %s, health : %d, location : (%d, %d), power : %d\n", hero.getCardID() ,

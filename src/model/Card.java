@@ -1,25 +1,20 @@
 package model;
 
+import javafx.scene.image.Image;
 import view.Battle;
 
-import java.awt.*;
+
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Card implements Cloneable {
     Battle battle = Battle.getInstance();
+
     String name;
     int cost;
     int MP;
-    Square square = new Square();
+    Square square;
     Account userAccount;
     String cardID;
-    //String desc;
-    //CardType cardType;
-    HeroOrMinionType heroOrMinionType;
-    Card flagOwner;
-    int range;
-    boolean usable;
     int health;
     int AP;
     Image image;
@@ -207,36 +202,12 @@ public class Card implements Cloneable {
         this.name = name;
     }
 
-    public HeroOrMinionType getHeroOrMinionType() {
-        return heroOrMinionType;
-    }
-
-    public void setHeroOrMinionType(HeroOrMinionType heroOrMinionType) {
-        this.heroOrMinionType = heroOrMinionType;
-    }
-
-    public boolean isUsable() {
-        return usable;
-    }
-
-    public void setUsableItem(boolean usable) {
-        this.usable = usable;
-    }
-
     public int getAP() {
         return AP;
     }
 
     public void setAP(int AP) {
         this.AP = AP;
-    }
-
-    public int getRange() {
-        return range;
-    }
-
-    public void setRange(int range) {
-        this.range = range;
     }
 
     public ArrayList<Integer> getDecreaseHealthAmount() {
@@ -285,14 +256,6 @@ public class Card implements Cloneable {
 
     public int getDisarmTurns() {
         return disarmTurns;
-    }
-
-    public Card getFlagOwner() {
-        return flagOwner;
-    }
-
-    public void setFlagOwner(Card flagOwner) {
-        this.flagOwner = flagOwner;
     }
 
     public Image getImage() {

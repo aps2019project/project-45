@@ -4,13 +4,13 @@ public class Minion extends Card {
     private HeroOrMinionType heroOrMinionType;
     private Spell specialPower = new Spell();
     private MinionSpecialPowerActivation minionSpecialPowerActivation;
+    private int range;
 
-    @Override
+
     public HeroOrMinionType getHeroOrMinionType() {
         return heroOrMinionType;
     }
 
-    @Override
     public void setHeroOrMinionType(HeroOrMinionType heroOrMinionType) {
         this.heroOrMinionType = heroOrMinionType;
     }
@@ -29,5 +29,13 @@ public class Minion extends Card {
 
     public void setMinionSpecialPowerActivation(MinionSpecialPowerActivation minionSpecialPowerActivation) {
         this.minionSpecialPowerActivation = minionSpecialPowerActivation;
+    }
+
+    public int getRange() {
+        return range;
+    }
+
+    public void setRange(int range) {
+        this.range = range;
     }
 }

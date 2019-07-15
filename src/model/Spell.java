@@ -3,6 +3,7 @@ package model;
 import view.Battle;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Random;
 
 public class Spell extends Card {
@@ -10,7 +11,6 @@ public class Spell extends Card {
     // so important ha
     private Battle battle = Battle.getInstance();
 
-    //private ArrayList<BuffType> buffTypes = new ArrayList<>();
     private ArrayList<Integer> effectValue = new ArrayList<>();
     private ArrayList<Integer> delay = new ArrayList<>();
     private ArrayList<Integer> last = new ArrayList<>();
@@ -444,4 +444,9 @@ public class Spell extends Card {
         this.allDescs = allDescs;
     }
 
+    public void setLastDesc(ArrayList<String> allDescs, String string) {
+        String desc = allDescs.get(allDescs.size() - 1);
+        desc = desc + string;
+
+    }
 }

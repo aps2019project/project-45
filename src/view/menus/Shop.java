@@ -7,14 +7,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.*;
 import view.Battle;
 import javafx.scene.image.Image;
-import view.menus.PlayMenu;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -23,65 +20,75 @@ import java.util.Map;
 
 public class Shop extends PlayMenu {
     private static final Shop SHOP = new Shop();
-
     private Shop() {
     }
-
     public static Shop getInstance() {
         return SHOP;
     }
 
-
-
-
     private Battle battle = Battle.getInstance();
 
-    /*private static ArrayList<Card> allAvailablecardsInShop = new ArrayList<>();
-    private static ArrayList<Hero> allAvailableHeros = new ArrayList<>();
-    private static ArrayList<Item> allAvailableItems = new ArrayList<>();
-    private static ArrayList<Minion> allAvailableMinions = new ArrayList<>();
-    private static ArrayList<Spell> allAvailableSpells = new ArrayList<>();
-*/
     public static Map<String, Card> cards = new HashMap<>();
     public static Map<String, Card> heroes = new HashMap<>();
     public static Map<String, Card> minions = new HashMap<>();
     public static Map<String, Card> spells = new HashMap<>();
     public static Map<String, Card> items = new HashMap<>();
 
-
-
     @Override
     public void open(Stage primaryStage) {
-        //Group root = (Group) primaryStage.getScene().getRoot();
-
         Group root = (Group) primaryStage.getScene().getRoot();
         primaryStage.getScene().getRoot().setStyle("-fx-font-size: 15");
 
         Image image = null;
         Image[] images = new Image[10];
+        ImageView[] cardBackGround = new ImageView[10];
+        ImageView[] cardIcons = new ImageView[10];
         try {
             image = new Image(new FileInputStream("neutral_prismatic_unit@2x.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        ImageView[] imageViews = new ImageView[10];
-        for (int i = 0; i < 10; i++) {
-            imageViews[i] = new ImageView(image);
-            imageViews[i].setFitWidth(200);
-            imageViews[i].setFitHeight(250);
-            if (i < 5) {
-                imageViews[i].setLayoutX(250 * i + 100);
-                imageViews[i].setLayoutY(80);
-            }
-            else {
-                imageViews[i].setLayoutX(imageViews[i - 5].getLayoutX());
-                imageViews[i].setLayoutY(380);
-            }
-        }
+        setImagesLayout(image, cardBackGround, cardIcons);
 
         Label[] first = new Label[10];
         Label[] second = new Label[10];
+        setLabelsLayout(first, second);
+
+        MenuBar menubar = new MenuBar();
+        menubar.setMinWidth(Screen.getPrimary().getVisualBounds().getWidth());
+        Menu heroMenu = new Menu("Hero");
+        Menu minionMenu = new Menu("Minion");
+        Menu spellMenu = new Menu("Spell");
+        Menu itemMenu = new Menu("Item");
+        Menu changeMenutToRight = new Menu(">>");
+        Menu changeMenuToLeft = new Menu("<<");
+        menubar.getMenus().addAll(heroMenu, minionMenu, spellMenu, itemMenu, changeMenuToLeft, changeMenutToRight);
+
+        root.getChildren().add(menubar);
+        for (int i = 0; i < 10; i++) {
+            root.getChildren().addAll(cardBackGround[i], first[i], second[i]);
+        }
+
+        primaryStage.show();
+
+        heroMenu.setOnShowing(event -> {
+            int pages = heroes.size();
+            int thisPage = 1;
+            int i = 0;
+            for (Card card : heroes.values()) {
+                Hero hero = (Hero) card;
+                images[i] = hero.getImage();
+                cardIcons[i % 10].setImage(images[i]);
+                i++;
+                if (i == 10) break;
+            }
+
+
+        });
+    }
+
+    private void setLabelsLayout(Label[] first, Label[] second) {
         for (int i = 0; i < 10; i++) {
             first[i] = new Label();
             second[i] = new Label();
@@ -97,31 +104,35 @@ public class Shop extends PlayMenu {
                 second[i].setLayoutY(519);
             }
         }
-
-
-
-        MenuBar menubar = new MenuBar();
-        menubar.setMinWidth(Screen.getPrimary().getVisualBounds().getWidth());
-        Menu heroMenu = new Menu("Hero");
-        Menu minionMenu = new Menu("Minion");
-        Menu spellMenu = new Menu("Spell");
-        Menu itemMenu = new Menu("Item");
-        Menu changeMenutToRight = new Menu(">>");
-        Menu changeMenuToLeft = new Menu("<<");
-        menubar.getMenus().addAll(heroMenu, minionMenu, spellMenu, itemMenu, changeMenuToLeft, changeMenutToRight);
-
-        root.getChildren().add(menubar);
-        root.getChildren().addAll(imageViews);
-
-        primaryStage.show();
-
-        heroMenu.setOnShowing(event -> {
-
-
-        });
     }
 
-
+    private void setImagesLayout(Image image, ImageView[] cardBackGround, ImageView[] cardIcons) {
+        for (int i = 0; i < 10; i++) {
+            cardBackGround[i] = new ImageView(image);
+            cardBackGround[i].setFitWidth(200);
+            cardBackGround[i].setFitHeight(250);
+            if (i < 5) {
+                cardBackGround[i].setLayoutX(250 * i + 100);
+                cardBackGround[i].setLayoutY(80);
+            }
+            else {
+                cardBackGround[i].setLayoutX(cardBackGround[i - 5].getLayoutX());
+                cardBackGround[i].setLayoutY(380);
+            }
+        }
+        for (int i = 0; i < 10; i++) {
+            cardIcons[i] = new ImageView();
+            cardIcons[i].setFitWidth(80);
+            cardIcons[i].setFitHeight(80);
+            if (i < 5) {
+                cardIcons[i].setLayoutX(250 * i + 155);
+                cardIcons[i].setLayoutX(110);
+            } else {
+                cardIcons[i].setLayoutX(cardIcons[i - 5].getLayoutX());
+                cardIcons[i].setLayoutX(410);
+            }
+        }
+    }
 
 
     public void showCollection() {

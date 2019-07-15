@@ -5,6 +5,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import view.menus.AccountMenu;
+import view.menus.CustomCardMenu;
 import view.menus.Shop;
 import java.io.*;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class Main extends Application{
     @Override
     public void start(Stage primaryStage) {
         handleSaves();
-        AccountMenu.getInstance().openWithButtons(primaryStage);
+        CustomCardMenu.getInstance().openWithButtons(primaryStage);
     }
 
     private void handleSaves() {
@@ -55,6 +56,9 @@ public class Main extends Application{
                     card[0].setCardID((String) obj.get("cardID"));
                 }
                 Shop.cards.put(card[0].getName(), card[0]);
+                ArrayList<String> arrayList = (ArrayList<String>) obj.get("allDescs");
+                System.out.println(arrayList.get(0));
+
             }
             bufferedReader.close();
         } catch (IOException | ParseException e) {

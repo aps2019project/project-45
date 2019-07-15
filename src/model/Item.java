@@ -3,6 +3,11 @@ package model;
 import java.util.Random;
 
 public class Item extends Card {
+    private Card flagOwner = new Card();
+    private boolean usable;
+
+
+
     public void wisdomCrown(String cardID) {
         Card targetCard = battle.getActiveAccount().getActiveCardsOnGround().get(cardID);
         if (targetCard == null)
@@ -14,11 +19,11 @@ public class Item extends Card {
         battle.getActiveAccount().getHero().setHolyBuff(1, 12);
     }
 
-    public void damoolArc() {
+    /*public void damoolArc() {
         if (battle.getActiveAccount().getHero().heroOrMinionType != HeroOrMinionType.MELEE) {
             //
         }
-    }
+    }*/
 
     public void nooshdaroo() {
         int number = battle.getActiveAccount().getActiveCardsOnGround().size() + battle.getInActiveAccount().
@@ -42,7 +47,7 @@ public class Item extends Card {
         }
     }
 
-    public void towinArrow() {
+    /*public void towinArrow() {
         int number = battle.getActiveAccount().getActiveCardsOnGround().size() + battle.getInActiveAccount().
                 getActiveCardsOnGround().size();
         Random random = new Random();
@@ -66,13 +71,13 @@ public class Item extends Card {
             }
             count++;
         }
-    }
+    }*/
 
-    public void simorghFeather() {
+    /*public void simorghFeather() {
         if (battle.getInActiveAccount().getHero().heroOrMinionType != HeroOrMinionType.MELEE) {
             battle.getInActiveAccount().getHero().setDecreaseAP(1, 2);
         }
-    }
+    }*/
 
     public void elixir(String cardID) {
         battle.getActiveAccount().getActiveCardsOnGround().get(cardID).
@@ -204,11 +209,27 @@ public class Item extends Card {
         }
     }
 
-    public void chineseSword() {
+    public Card getFlagOwner() {
+        return flagOwner;
+    }
+
+    public void setFlagOwner(Card flagOwner) {
+        this.flagOwner = flagOwner;
+    }
+
+    public boolean isUsable() {
+        return usable;
+    }
+
+    public void setUsable(boolean usable) {
+        this.usable = usable;
+    }
+
+    /*public void chineseSword() {
         for (Card targetCard : battle.getActiveAccount().getActiveCardsOnGround().values()) {
             if (targetCard.heroOrMinionType == HeroOrMinionType.MELEE) {
                 targetCard.setIncreaseAP(1, 5);
             }
         }
-    }
+    }*/
 }

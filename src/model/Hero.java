@@ -4,6 +4,8 @@ public class Hero extends Card {
     private String heroClass;
     private Spell specialPower = new Spell();
     private int specialPowerCooldown;
+    private HeroOrMinionType heroOrMinionType;
+    private int range;
 
 
 
@@ -31,5 +33,21 @@ public class Hero extends Card {
 
     public void setSpecialPowerCooldown(int specialPowerCooldown) {
         this.specialPowerCooldown = specialPowerCooldown;
+    }
+
+    public HeroOrMinionType getHeroOrMinionType() {
+        return heroOrMinionType;
+    }
+
+    public void setHeroOrMinionType(HeroOrMinionType heroOrMinionType) {
+        this.heroOrMinionType = heroOrMinionType;
+    }
+
+    public int getRange() {
+        return range;
+    }
+
+    public void setRange(int range) {
+        this.range = range;
     }
 }
