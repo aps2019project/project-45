@@ -1,7 +1,8 @@
 package view.menus;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -11,14 +12,9 @@ import javafx.stage.Stage;
 import model.*;
 import javafx.scene.Group;
 import view.Battle;
-
-import javax.xml.soap.Text;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class CustomCardMenu extends PlayMenu {
 
@@ -64,7 +60,7 @@ public class CustomCardMenu extends PlayMenu {
         radioList.setLayoutY(520);
         radioList1.setLayoutX(680);
         radioList1.setLayoutY(560);
-        radioList2.setLayoutX(350);
+        radioList2.setLayoutX(275);
         radioList2.setLayoutY(600);
 
         Label AP = new Label("AP :");
@@ -83,6 +79,7 @@ public class CustomCardMenu extends PlayMenu {
         Label name = new Label("Name :");
         Label type = new Label("Type :");
         Label target = new Label("Target :");
+        Label in = new Label("In :");
         Button addbuffs = new Button("Add buffs");
         RadioButton oneEnemy = new RadioButton("One Enemy");
         RadioButton oneRandomEnemy = new RadioButton("One Random Enemy");
@@ -93,15 +90,23 @@ public class CustomCardMenu extends PlayMenu {
         RadioButton enemyHero = new RadioButton("Enemy Hero");
         RadioButton friendHero = new RadioButton("Friend Hero");
         RadioButton allFriendMinions = new RadioButton("All Friend Minions");
-        RadioButton inColumn = new RadioButton("In Column");
+        RadioButton oneSquare = new RadioButton("One Square");
+        RadioButton column = new RadioButton("One Column");
         RadioButton twoCrossTwoSquares = new RadioButton("Two Cross Two Squares");
         RadioButton threeCrossThreeSquares = new RadioButton("Three Cross Three Squares");
         RadioButton oneRandomEnemyBesideFriendHero = new RadioButton("Beside Friend Hero");
         RadioButton besideYou = new RadioButton("Beside You");
 
+        target.setLayoutX(95);
+        target.setLayoutY(545);
+        in.setLayoutX(95);
+        in.setLayoutY(600);
+        target.setStyle("-fx-background-color: #6bfdff; -fx-border-color: #535252");
+        in.setStyle("-fx-background-color: #6bfdff; -fx-border-color: #535252");
+
         radioList.getChildren().addAll(oneEnemy, oneRandomEnemy, oneFriend, oneRandomFriend, allEnemy);
         radioList1.getChildren().addAll(allFriend, enemyHero, friendHero );
-        radioList2.getChildren().addAll(twoCrossTwoSquares, threeCrossThreeSquares, inColumn,
+        radioList2.getChildren().addAll(oneSquare, twoCrossTwoSquares, threeCrossThreeSquares, column,
                 oneRandomEnemyBesideFriendHero, allFriendMinions, besideYou);
 
         TextField nameText = new TextField();
@@ -148,10 +153,146 @@ public class CustomCardMenu extends PlayMenu {
         TextField specialPowerCooldownText = new TextField();
 
         setVisibleFalse(radioList, radioList1, radioList2, AP, HP, MP, attackType, range, specialPower,
-                specialPowerActivation, specialPowerCooldown, buffType, effectValue, delay, last, target, addbuffs,
+                specialPowerActivation, specialPowerCooldown, buffType, effectValue, delay, last, addbuffs,
                 buffsHbox, effectValueText, delayText, lastText, APText, HPText, MPText, attackTypeHbox, rangeText,
-                specialPowerText, minionSpecialPowerActivation, specialPowerCooldownText);
+                specialPowerText, minionSpecialPowerActivation, specialPowerCooldownText, target, in);
+        gridAdding(grid, AP, HP, MP, attackType, range, specialPower, specialPowerActivation, specialPowerCooldown,
+                cost, buffType, effectValue, delay, last, name, type, addbuffs, nameText, typeText, costText,
+                effectValueText, delayText, lastText, APText, HPText, MPText, attackTypeHbox, rangeText,
+                specialPowerText, specialPowerCooldownText);
+        root.getChildren().addAll(grid, target, in, radioList, radioList1, radioList2, buffsHbox,
+                minionSpecialPowerActivation, OK);
 
+        primaryStage.setTitle("Custom Card Menu");
+        primaryStage.show();
+
+        Spell spell = new Spell();
+        Hero hero = new Hero();
+        Minion minion = new Minion();
+
+        typeText.setOnKeyPressed(event -> typeText.setTextFormatter(new TextFormatter<>(change -> {
+            if (change.getControlNewText().equalsIgnoreCase("spell")) {
+                setSpellVisibleTrue(radioList, radioList1, radioList2, MP, buffType, effectValue, delay, last,
+                        addbuffs, buffsHbox, effectValueText, delayText, lastText, MPText, target, in);
+            } else if (change.getControlNewText().equalsIgnoreCase("minion")) {
+                setHeroOrMinionVisibleFalse(AP, HP, MP, attackType, specialPower, specialPowerActivation, APText,
+                        HPText, MPText, attackTypeHbox, specialPowerText, minionSpecialPowerActivation);
+            } else if (change.getControlNewText().equalsIgnoreCase("hero")) {
+                setHeroOrMinionVisibleFalse(AP, HP, MP, attackType, specialPower, specialPowerActivation, APText,
+                        HPText, MPText, attackTypeHbox, specialPowerText, minionSpecialPowerActivation);
+            } else {
+                setVisibleFalse(radioList, radioList1, radioList2, AP, HP, MP, attackType, range, specialPower,
+                        specialPowerActivation, specialPowerCooldown, buffType, effectValue, delay, last,
+                        addbuffs, buffsHbox, effectValueText, delayText, lastText, APText, HPText, MPText,
+                        attackTypeHbox, rangeText, specialPowerText, minionSpecialPowerActivation,
+                        specialPowerCooldownText, target, in);
+            }
+            return change;
+        })));
+
+        final boolean[] rangedOnAction = {false};
+        ranged.setOnAction(event -> {
+            rangedOnAction[0] = (!rangedOnAction[0]);
+            if (rangedOnAction[0]) {
+                range.setVisible(true);
+                rangeText.setVisible(true);
+            } else {
+                range.setVisible(false);
+                rangeText.setVisible(false);
+            }
+        });
+
+        addbuffs.setOnAction(event -> {
+            RadioButton radioButton = null;
+            for (Node radio : buffsHbox.getChildren()) {
+                RadioButton radioButtonInFor = (RadioButton) radio;
+                if (radioButtonInFor.isSelected()) {
+                    radioButton = radioButtonInFor;
+                    break;
+                }
+            }
+            setSpellFeatures(holy, power, health, poison, weakness, stun, disarm, effectValueText, delayText,
+                    lastText, spell);
+            holy.setSelected(false);
+            poison.setSelected(false);
+            power.setSelected(false);
+            weakness.setSelected(false);
+            stun.setSelected(false);
+            disarm.setSelected(false);
+            effectValueText.setText("");
+            delayText.setText("0");
+            lastText.setText("");
+            setDesc(radioList, holy, power, health, poison, weakness, stun, disarm, spell, radioButton);
+            setDesc(radioList1, holy, power, health, poison, weakness, stun, disarm, spell, radioButton);
+            for (Node radio : radioList2.getChildren()) {
+                RadioButton radioButtonInFor = (RadioButton) radio;
+                if (radioButtonInFor.isSelected()) {
+                    int size_1 = spell.getAllDescs().size() - 1;
+                    spell.getAllDescs().set(size_1, spell.getAllDescs().get(size_1) + " in " + radioButtonInFor.
+                            getText());
+                    radioButtonInFor.setSelected(false);
+                }
+            }
+        });
+
+        OK.setOnAction(event -> {
+            if (typeText.getText().equalsIgnoreCase("spell")) {
+                spell.setName(nameText.getText());
+                spell.setCardID(battle.getActiveAccount().getUsername() + "_" + spell.getName() + "_1");
+                spell.setCost(Integer.parseInt(costText.getText()));
+                spell.setMP(Integer.parseInt(MPText.getText()));
+            }
+            else if (typeText.getText().equalsIgnoreCase("minion")) {
+                minion.setName(nameText.getText());
+                spell.setCardID(battle.getActiveAccount().getUsername() + "_" + minion.getName() + "_1");
+                minion.setCost(Integer.parseInt(costText.getText()));
+                minion.setAP(Integer.parseInt(APText.getText()));
+                minion.setHealth(Integer.parseInt(HPText.getText()));
+                minion.setMP(Integer.parseInt(MPText.getText()));
+                setSpecialPower(specialPowerText, minion);
+                setHeroOrMinionType(melee, ranged, hybrid, rangeText, minion);
+                setMinionSpecialPowerActivation(onAttack, combo, passive, onDeath, onSpown, onTurn, onDefend,
+                        minionSpecialPowerActivation, minion);
+                if (ranged.isSelected()) {
+                    minion.setRange(Integer.parseInt(rangeText.getText()));
+                }
+                setMinionSpellActivation(onAttack, combo, passive, onDeath, onSpown, onTurn, onDefend, minion);
+            }
+            else if (typeText.getText().equalsIgnoreCase("hero")) {
+                hero.setName(nameText.getText());
+                spell.setCardID(battle.getActiveAccount().getUsername() + "_" + hero.getName() + "_1");
+                hero.setCost(Integer.parseInt(costText.getText()));
+                hero.setAP(Integer.parseInt(APText.getText()));
+                hero.setHealth(Integer.parseInt(HPText.getText()));
+                hero.setMP(Integer.parseInt(MPText.getText()));
+                setHeroOrMinionType(melee, ranged, hybrid, rangeText, hero);
+                setSpecialPower1(specialPowerText, hero);
+                hero.setSpecialPowerCooldown(Integer.parseInt(specialPowerCooldownText.getText()));
+                if (ranged.isSelected()) {
+                    hero.setRange(Integer.parseInt(rangeText.getText()));
+                }
+            }
+
+            ObjectMapper mapper = new ObjectMapper();
+            try {
+                BufferedWriter out = new BufferedWriter(new FileWriter("cards.txt", true));
+                String json = mapper.writeValueAsString(spell);
+                out.write(json + "\n");
+                out.close();
+                //exit(primaryStage);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void gridAdding(GridPane grid, Label AP, Label HP, Label MP, Label attackType, Label range, Label
+            specialPower, Label specialPowerActivation, Label specialPowerCooldown, Label cost, Label buffType, Label
+            effectValue, Label delay, Label last, Label name, Label type, Button addbuffs, TextField nameText,
+                            TextField typeText, TextField costText, TextField effectValueText, TextField delayText,
+                            TextField lastText, TextField APText, TextField HPText, TextField MPText, HBox
+                                    attackTypeHbox, TextField rangeText, TextField specialPowerText, TextField
+                                    specialPowerCooldownText) {
         grid.add(name, 0, 0);
         grid.add(type, 0, 1);
         grid.add(AP, 0, 2);
@@ -181,162 +322,149 @@ public class CustomCardMenu extends PlayMenu {
         grid.add(costText, 1, 8);
         grid.add(MP, 0, 9);
         grid.add(MPText, 1, 9);
-        root.getChildren().addAll(grid, radioList, radioList1, radioList2, buffsHbox, minionSpecialPowerActivation, OK);
-
-        primaryStage.setTitle("Custom Card Menu");
-        primaryStage.show();
-
-        final Card[] card = new Card[1];
-        typeText.setOnKeyPressed(event -> typeText.setTextFormatter(new TextFormatter<>(change -> {
-            if (change.getControlNewText().equalsIgnoreCase("spell")) {
-                card[0] = new Spell();
-                addbuffs.setVisible(true);
-                buffType.setVisible(true);
-                effectValue.setVisible(true);
-                delay.setVisible(true);
-                last.setVisible(true);
-                buffsHbox.setVisible(true);
-                effectValueText.setVisible(true);
-                delayText.setVisible(true);
-                lastText.setVisible(true);
-                radioList.setVisible(true);
-                radioList1.setVisible(true);
-                radioList2.setVisible(true);
-                MP.setVisible(true);
-                MPText.setVisible(true);
-            } else if (change.getControlNewText().equalsIgnoreCase("minion")) {
-                card[0] = new Minion();
-                setHeroOrMinionVisibleFalse(AP, HP, MP, attackType, specialPower, specialPowerActivation, APText,
-                        HPText, MPText, attackTypeHbox, specialPowerText, minionSpecialPowerActivation);
-            } else if (change.getControlNewText().equalsIgnoreCase("hero")) {
-                card[0] = new Hero();
-                setHeroOrMinionVisibleFalse(AP, HP, MP, attackType, specialPower, specialPowerActivation, APText,
-                        HPText, MPText, attackTypeHbox, specialPowerText, minionSpecialPowerActivation);
-            } else {
-                setVisibleFalse(radioList, radioList1, radioList2, AP, HP, MP, attackType, range, specialPower,
-                        specialPowerActivation, specialPowerCooldown, buffType, effectValue, delay, last, target,
-                        addbuffs, buffsHbox, effectValueText, delayText, lastText, APText, HPText, MPText,
-                        attackTypeHbox, rangeText, specialPowerText, minionSpecialPowerActivation,
-                        specialPowerCooldownText);
-            }
-            return change;
-        })));
-
-        final boolean[] rangedOnAction = {false};
-        ranged.setOnAction(event -> {
-            rangedOnAction[0] = (!rangedOnAction[0]);
-            if (rangedOnAction[0]) {
-                range.setVisible(true);
-                rangeText.setVisible(true);
-            } else {
-                range.setVisible(false);
-                rangeText.setVisible(false);
-            }
-        });
-
-        addbuffs.setOnAction(event -> {
-            Spell spell = (Spell) card[0];
-            RadioButton radioButton = null;
-            for (Node radio : buffsHbox.getChildren()) {
-                RadioButton radioButtonInFor = (RadioButton) radio;
-                if (radioButtonInFor.isSelected()) {
-                    radioButton = radioButtonInFor;
-                    break;
-                }
-            }
-            setSpellFeatures(holy, power, health, poison, weakness, stun, disarm, effectValueText, delayText, lastText,
-                    spell);
-            holy.setSelected(false);
-            poison.setSelected(false);
-            power.setSelected(false);
-            weakness.setSelected(false);
-            stun.setSelected(false);
-            disarm.setSelected(false);
-            effectValueText.setText("");
-            delayText.setText("");
-            lastText.setText("");
-            setDesc(radioList, holy, power, health, poison, weakness, stun, disarm, spell, radioButton);
-            setDesc(radioList1, holy, power, health, poison, weakness, stun, disarm, spell, radioButton);
-            for (Node radio : radioList2.getChildren()) {
-                RadioButton radioButtonInFor = (RadioButton) radio;
-                if (radioButtonInFor.isSelected()) {
-                    spell.getAllDescs().set(spell.getAllDescs().size() - 1, spell.getAllDescs().get(spell.getAllDescs()
-                            .size() - 1) + " in " + radioButtonInFor.getText());
-                }
-            }
-        });
-
-        OK.setOnAction(event -> {
-            card[0].setName(nameText.getText());
-            card[0].setCost(Integer.parseInt(costText.getText()));
-            if (typeText.getText().equalsIgnoreCase("spell")) {
-                Spell spell = (Spell) card[0];
-                spell.setMP(Integer.parseInt(MPText.getText()));
-            }
-            if (typeText.getText().equalsIgnoreCase("minion")) {
-                Minion minion = (Minion) card[0];
-                minion.setAP(Integer.parseInt(APText.getText()));
-                minion.setHealth(Integer.parseInt(HPText.getText()));
-                minion.setMP(Integer.parseInt(MPText.getText()));
-                setSpecialPower(specialPowerText, minion);
-                setHeroOrMinionType(melee, ranged, hybrid, rangeText, minion);
-                setMinionSpecialPowerActivation(onAttack, combo, passive, onDeath, onSpown, onTurn, onDefend,
-                        minionSpecialPowerActivation, minion);
-                if (ranged.isSelected()) {
-                    minion.setRange(Integer.parseInt(rangeText.getText()));
-                }
-                setMinionSpellActivation(onAttack, combo, passive, onDeath, onSpown, onTurn, onDefend, minion);
-            } else if (typeText.getText().equalsIgnoreCase("hero")) {
-                Hero hero = (Hero) card[0];
-                hero.setAP(Integer.parseInt(APText.getText()));
-                hero.setHealth(Integer.parseInt(HPText.getText()));
-                hero.setMP(Integer.parseInt(MPText.getText()));
-                setHeroOrMinionType(melee, ranged, hybrid, rangeText, hero);
-                setSpecialPower1(specialPowerText, hero);
-                hero.setSpecialPowerCooldown(Integer.parseInt(specialPowerCooldownText.getText()));
-                if (ranged.isSelected()) {
-                    hero.setRange(Integer.parseInt(rangeText.getText()));
-                }
-            }
-
-            String cardID = battle.getActiveAccount().getUsername() + "_" + card[0].getName() + "_1";
-            card[0].setCardID(cardID);
-
-            ObjectMapper mapper = new ObjectMapper();
-            try {
-                String json = mapper.writeValueAsString(card[0]);
-                BufferedWriter out = new BufferedWriter(new FileWriter("cards.txt", true));
-                out.write(json + "\n");
-                out.close();
-                //exit(primaryStage);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
     }
 
-    private void setHeroOrMinionVisibleFalse(Label AP, Label HP, Label MP, Label attackType, Label specialPower, Label specialPowerActivation, TextField APText, TextField HPText, TextField MPText, HBox attackTypeHbox, TextField specialPowerText, HBox minionSpecialPowerActivation) {
-        AP.setVisible(true);
-        HP.setVisible(true);
-        MP.setVisible(true);
-        attackType.setVisible(true);
-        specialPower.setVisible(true);
-        specialPowerActivation.setVisible(true);
-        APText.setVisible(true);
-        HPText.setVisible(true);
-        MPText.setVisible(true);
-        attackTypeHbox.setVisible(true);
-        specialPowerText.setVisible(true);
-        minionSpecialPowerActivation.setVisible(true);
+    private void setDesc(HBox radioList, RadioButton holy, RadioButton power, RadioButton health, RadioButton poison,
+                         RadioButton weakness, RadioButton stun, RadioButton disarm, Spell spell,
+                         RadioButton radioButton) {
+        for (Node radio : radioList.getChildren()) {
+            RadioButton radioButtonInFor = (RadioButton) radio;
+            String desc = "";
+            int turns;
+            int delays;
+            if (radioButtonInFor.isSelected()) {
+                if (holy.equals(radioButton)) {
+                    int holyTurns = spell.getHolyBuffTurns().get(spell.getHolyBuffTurns().size() - 1);
+                    int holyAmount = spell.getHolyBuffAmount().get(spell.getHolyBuffAmount().size() - 1);
+                    if (holyTurns == -1) {
+                        desc = "Gives " + holyAmount + " holy buffs for ever to " + radioButtonInFor.getText() +
+                                " permanently";
+                    } else if (holyTurns == -10) {
+                        desc = "Gives " + holyAmount + " holy buffs for ever to " + radioButtonInFor.getText() +
+                                " continuousely";
+                    } else if (holyTurns > 1000) {
+                        turns = holyTurns % 1000;
+                        delays = holyTurns / 1000;
+                        desc = "Gives " + holyAmount + " holy buffs for " + turns + " turns to " +
+                                radioButtonInFor.getText() + " with " + delays + " turns delay";
+                    } else {
+                        desc = "Gives " + holyAmount + " holy buffs for " + spell.getHolyBuffTurns().get
+                                (spell.getHolyBuffTurns().size() - 1) + " turns to " + radioButtonInFor.getText();
+                    }
+                } else if (power.equals(radioButton)) {
+                    int powerTurns = spell.getIncreaseAPturns().get(spell.getIncreaseAPturns().size() - 1);
+                    int powerAmount = spell.getIncreaseAPamount().get(spell.getIncreaseAPamount().size() - 1);
+                    if (powerTurns == -1) {
+                        desc = "Increases " + powerAmount + " power units for ever to " + radioButtonInFor.getText()
+                                + " permanently";
+                    } else if (powerTurns == -10) {
+                        desc = "Increases " + powerAmount + " power units for ever to " + radioButtonInFor.getText()
+                                + " continuousely";
+                    } else if (powerTurns > 1000) {
+                        turns = powerTurns % 1000;
+                        delays = powerTurns / 1000;
+                        desc = "Increases " + powerAmount + " power units for " + turns + " turns to " +
+                                radioButtonInFor.getText() + " with " + delays + " turns delay";
+                    } else {
+                        desc = "Increases " + powerAmount + " power units for " + powerTurns + " turns to " +
+                                radioButtonInFor.getText();
+                    }
+                } else if (health.equals(radioButton)) {
+                    int healthTurns = spell.getIncreaseHealthTurns().get(spell.getIncreaseHealthTurns().size() - 1);
+                    int healthAmount = spell.getIncreaseHealthAmount().get(spell.getIncreaseHealthAmount().size() - 1);
+                    if (healthTurns == -1) {
+                        desc = "Increases " + healthAmount + " health units for ever to " + radioButtonInFor.getText()
+                                + " permanently";
+                    } else if (healthTurns == -10) {
+                        desc = "Increases " + healthAmount + " health units for ever to " + radioButtonInFor.getText()
+                                + " continuousely";
+                    } else if (healthTurns > 1000) {
+                        turns = healthTurns % 1000;
+                        delays = healthTurns / 1000;
+                        desc = "Increases " + healthAmount + " health units for " + turns + " turns to " + radioButtonInFor.
+                                getText() + " with " + delays + " turns delay";
+                    } else {
+                        desc = "Increases " + healthAmount + " health units for " + healthTurns + " turns to " +
+                                radioButtonInFor.getText();
+                    }
+                } else if (poison.equals(radioButton)) {
+                    int poisonTurns = spell.getDecreaseHealthTurns().get(spell.getDecreaseHealthTurns().size() - 1);
+                    int poisonAmount = spell.getDecreaseHealthAmount().get(spell.getDecreaseHealthAmount().size() - 1);
+                    if (poisonTurns == -1) {
+                        desc = "Decreases " + poisonAmount + " health units for ever to " + radioButtonInFor.getText() +
+                                " permanently";
+                    } else if (poisonTurns == -10) {
+                        desc = "Decreases " + poisonAmount + " health units for ever to " + radioButtonInFor.getText() +
+                                " continuousely";
+                    } else if (poisonTurns > 1000) {
+                        turns = poisonTurns % 1000;
+                        delays = poisonTurns / 1000;
+                        desc = "Decreases " + poisonAmount + " health units for " + turns + " turns to " +
+                                radioButtonInFor.getText() + " with " + delays + " turns delay";
+                    } else {
+                        desc = "Decreases " + poisonAmount + " health units for " + poisonTurns + " turns to " +
+                                radioButtonInFor.getText();
+                    }
+                } else if (weakness.equals(radioButton)) {
+                    int weaknessTurns = spell.getDecreaseAPturns().get(spell.getDecreaseAPturns().size() - 1);
+                    int weaknessAmount = spell.getDecreaseAPamount().get(spell.getDecreaseAPamount().size() - 1);
+                    if (weaknessTurns == -1) {
+                        desc = "Decreases " + weaknessAmount + " power units for ever to " + radioButtonInFor.getText() +
+                                " permanently";
+                    } else if (weaknessTurns == -10) {
+                        desc = "Decreases " + weaknessAmount + " power units for ever to " + radioButtonInFor.getText() +
+                                " continuousely";
+                    } else if (weaknessTurns > 1000) {
+                        turns = weaknessTurns % 1000;
+                        delays = weaknessTurns / 1000;
+                        desc = "Decreases " + weaknessAmount + " power units for " + turns + " turns to" +
+                                radioButtonInFor.getText() + " with " + delays + " turns delay";
+                    } else {
+                        desc = "Decreases " + weaknessAmount + " power units for " + weaknessTurns + " turns to" +
+                                radioButton.getText();
+                    }
+                } else if (stun.equals(radioButton)) {
+                    int stunTurns = spell.getStunTurns();
+                    if (stunTurns == -1) {
+                        desc = "Exerts stun buff for ever permanently";
+                    } else if (stunTurns == -10) {
+                        desc = "Exerts stun buff for ever continuousely";
+                    } else if (stunTurns > 1000) {
+                        delays = stunTurns / 1000;
+                        desc = "Exerts stun buff for " + stunTurns + " turns to" + radioButtonInFor.getText() + " with "
+                                + delays + " delay";
+                    } else {
+                        desc = "Exerts stun buff for " + stunTurns + " turns to" + radioButtonInFor.getText();
+                    }
+                } else if (disarm.equals(radioButton)) {
+                    int disarmTurns = spell.getDisarmTurns();
+                    if (disarmTurns == -1) {
+                        desc = "Exerts disarm buff for ever permanently";
+                    } else if (disarmTurns == -10) {
+                        desc = "Exerts disarm buff for ever continuousely";
+                    } else if (disarmTurns > 1000) {
+                        delays = disarmTurns / 1000;
+                        desc = "Exerts stun buff for " + disarmTurns + " turns to" + radioButtonInFor.getText() + " with "
+                                + delays + " delay";
+                    } else {
+                        desc = "Exerts stun buff for " + disarmTurns + " turns to" + radioButtonInFor.getText();
+                    }
+                }
+                spell.getAllDescs().add(desc);
+                radioButtonInFor.setSelected(false);
+                return;
+            }
+        }
     }
 
     private void setVisibleFalse(HBox radioList, HBox radioList1, HBox radioList2, Label AP, Label HP, Label MP,
                                  Label attackType, Label range, Label specialPower, Label specialPowerActivation,
                                  Label specialPowerCooldown, Label buffType, Label effectValue, Label delay, Label
-                                         last, Label target, Button addbuffs, HBox buffsHbox, TextField effectValueText,
+                                         last, Button addbuffs, HBox buffsHbox, TextField effectValueText,
                                  TextField delayText, TextField lastText, TextField APText, TextField HPText, TextField
                                          MPText, HBox attackTypeHbox, TextField rangeText, TextField specialPowerText,
-                                 HBox minionSpecialPowerActivation, TextField specialPowerCooldownText) {
+                                 HBox minionSpecialPowerActivation, TextField specialPowerCooldownText, Label target,
+                                 Label in) {
         target.setVisible(false);
         addbuffs.setVisible(false);
         radioList.setVisible(false);
@@ -366,7 +494,27 @@ public class CustomCardMenu extends PlayMenu {
         specialPowerText.setVisible(false);
         specialPowerCooldownText.setVisible(false);
         minionSpecialPowerActivation.setVisible(false);
+        target.setVisible(false);
+        in.setVisible(false);
     }
+
+    private void setHeroOrMinionVisibleFalse(Label AP, Label HP, Label MP, Label attackType, Label specialPower, Label
+            specialPowerActivation, TextField APText, TextField HPText, TextField MPText, HBox attackTypeHbox,
+                                             TextField specialPowerText, HBox minionSpecialPowerActivation) {
+        AP.setVisible(true);
+        HP.setVisible(true);
+        MP.setVisible(true);
+        attackType.setVisible(true);
+        specialPower.setVisible(true);
+        specialPowerActivation.setVisible(true);
+        APText.setVisible(true);
+        HPText.setVisible(true);
+        MPText.setVisible(true);
+        attackTypeHbox.setVisible(true);
+        specialPowerText.setVisible(true);
+        minionSpecialPowerActivation.setVisible(true);
+    }
+
 
     private void setMinionSpellActivation(RadioButton onAttack, RadioButton combo, RadioButton passive,
                                           RadioButton onDeath, RadioButton onSpown, RadioButton onTurn,
@@ -500,137 +648,26 @@ public class CustomCardMenu extends PlayMenu {
         }
     }
 
-    private void setDesc(HBox radioList, RadioButton holy, RadioButton power, RadioButton health, RadioButton poison,
-                         RadioButton weakness, RadioButton stun, RadioButton disarm, Spell spell,
-                         RadioButton radioButton) {
-        for (Node radio : radioList.getChildren()) {
-            RadioButton radioButtonInFor = (RadioButton) radio;
-            String desc = null;
-            int turns;
-            int delays;
-            if (radioButtonInFor.isSelected()) {
-                if (holy.equals(radioButton)) {
-                    int holyTurns = spell.getHolyBuffTurns().get(spell.getHolyBuffTurns().size() - 1);
-                    int holyAmount = spell.getHolyBuffAmount().get(spell.getHolyBuffAmount().size() - 1);
-                    if (holyTurns == -1) {
-                        desc = "Gives " + holyAmount + " holy buffs for ever to " + radioButton.getText() +
-                                " permanently";
-                    } else if (holyTurns == -10) {
-                        desc = "Gives " + holyAmount + " holy buffs for ever to " + radioButton.getText() +
-                                " continuousely";
-                    } else if (holyTurns > 1000) {
-                        turns = holyTurns % 1000;
-                        delays = holyTurns / 1000;
-                        desc = "Gives " + holyAmount + " holy buffs for " + turns + " turns to " +
-                                radioButtonInFor.getText() + " with " + delays + " turns delay";
-                    } else {
-                        desc = "Gives " + holyAmount + " holy buffs for " + spell.getHolyBuffTurns().get
-                                (spell.getHolyBuffTurns().size() - 1) + " turns to " + radioButtonInFor.getText();
-                    }
-                } else if (power.equals(radioButton)) {
-                    int powerTurns = spell.getIncreaseAPturns().get(spell.getIncreaseAPturns().size() - 1);
-                    int powerAmount = spell.getIncreaseAPamount().get(spell.getIncreaseAPamount().size() - 1);
-                    if (powerTurns == -1) {
-                        desc = "Increases " + powerAmount + " power units for ever to " + radioButton.getText()
-                                + " permanently";
-                    } else if (powerTurns == -10) {
-                        desc = "Increases " + powerAmount + " power units for ever to " + radioButton.getText()
-                                + " continuousely";
-                    } else if (powerTurns > 1000) {
-                        turns = powerTurns % 1000;
-                        delays = powerTurns / 1000;
-                        desc = "Increases " + powerAmount + " power units for " + turns + " turns to " +
-                                radioButtonInFor.getText() + " with " + delays + " turns delay";
-                    } else {
-                        desc = "Increases " + powerAmount + " power units for " + powerTurns + " turns to " +
-                                radioButtonInFor.getText();
-                    }
-                } else if (health.equals(radioButton)) {
-                    int healthTurns = spell.getIncreaseHealthTurns().get(spell.getIncreaseHealthTurns().size() - 1);
-                    int healthAmount = spell.getIncreaseHealthAmount().get(spell.getIncreaseHealthAmount().size() - 1);
-                    if (healthTurns == -1) {
-                        desc = "Increases " + healthAmount + " health units for ever to " + radioButton.getText()
-                                + " permanently";
-                    } else if (healthTurns == -10) {
-                        desc = "Increases " + healthAmount + " health units for ever to " + radioButton.getText()
-                                + " continuousely";
-                    } else if (healthTurns > 1000) {
-                        turns = healthTurns % 1000;
-                        delays = healthTurns / 1000;
-                        desc = "Increases " + healthAmount + " health units for " + turns + " turns to " + radioButtonInFor.
-                                getText() + " with " + delays + " turns delay";
-                    } else {
-                        desc = "Increases " + healthAmount + " health units for " + healthTurns + " turns to " +
-                                radioButtonInFor.getText();
-                    }
-                } else if (poison.equals(radioButton)) {
-                    int poisonTurns = spell.getDecreaseHealthTurns().get(spell.getDecreaseHealthTurns().size() - 1);
-                    int poisonAmount = spell.getDecreaseHealthAmount().get(spell.getDecreaseHealthAmount().size() - 1);
-                    if (poisonTurns == -1) {
-                        desc = "Decreases " + poisonAmount + " health units for ever to " + radioButton.getText() +
-                                " permanently";
-                    } else if (poisonTurns == -10) {
-                        desc = "Decreases " + poisonAmount + " health units for ever to " + radioButton.getText() +
-                                " continuousely";
-                    } else if (poisonTurns > 1000) {
-                        turns = poisonTurns % 1000;
-                        delays = poisonTurns / 1000;
-                        desc = "Decreases " + poisonAmount + " health units for " + turns + " turns to " +
-                                radioButtonInFor.getText() + " with " + delays + " turns delay";
-                    } else {
-                        desc = "Decreases " + poisonAmount + " health units for " + poisonTurns + " turns to " +
-                                radioButtonInFor.getText();
-                    }
-                } else if (weakness.equals(radioButton)) {
-                    int weaknessTurns = spell.getDecreaseAPturns().get(spell.getDecreaseAPturns().size() - 1);
-                    int weaknessAmount = spell.getDecreaseAPamount().get(spell.getDecreaseAPamount().size() - 1);
-                    if (weaknessTurns == -1) {
-                        desc = "Decreases " + weaknessAmount + " power units for ever to " + radioButton.getText() +
-                                " permanently";
-                    } else if (weaknessTurns == -10) {
-                        desc = "Decreases " + weaknessAmount + " power units for ever to " + radioButton.getText() +
-                                " continuousely";
-                    } else if (weaknessTurns > 1000) {
-                        turns = weaknessTurns % 1000;
-                        delays = weaknessTurns / 1000;
-                        desc = "Decreases " + weaknessAmount + " power units for " + turns + " turns to" +
-                                radioButton.getText() + " with " + delays + " turns delay";
-                    } else {
-                        desc = "Decreases " + weaknessAmount + " power units for " + weaknessTurns + " turns to" +
-                                radioButton.getText();
-                    }
-                } else if (stun.equals(radioButton)) {
-                    int stunTurns = spell.getStunTurns();
-                    if (stunTurns == -1) {
-                        desc = "Exerts stun buff for ever permanently";
-                    } else if (stunTurns == -10) {
-                        desc = "Exerts stun buff for ever continuousely";
-                    } else if (stunTurns > 1000) {
-                        delays = stunTurns / 1000;
-                        desc = "Exerts stun buff for " + stunTurns + " turns to" + radioButton.getText() + " with "
-                                + delays + " delay";
-                    } else {
-                        desc = "Exerts stun buff for " + stunTurns + " turns to" + radioButton.getText();
-                    }
-                } else if (disarm.equals(radioButton)) {
-                    int disarmTurns = spell.getDisarmTurns();
-                    if (disarmTurns == -1) {
-                        desc = "Exerts disarm buff for ever permanently";
-                    } else if (disarmTurns == -10) {
-                        desc = "Exerts disarm buff for ever continuousely";
-                    } else if (disarmTurns > 1000) {
-                        delays = disarmTurns / 1000;
-                        desc = "Exerts stun buff for " + disarmTurns + " turns to" + radioButton.getText() + " with "
-                                + delays + " delay";
-                    } else {
-                        desc = "Exerts stun buff for " + disarmTurns + " turns to" + radioButton.getText();
-                    }
-                }
-                spell.getAllDescs().add(desc);
-                System.out.println(spell.getAllDescs().get(0));
-                radioButtonInFor.setSelected(false);
-                return;
-            }
-        }
+    private void setSpellVisibleTrue(HBox radioList, HBox radioList1, HBox radioList2, Label MP, Label buffType,
+                                     Label effectValue, Label delay, Label last, Button addbuffs, HBox buffsHbox,
+                                     TextField effectValueText, TextField delayText, TextField lastText, TextField
+                                             MPText, Label target, Label in) {
+        addbuffs.setVisible(true);
+        buffType.setVisible(true);
+        effectValue.setVisible(true);
+        delay.setVisible(true);
+        last.setVisible(true);
+        buffsHbox.setVisible(true);
+        effectValueText.setVisible(true);
+        delayText.setVisible(true);
+        lastText.setVisible(true);
+        radioList.setVisible(true);
+        radioList1.setVisible(true);
+        radioList2.setVisible(true);
+        MP.setVisible(true);
+        MPText.setVisible(true);
+        target.setVisible(true);
+        in.setVisible(true);
     }
+
 }

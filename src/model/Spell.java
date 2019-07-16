@@ -443,10 +443,4 @@ public class Spell extends Card {
     public void setAllDescs(ArrayList<String> allDescs) {
         this.allDescs = allDescs;
     }
-
-    public void setLastDesc(ArrayList<String> allDescs, String string) {
-        String desc = allDescs.get(allDescs.size() - 1);
-        desc = desc + string;
-
-    }
 }

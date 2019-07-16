@@ -56,8 +56,8 @@ public class Main extends Application{
                     card[0].setCardID((String) obj.get("cardID"));
                 }
                 Shop.cards.put(card[0].getName(), card[0]);
-                ArrayList<String> arrayList = (ArrayList<String>) obj.get("allDescs");
-                System.out.println(arrayList.get(0));
+                //System.out.println(((ArrayList<String>) obj.get("allDescs")).get(0));
+
 
             }
             bufferedReader.close();
