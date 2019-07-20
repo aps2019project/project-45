@@ -2,7 +2,7 @@ package model;
 
 public class Minion extends Card {
     private HeroOrMinionType heroOrMinionType;
-    private Spell specialPower = new Spell();
+    private Spell specialPower;
     private MinionSpecialPowerActivation minionSpecialPowerActivation;
     private int range;
 

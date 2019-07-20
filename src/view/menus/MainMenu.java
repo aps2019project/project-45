@@ -30,6 +30,7 @@ public class MainMenu extends PlayMenu {
     @Override
     public void open(Stage primaryStage) {
         Group root = (Group) primaryStage.getScene().getRoot();
+        primaryStage.setTitle("Main Menu");
 
         Image image = null;
         Image image1 = null;

@@ -1,3 +1,8 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.sun.xml.internal.ws.util.QNameMap;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.*;
@@ -8,11 +13,15 @@ import view.menus.AccountMenu;
 import view.menus.CustomCardMenu;
 import view.menus.Shop;
 import java.io.*;
-import java.util.ArrayList;
+import java.util.*;
 
 
 public class Main extends Application{
 
+    private static int spellNum = 1;
+    private static int minionNum = 1;
+    private static int heroNum = 1;
+    private static int itemNum = 1;
     public static void main(String[] args) {
         Application.launch(args);
     }
@@ -20,71 +29,35 @@ public class Main extends Application{
     @Override
     public void start(Stage primaryStage) {
         handleSaves();
-        CustomCardMenu.getInstance().openWithButtons(primaryStage);
+        AccountMenu.getInstance().openWithButtons(primaryStage);
     }
 
     private void handleSaves() {
-        ArrayList<JSONObject> json = new ArrayList<>();
         JSONObject obj;
         String line;
         try {
-            FileReader fileReader = new FileReader("cards.txt");
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("cards.txt"));
             while ((line = bufferedReader.readLine()) != null) {
                 obj = (JSONObject) new JSONParser().parse(line);
-                json.add(obj);
-                Card[] card = new Card[1];
-                card[0] = new Card();
                 if (obj.containsKey("allDescs")) {
-                    card[0] = new Spell();
-                    ((Spell)card[0]).setAllDescs((ArrayList<String>) obj.get("allDescs"));
+                    Spell spell = new Gson().fromJson(line, Spell.class);
+                    Shop.spells.put(spell.getName(), spell);
+                    Shop.cards.put(spell.getName(), spell);
                 } else if (obj.containsKey("minionSpecialPowerActivation")) {
-                    Minion minion = (Minion) card[0];
-                    setObject(obj, minion);
-                    minion.setMinionSpecialPowerActivation((MinionSpecialPowerActivation) obj.get
-                            ("minionSpecialPowerActivation"));
+                    Minion minion = new Gson().fromJson(line, Minion.class);
+                    Shop.minions.put(minion.getName(), minion);
+                    Shop.cards.put(minion.getName(), minion);
                 } else if (obj.containsKey("specialPowerCooldown")) {
-                    Hero hero = (Hero) card[0];
-                    setObject1(obj, hero);
-                    hero.setSpecialPowerCooldown(Integer.valueOf(obj.get("specialPowerCooldown").toString()));
-                } else if (obj.containsKey("usable")) {
+                    Hero hero = new Gson().fromJson(line, Hero.class);
+                    Shop.heroes.put(hero.getName(), hero);
+                    Shop.cards.put(hero.getName(), hero);
+                } else if (obj.containsKey("number")) {
 
                 }
-                card[0].setName((String) obj.get("name"));
-                card[0].setCost(Integer.valueOf(obj.get("cost").toString()));
-                if (obj.containsKey("cardId") && obj.get("cardID") != null) {
-                    card[0].setCardID((String) obj.get("cardID"));
-                }
-                Shop.cards.put(card[0].getName(), card[0]);
-                //System.out.println(((ArrayList<String>) obj.get("allDescs")).get(0));
-
-
             }
             bufferedReader.close();
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-    }
-
-    private void setObject1(JSONObject obj, Hero hero) {
-        hero.setAP(Integer.valueOf(obj.get("AP").toString()));
-        hero.setHealth(Integer.valueOf(obj.get("health").toString()));
-        hero.setMP(Integer.valueOf(obj.get("MP").toString()));
-        hero.setHeroOrMinionType((HeroOrMinionType) obj.get("heroOrMinionType"));
-        if (obj.containsKey("range")) {
-            hero.setRange(Integer.valueOf(obj.get("range").toString()));
-        }
-        hero.setSpecialPower((Spell) obj.get("specialPower"));
-    }
-
-    private void setObject(JSONObject obj, Minion card) {
-        card.setAP(Integer.valueOf(obj.get("AP").toString()));
-        card.setHealth(Integer.valueOf(obj.get("health").toString()));
-        card.setMP(Integer.valueOf(obj.get("MP").toString()));
-        card.setHeroOrMinionType((HeroOrMinionType) obj.get("heroOrMinionType"));
-        if (obj.containsKey("range")) {
-            card.setRange(Integer.valueOf(obj.get("range").toString()));
-        }
-        card.setSpecialPower((Spell) obj.get("specialPower"));
     }
 }

@@ -1,5 +1,7 @@
 package model;
 
+import view.Battle;
+
 import java.util.Random;
 
 public class Item extends Card {
@@ -9,36 +11,36 @@ public class Item extends Card {
 
 
     public void wisdomCrown(String cardID) {
-        Card targetCard = battle.getActiveAccount().getActiveCardsOnGround().get(cardID);
+        Card targetCard = Battle.getInstance().getActiveAccount().getActiveCardsOnGround().get(cardID);
         if (targetCard == null)
-            targetCard = battle.getInActiveAccount().getActiveCardsOnGround().get(cardID);
+            targetCard = Battle.getInstance().getInActiveAccount().getActiveCardsOnGround().get(cardID);
         //targetCard.MP++;
     }
 
     public void namoosShield() {
-        battle.getActiveAccount().getHero().setHolyBuff(1, 12);
+        Battle.getInstance().getActiveAccount().getHero().setHolyBuff(1, 12);
     }
 
     /*public void damoolArc() {
-        if (battle.getActiveAccount().getHero().heroOrMinionType != HeroOrMinionType.MELEE) {
+        if (Battle.getInstance().getActiveAccount().getHero().heroOrMinionType != HeroOrMinionType.MELEE) {
             //
         }
     }*/
 
     public void nooshdaroo() {
-        int number = battle.getActiveAccount().getActiveCardsOnGround().size() + battle.getInActiveAccount().
+        int number = Battle.getInstance().getActiveAccount().getActiveCardsOnGround().size() + Battle.getInstance().getInActiveAccount().
                 getActiveCardsOnGround().size();
         Random random = new Random();
         int randomCard = random.nextInt(number);
         int count = 0;
-        for (Card targetCard : battle.getActiveAccount().getActiveCardsOnGround().values()) {
+        for (Card targetCard : Battle.getInstance().getActiveAccount().getActiveCardsOnGround().values()) {
             if (randomCard == count) {
                 targetCard.setIncreaseHealth(1,6);
                 return;
             }
             count++;
         }
-        for (Card targetCard : battle.getInActiveAccount().getActiveCardsOnGround().values()) {
+        for (Card targetCard : Battle.getInstance().getInActiveAccount().getActiveCardsOnGround().values()) {
             if (randomCard == count) {
                 targetCard.setIncreaseHealth(1,6);
                 return;
@@ -48,12 +50,12 @@ public class Item extends Card {
     }
 
     /*public void towinArrow() {
-        int number = battle.getActiveAccount().getActiveCardsOnGround().size() + battle.getInActiveAccount().
+        int number = Battle.getInstance().getActiveAccount().getActiveCardsOnGround().size() + Battle.getInstance().getInActiveAccount().
                 getActiveCardsOnGround().size();
         Random random = new Random();
         int randomCard = random.nextInt(number);
         int count = 0;
-        for (Card targetCard : battle.getActiveAccount().getActiveCardsOnGround().values()) {
+        for (Card targetCard : Battle.getInstance().getActiveAccount().getActiveCardsOnGround().values()) {
             if (randomCard == count) {
                 if (targetCard.heroOrMinionType != HeroOrMinionType.MELEE) {
                     targetCard.setIncreaseAP(1, 2);
@@ -62,7 +64,7 @@ public class Item extends Card {
             }
             count++;
         }
-        for (Card targetCard : battle.getInActiveAccount().getActiveCardsOnGround().values()) {
+        for (Card targetCard : Battle.getInstance().getInActiveAccount().getActiveCardsOnGround().values()) {
             if (randomCard == count) {
                 if (targetCard.heroOrMinionType != HeroOrMinionType.MELEE) {
                     targetCard.setIncreaseAP(1, 2);
@@ -74,27 +76,27 @@ public class Item extends Card {
     }*/
 
     /*public void simorghFeather() {
-        if (battle.getInActiveAccount().getHero().heroOrMinionType != HeroOrMinionType.MELEE) {
-            battle.getInActiveAccount().getHero().setDecreaseAP(1, 2);
+        if (Battle.getInstance().getInActiveAccount().getHero().heroOrMinionType != HeroOrMinionType.MELEE) {
+            Battle.getInstance().getInActiveAccount().getHero().setDecreaseAP(1, 2);
         }
     }*/
 
     public void elixir(String cardID) {
-        battle.getActiveAccount().getActiveCardsOnGround().get(cardID).
+        Battle.getInstance().getActiveAccount().getActiveCardsOnGround().get(cardID).
                 setIncreaseHealth(1, 3);
-        int number = battle.getActiveAccount().getActiveCardsOnGround().size() + battle.getInActiveAccount().
+        int number = Battle.getInstance().getActiveAccount().getActiveCardsOnGround().size() + Battle.getInstance().getInActiveAccount().
                 getActiveCardsOnGround().size();
         Random random = new Random();
         int randomCard = random.nextInt(number);
         int count = 0;
-        for (Card targetCard : battle.getActiveAccount().getActiveCardsOnGround().values()) {
+        for (Card targetCard : Battle.getInstance().getActiveAccount().getActiveCardsOnGround().values()) {
             if (randomCard == count) {
                 targetCard.setIncreaseAP(1, 3);
                 return;
             }
             count++;
         }
-        for (Card targetCard : battle.getInActiveAccount().getActiveCardsOnGround().values()) {
+        for (Card targetCard : Battle.getInstance().getInActiveAccount().getActiveCardsOnGround().values()) {
             if (randomCard == count) {
                 targetCard.setIncreaseAP(1, 3);
                 return;
@@ -104,11 +106,11 @@ public class Item extends Card {
     }
 
     public void majooneRooyinTani() {
-        int number = battle.getActiveAccount().getActiveCardsOnGround().size();
+        int number = Battle.getInstance().getActiveAccount().getActiveCardsOnGround().size();
         Random random = new Random();
         int randomCard = random.nextInt(number);
         int count = 0;
-        for (Card targetCard : battle.getActiveAccount().getActiveCardsOnGround().values()) {
+        for (Card targetCard : Battle.getInstance().getActiveAccount().getActiveCardsOnGround().values()) {
             if (randomCard == count) {
                 targetCard.setHolyBuff(2, 10);
                 return;
@@ -118,19 +120,19 @@ public class Item extends Card {
     }
 
     public void randomDamage() {
-        int number = battle.getActiveAccount().getActiveCardsOnGround().size() + battle.getInActiveAccount().
+        int number = Battle.getInstance().getActiveAccount().getActiveCardsOnGround().size() + Battle.getInstance().getInActiveAccount().
                 getActiveCardsOnGround().size();
         Random random = new Random();
         int randomCard = random.nextInt(number);
         int count = 0;
-        for (Card targetCard : battle.getActiveAccount().getActiveCardsOnGround().values()) {
+        for (Card targetCard : Battle.getInstance().getActiveAccount().getActiveCardsOnGround().values()) {
             if (randomCard == count) {
                 targetCard.setIncreaseAP(1, 2);
                 return;
             }
             count++;
         }
-        for (Card targetCard : battle.getInActiveAccount().getActiveCardsOnGround().values()) {
+        for (Card targetCard : Battle.getInstance().getInActiveAccount().getActiveCardsOnGround().values()) {
             if (randomCard == count) {
                 targetCard.setIncreaseAP(1, 2);
                 return;
@@ -140,19 +142,19 @@ public class Item extends Card {
     }
 
     public void bladesOfAgility () {
-        int number = battle.getActiveAccount().getActiveCardsOnGround().size() + battle.getInActiveAccount().
+        int number = Battle.getInstance().getActiveAccount().getActiveCardsOnGround().size() + Battle.getInstance().getInActiveAccount().
                 getActiveCardsOnGround().size();
         Random random = new Random();
         int randomCard = random.nextInt(number);
         int count = 0;
-        for (Card targetCard : battle.getActiveAccount().getActiveCardsOnGround().values()) {
+        for (Card targetCard : Battle.getInstance().getActiveAccount().getActiveCardsOnGround().values()) {
             if (randomCard == count) {
                 targetCard.setIncreaseAP(1, 6);
                 return;
             }
             count++;
         }
-        for (Card targetCard : battle.getInActiveAccount().getActiveCardsOnGround().values()) {
+        for (Card targetCard : Battle.getInstance().getInActiveAccount().getActiveCardsOnGround().values()) {
             if (randomCard == count) {
                 targetCard.setIncreaseAP(1, 6);
                 return;
@@ -162,19 +164,19 @@ public class Item extends Card {
     }
 
     public void kingWisdom(String cardID) {
-        battle.getActiveAccount().getActiveCardsOnGround().get(cardID).MP++;
+        Battle.getInstance().getActiveAccount().getActiveCardsOnGround().get(cardID).MP++;
     }
 
     public void assessinationDagger() {
-        battle.getInActiveAccount().getHero().setDecreaseHealth(1, 1);
+        Battle.getInstance().getInActiveAccount().getHero().setDecreaseHealth(1, 1);
     }
 
     public void poisonousDagger(String cardID) {
-        int number = battle.getInActiveAccount().getActiveCardsOnGround().size();
+        int number = Battle.getInstance().getInActiveAccount().getActiveCardsOnGround().size();
         Random random = new Random();
         int randomCard = random.nextInt(number);
         int count = 0;
-        for (Card targetCard : battle.getInActiveAccount().getActiveCardsOnGround().values()) {
+        for (Card targetCard : Battle.getInstance().getInActiveAccount().getActiveCardsOnGround().values()) {
             if (count == randomCard) {
                 targetCard.setDecreaseHealth(1, 1);
                 return;
@@ -184,15 +186,15 @@ public class Item extends Card {
     }
 
     public void shockHammer(String cardID) {
-        battle.getInActiveAccount().getActiveCardsOnGround().get(cardID).setDisarmTurns(1);
+        Battle.getInstance().getInActiveAccount().getActiveCardsOnGround().get(cardID).setDisarmTurns(1);
     }
 
     public void soulEater() {
-        int number = battle.getActiveAccount().getActiveCardsOnGround().size();
+        int number = Battle.getInstance().getActiveAccount().getActiveCardsOnGround().size();
         Random random = new Random();
         int randomCard = random.nextInt(number);
         int count = 0;
-        for (Card targetCard : battle.getActiveAccount().getActiveCardsOnGround().values()) {
+        for (Card targetCard : Battle.getInstance().getActiveAccount().getActiveCardsOnGround().values()) {
             if (count == randomCard) {
                 targetCard.setIncreaseAP(1, 1);
                 return;
@@ -202,7 +204,7 @@ public class Item extends Card {
     }
 
     public void baptism() { // equals for "ghosl_e_ta'amid"   :)
-        for (Card targetCard : battle.getActiveAccount().getActiveCardsOnGround().values()) {
+        for (Card targetCard : Battle.getInstance().getActiveAccount().getActiveCardsOnGround().values()) {
             if (targetCard instanceof Minion) {
                 targetCard.setHolyBuff(2, 1);
             }
@@ -226,7 +228,7 @@ public class Item extends Card {
     }
 
     /*public void chineseSword() {
-        for (Card targetCard : battle.getActiveAccount().getActiveCardsOnGround().values()) {
+        for (Card targetCard : Battle.getInstance().getActiveAccount().getActiveCardsOnGround().values()) {
             if (targetCard.heroOrMinionType == HeroOrMinionType.MELEE) {
                 targetCard.setIncreaseAP(1, 5);
             }

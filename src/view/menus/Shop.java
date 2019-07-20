@@ -29,10 +29,10 @@ public class Shop extends PlayMenu {
     private Battle battle = Battle.getInstance();
 
     public static Map<String, Card> cards = new HashMap<>();
-    public static Map<String, Card> heroes = new HashMap<>();
-    public static Map<String, Card> minions = new HashMap<>();
-    public static Map<String, Card> spells = new HashMap<>();
-    public static Map<String, Card> items = new HashMap<>();
+    public static Map<String, Hero> heroes = new HashMap<>();
+    public static Map<String, Minion> minions = new HashMap<>();
+    public static Map<String, Spell> spells = new HashMap<>();
+    public static Map<String, Item> items = new HashMap<>();
 
     @Override
     public void open(Stage primaryStage) {
@@ -57,20 +57,48 @@ public class Shop extends PlayMenu {
 
         MenuBar menubar = new MenuBar();
         menubar.setMinWidth(Screen.getPrimary().getVisualBounds().getWidth());
-        Menu heroMenu = new Menu("Hero");
-        Menu minionMenu = new Menu("Minion");
-        Menu spellMenu = new Menu("Spell");
-        Menu itemMenu = new Menu("Item");
-        Menu changeMenutToRight = new Menu(">>");
-        Menu changeMenuToLeft = new Menu("<<");
+        Label heroLabel = new Label("Hero");
+        Label minionLabel = new Label("Minion");
+        Label spellLabel = new Label("Spell");
+        Label itemLabel = new Label("Item");
+        Label changeMenuToRightLabel = new Label(">>");
+        Label changeMenuToLeftLabel = new Label("<<");
+        Menu heroMenu = new Menu();
+        Menu minionMenu = new Menu();
+        Menu spellMenu = new Menu();
+        Menu itemMenu = new Menu();
+        Menu changeMenutToRight = new Menu();
+        Menu changeMenuToLeft = new Menu();
+        heroMenu.setGraphic(heroLabel);
+        minionMenu.setGraphic(minionLabel);
+        spellMenu.setGraphic(spellLabel);
+        itemMenu.setGraphic(itemLabel);
+        changeMenutToRight.setGraphic(changeMenuToRightLabel);
+        changeMenuToLeft.setGraphic(changeMenuToLeftLabel);
         menubar.getMenus().addAll(heroMenu, minionMenu, spellMenu, itemMenu, changeMenuToLeft, changeMenutToRight);
 
         root.getChildren().add(menubar);
         for (int i = 0; i < 10; i++) {
-            root.getChildren().addAll(cardBackGround[i], first[i], second[i]);
+            root.getChildren().addAll(cardBackGround[i], first[i], second[i], cardIcons[i]);
         }
 
         primaryStage.show();
+
+        spellLabel.setOnMouseClicked(event -> {
+            int pages = spells.size();
+            int thisPage = 1;
+            int i = 0;
+            for (Card card : spells.values()) {
+                Spell spell = (Spell) card;
+                try {
+                    cardIcons[i % 10].setImage(new Image(new FileInputStream(spell.getImageName())));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                i++;
+                if (i == 10) break;
+            }
+        });
 
         heroMenu.setOnShowing(event -> {
             int pages = heroes.size();
@@ -78,13 +106,11 @@ public class Shop extends PlayMenu {
             int i = 0;
             for (Card card : heroes.values()) {
                 Hero hero = (Hero) card;
-                images[i] = hero.getImage();
+                //images[i] = hero.getImage();
                 cardIcons[i % 10].setImage(images[i]);
                 i++;
                 if (i == 10) break;
             }
-
-
         });
     }
 
@@ -122,14 +148,14 @@ public class Shop extends PlayMenu {
         }
         for (int i = 0; i < 10; i++) {
             cardIcons[i] = new ImageView();
-            cardIcons[i].setFitWidth(80);
-            cardIcons[i].setFitHeight(80);
+            cardIcons[i].setFitWidth(150);
+            cardIcons[i].setFitHeight(150);
             if (i < 5) {
-                cardIcons[i].setLayoutX(250 * i + 155);
-                cardIcons[i].setLayoutX(110);
+                cardIcons[i].setLayoutX(250 * i + 125);
+                cardIcons[i].setLayoutY(70);
             } else {
                 cardIcons[i].setLayoutX(cardIcons[i - 5].getLayoutX());
-                cardIcons[i].setLayoutX(410);
+                cardIcons[i].setLayoutY(370);
             }
         }
     }

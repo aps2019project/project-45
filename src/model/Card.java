@@ -7,7 +7,7 @@ import view.Battle;
 import java.util.ArrayList;
 
 public class Card implements Cloneable {
-    Battle battle = Battle.getInstance();
+    //Battle battle = Battle.getInstance();
 
     String name;
     int cost;
@@ -17,7 +17,7 @@ public class Card implements Cloneable {
     String cardID;
     int health;
     int AP;
-    Image image;
+    String imageName;
 
     int disarmTurns;
     int stunTurns;
@@ -258,12 +258,11 @@ public class Card implements Cloneable {
         return disarmTurns;
     }
 
-    public Image getImage() {
-        return image;
+    public String getImageName() {
+        return imageName;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
-
 }
