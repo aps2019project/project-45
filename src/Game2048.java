@@ -1,5 +1,6 @@
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -17,6 +18,9 @@ import java.util.Random;
 
 public class Game2048 extends Application {
     private static int n = 4;
+    private static int newRandomX;
+    private static int newRandomY;
+    private boolean setLabel = true;
 
     public static void main(String[] args) {
         handleSaves();
@@ -48,10 +52,8 @@ public class Game2048 extends Application {
         Button back = new Button("back");
         back.setLayoutX(900);
         back.setLayoutY(650);
-        back.setOnAction(event -> {
-            primaryStage.setScene(scene1);
-
-        });
+        back.setStyle("-fx-font-size: 15");
+        back.setOnAction(event -> primaryStage.setScene(scene1));
         group.getChildren().add(back);
 
         ArrayList<ArrayList<Rectangle>> rec = new ArrayList<>();
@@ -64,7 +66,7 @@ public class Game2048 extends Application {
             primaryStage.setScene(scene2);
             int first = random.nextInt(n * n - 1);
             int second = random.nextInt(n * n - first) + first;
-            while (second == first) second = random.nextInt(n * n);
+            while (second == first) second = random.nextInt(n * n - first) + first;
             int count = 0;
             for (int i = 0; i < n; i++) {
                 ArrayList<Rectangle> smallRec = new ArrayList<>();
@@ -94,75 +96,405 @@ public class Game2048 extends Application {
                 rec.add(smallRec);
                 lab.add(smallLab);
             }
+            //lab.get(3).get(0).setText("4");
+            //lab.get(2).get(0).setText("4");
+            //lab.get(3).get(2).setText("2");
+
         });
         play.setLayoutX(800);
         play.setLayoutY(650);
         root.getChildren().add(play);
 
         scene2.setOnKeyPressed(event -> {
+            setLabel = true;
+            TranslateTransition anim = null;
             switch (event.getCode()) {
                 case RIGHT:
                     for (int j = n - 2; j >= 0; j--) {
                         for (int i = 0; i < n; i++) {
                             int finalI = i;
-                            int finalJ = j;
                             if (!lab.get(i).get(j).getText().equals("")) {
-
-                                Rectangle copyRec = rec.get(finalI).get(finalJ);
-                                Rectangle rectangle = new Rectangle(copyRec.getX(), copyRec.getY(), copyRec.getWidth(),
-                                        copyRec.getHeight());
+                                Rectangle copyRec = rec.get(i).get(j);
+                                Rectangle rectangle = new Rectangle(copyRec.getX(), copyRec.getY(), copyRec.
+                                        getWidth(), copyRec.getHeight());
                                 rectangle.setFill(copyRec.getFill());
-                                Label copyLab = lab.get(finalI).get(finalJ);
-                                Label label = new Label(copyLab.getText());
-                                label.setLayoutX(10);
+                                rectangle.setStroke(Color.BLACK);
+                                Label label = new Label(lab.get(i).get(j).getText());
+                                label.setLayoutX(15);
                                 label.setLayoutY(10);
-                                label.setStyle(copyLab.getStyle());
+                                label.setStyle(lab.get(i).get(j).getStyle());
                                 StackPane stackPane = new StackPane(rectangle, label);
                                 stackPane.setAlignment(Pos.CENTER);
                                 stackPane.setLayoutX(rectangle.getX());
                                 stackPane.setLayoutY(rectangle.getY());
-                                //stackPane.setMaxWidth(rectangle.getWidth());
-                                //stackPane.setMaxHeight(rectangle.getHeight());
                                 group.getChildren().add(stackPane);
-                                TranslateTransition anim = new TranslateTransition();
+                                anim = new TranslateTransition();
                                 anim.setNode(stackPane);
                                 anim.setDuration(Duration.millis(300));
-                                Multi multi = new Multi(anim, lab, rec, finalI, finalJ, n);
-                                multi.start();
-                            /*if (lab.get(i).get(j + 1).getText().equals("")) {
-
-                            } else if (Integer.parseInt(lab.get(i).get(j).getText()) == Integer.parseInt(lab.
-                                    get(i).get(j + 1).getText())) {
-
-                            }*/
+                                for (int k = j + 1; k < n; k++) {
+                                    int finalK = k;
+                                    if (lab.get(i).get(k).getText().equals("") && k != n - 1) continue;
+                                    if (lab.get(i).get(k).getText().equals("") && k == n - 1 && k == j) {
+                                        setLabel = false;
+                                        System.out.println(1);
+                                    }
+                                    if (lab.get(i).get(k).getText().equals("") && k == n - 1 && k != j) {
+                                        anim.setByX(80 * (k - j));
+                                        anim.play();
+                                        lab.get(i).get(k).setText(lab.get(i).get(j).getText());
+                                        lab.get(i).get(k).setVisible(false);
+                                        lab.get(i).get(j).setText("");
+                                        Color color = (Color) rec.get(finalI).get(j).getFill();
+                                        rec.get(i).get(j).setFill(Color.WHITE);
+                                        anim.setOnFinished(event1 -> {
+                                            if (newRandomY >= 0 && newRandomY <= 3 && newRandomX >= 0 && newRandomX <= 3) {
+                                                lab.get(newRandomY).get(newRandomX).setVisible(true);
+                                                rec.get(newRandomY).get(newRandomX).setFill(Color.web("ffffc8"));
+                                            }
+                                            lab.get(finalI).get(finalK).setVisible(true);
+                                            rec.get(finalI).get(finalK).setFill(color);
+                                            group.getChildren().remove(stackPane);
+                                        });
+                                        break;
+                                    }
+                                    if (Integer.parseInt(lab.get(i).get(j).getText()) != Integer.parseInt(lab.get(i).
+                                            get(k).getText()) && k - j == 1) {
+                                        setLabel = false;
+                                        System.out.println(2);
+                                    }
+                                    if (Integer.parseInt(lab.get(i).get(j).getText()) != Integer.parseInt(lab.get(i).
+                                            get(k).getText()) && k - j != 1) {
+                                        anim.setByX(80 * (k - j - 1));
+                                        anim.play();
+                                        lab.get(i).get(k - 1).setText(lab.get(i).get(j).getText());
+                                        lab.get(i).get(k - 1).setVisible(false);
+                                        Color color = (Color) rec.get(i).get(j).getFill();
+                                        if (k - j != 1) {
+                                            lab.get(i).get(j).setText("");
+                                            rec.get(i).get(j).setFill(Color.WHITE);
+                                        }
+                                        anim.setOnFinished(event1 -> {
+                                            if (newRandomY >= 0 && newRandomY <= 3 && newRandomX >= 0 && newRandomX <= 3) {
+                                                lab.get(newRandomY).get(newRandomX).setVisible(true);
+                                                rec.get(newRandomY).get(newRandomX).setFill(Color.web("ffffc8"));
+                                            }
+                                            rec.get(finalI).get(finalK - 1).setFill(color);
+                                            lab.get(finalI).get(finalK - 1).setVisible(true);
+                                            group.getChildren().remove(stackPane);
+                                        });
+                                        break;
+                                    }
+                                    if (Integer.parseInt(lab.get(i).get(j).getText()) == Integer.parseInt(lab.get(i).
+                                            get(k).getText()) && k != j) {
+                                        setLabel = false;
+                                        System.out.println(3);
+                                    }
+                                    if (Integer.parseInt(lab.get(i).get(j).getText()) == Integer.parseInt(lab.get(i).
+                                            get(k).getText()) && k != j) {
+                                        anim.setByX(80 * (k - j));
+                                        anim.play();
+                                        int a = 2 * Integer.parseInt(lab.get(i).get(j).getText());
+                                        lab.get(i).get(k).setText(Integer.toString(a));
+                                        lab.get(i).get(k).setVisible(false);
+                                        lab.get(i).get(j).setText("");
+                                        rec.get(i).get(j).setFill(Color.WHITE);
+                                        anim.setOnFinished(event1 -> {
+                                            if (newRandomY >= 0 && newRandomY <= 3 && newRandomX >= 0 && newRandomX <= 3) {
+                                                lab.get(newRandomY).get(newRandomX).setVisible(true);
+                                                rec.get(newRandomY).get(newRandomX).setFill(Color.web("ffffc8"));
+                                            }
+                                            lab.get(finalI).get(finalK).setVisible(true);
+                                            setColor(lab.get(finalI).get(finalK), rec.get(finalI).get(finalK));
+                                            group.getChildren().remove(stackPane);
+                                        });
+                                        break;
+                                    }
+                                }
                             }
                         }
                     }
+                    random2or4(lab, rec);
                     break;
                 case LEFT:
-                    for (int i = 0; i < n; i++) {
-                        for (int j = 0; j < n; j++) {
+                    for (int j = 1; j < n; j++) {
+                        for (int i = 0; i < n; i++) {
+                            int finalI = i;
+                            int finalJ = j;
+                            if (!lab.get(i).get(j).getText().equals("")) {
+                                Rectangle copyRec = rec.get(finalI).get(finalJ);
+                                Rectangle rectangle = new Rectangle(copyRec.getX(), copyRec.getY(), copyRec.
+                                        getWidth(), copyRec.getHeight());
+                                rectangle.setFill(copyRec.getFill());
+                                rectangle.setStroke(Color.BLACK);
+                                Label label = new Label(lab.get(finalI).get(finalJ).getText());
+                                label.setLayoutX(15);
+                                label.setLayoutY(10);
+                                label.setStyle(lab.get(finalI).get(finalJ).getStyle());
+                                StackPane stackPane = new StackPane(rectangle, label);
+                                stackPane.setAlignment(Pos.CENTER);
+                                stackPane.setLayoutX(rectangle.getX());
+                                stackPane.setLayoutY(rectangle.getY());
+                                group.getChildren().add(stackPane);
+                                anim = new TranslateTransition();
+                                anim.setNode(stackPane);
+                                anim.setDuration(Duration.millis(300));
+                                for (int k = finalJ - 1; k >= 0; k--) {
+                                    int finalK = k;
+                                    if (lab.get(i).get(k).getText().equals("") && k != 0) continue;
+                                    if (lab.get(i).get(k).getText().equals("") && k == 0) {
+                                        anim.setByX(80 * (k - j));
+                                        anim.play();
+                                        lab.get(i).get(k).setText(lab.get(i).get(j).getText());
+                                        lab.get(i).get(k).setVisible(false);
+                                        lab.get(i).get(j).setText("");
+                                        Color color = (Color) rec.get(i).get(j).getFill();
+                                        rec.get(i).get(j).setFill(Color.WHITE);
+                                        anim.setOnFinished(event1 -> {
+                                            if (newRandomY >= 0 && newRandomY <= 3 && newRandomX >= 0 && newRandomX <= 3) {
+                                                lab.get(newRandomY).get(newRandomX).setVisible(true);
+                                                rec.get(newRandomY).get(newRandomX).setFill(Color.web("ffffc8"));
+                                            }
+                                            lab.get(finalI).get(finalK).setVisible(true);
+                                            rec.get(finalI).get(finalK).setFill(color);
+                                            group.getChildren().remove(stackPane);
+                                        });
+                                        break;
+                                    }
+                                    if (Integer.parseInt(lab.get(i).get(j).getText()) != Integer.parseInt(lab.get(i).
+                                            get(k).getText()) && j - k != 1) {
+                                        anim.setByX(80 * (k - j + 1));
+                                        anim.play();
+                                        lab.get(i).get(k + 1).setText(lab.get(finalI).get(j).getText());
+                                        lab.get(i).get(k + 1).setVisible(false);
+                                        Color color = (Color) rec.get(finalI).get(finalJ).getFill();
+                                        if (j - k != 1) {
+                                            lab.get(i).get(j).setText("");
+                                            rec.get(i).get(j).setFill(Color.WHITE);
+                                        }
+                                        anim.setOnFinished(event1 -> {
+                                            if (newRandomY >= 0 && newRandomY <= 3 && newRandomX >= 0 && newRandomX <= 3) {
+                                                lab.get(newRandomY).get(newRandomX).setVisible(true);
+                                                rec.get(newRandomY).get(newRandomX).setFill(Color.web("ffffc8"));
+                                            }
+                                            rec.get(finalI).get(finalK + 1).setFill(color);
+                                            lab.get(finalI).get(finalK + 1).setVisible(true);
+                                            group.getChildren().remove(stackPane);
+                                        });
+                                        break;
+                                    }
+                                    if (Integer.parseInt(lab.get(i).get(j).getText()) == Integer.parseInt(lab.get(i).
+                                            get(k).getText()) && k != j) {
+                                        anim.setByX(80 * (k - j));
+                                        anim.play();
+                                        int a = 2 * Integer.parseInt(lab.get(i).get(j).getText());
+                                        lab.get(i).get(k).setText(Integer.toString(a));
+                                        lab.get(i).get(k).setVisible(false);
+                                        lab.get(i).get(j).setText("");
+                                        rec.get(i).get(j).setFill(Color.WHITE);
+                                        anim.setOnFinished(event1 -> {
+                                            if (newRandomY >= 0 && newRandomY <= 3 && newRandomX >= 0 && newRandomX <= 3) {
+                                                lab.get(newRandomY).get(newRandomX).setVisible(true);
+                                                rec.get(newRandomY).get(newRandomX).setFill(Color.web("ffffc8"));
+                                            }
+                                            lab.get(finalI).get(finalK).setVisible(true);
+                                            group.getChildren().remove(stackPane);
+                                            setColor(lab.get(finalI).get(finalK), rec.get(finalI).get(finalK));
+                                        });
+                                        break;
+                                    }
+                                }
+                            }
                         }
                     }
+                    random2or4(lab, rec);
                     break;
                 case UP:
-                    for (int i = 0; i < n; i++) {
+                    for (int i = 1; i < n; i++) {
                         for (int j = 0; j < n; j++) {
+                            int finalI = i;
+                            int finalJ = j;
+                            if (!lab.get(i).get(j).getText().equals("")) {
+                                Rectangle copyRec = rec.get(finalI).get(finalJ);
+                                Rectangle rectangle = new Rectangle(copyRec.getX(), copyRec.getY(), copyRec.
+                                        getWidth(), copyRec.getHeight());
+                                rectangle.setFill(copyRec.getFill());
+                                rectangle.setStroke(Color.BLACK);
+                                Label label = new Label(lab.get(finalI).get(finalJ).getText());
+                                label.setLayoutX(15);
+                                label.setLayoutY(10);
+                                label.setStyle(lab.get(finalI).get(finalJ).getStyle());
+                                StackPane stackPane = new StackPane(rectangle, label);
+                                stackPane.setAlignment(Pos.CENTER);
+                                stackPane.setLayoutX(rectangle.getX());
+                                stackPane.setLayoutY(rectangle.getY());
+                                group.getChildren().add(stackPane);
+                                anim = new TranslateTransition();
+                                anim.setNode(stackPane);
+                                anim.setDuration(Duration.millis(300));
+                                for (int k = i - 1; k >= 0; k--) {
+                                    int finalK = k;
+                                    if (lab.get(k).get(j).getText().equals("") && k != 0) continue;
+                                    if (lab.get(k).get(j).getText().equals("") && k == 0) {
+                                        anim.setByY(80 * (k - i));
+                                        anim.play();
+                                        lab.get(k).get(j).setText(lab.get(i).get(j).getText());
+                                        lab.get(k).get(j).setVisible(false);
+                                        lab.get(i).get(j).setText("");
+                                        Color color = (Color) rec.get(i).get(j).getFill();
+                                        rec.get(i).get(j).setFill(Color.WHITE);
+                                        anim.setOnFinished(event1 -> {
+                                            if (newRandomY >= 0 && newRandomY <= 3 && newRandomX >= 0 && newRandomX <= 3) {
+                                                lab.get(newRandomY).get(newRandomX).setVisible(true);
+                                                rec.get(newRandomY).get(newRandomX).setFill(Color.web("ffffc8"));
+                                            }
+                                            lab.get(finalK).get(finalJ).setVisible(true);
+                                            rec.get(finalK).get(finalJ).setFill(color);
+                                            group.getChildren().remove(stackPane);
+                                        });
+                                        break;
+                                    }
+                                    if (Integer.parseInt(lab.get(k).get(j).getText()) != Integer.parseInt(lab.get(i).
+                                            get(j).getText()) && i - k != 1) {
+                                        anim.setByY(80 * (k - i + 1));
+                                        anim.play();
+                                        lab.get(k + 1).get(j).setText(lab.get(i).get(j).getText());
+                                        lab.get(k + 1).get(j).setVisible(false);
+                                        Color color = (Color) rec.get(i).get(j).getFill();
+                                        if (i - k != 1) {
+                                            lab.get(i).get(j).setText("");
+                                            rec.get(i).get(j).setFill(Color.WHITE);
+                                        }
+                                        anim.setOnFinished(event1 -> {
+                                            if (newRandomY >= 0 && newRandomY <= 3 && newRandomX >= 0 && newRandomX <= 3) {
+                                                lab.get(newRandomY).get(newRandomX).setVisible(true);
+                                                rec.get(newRandomY).get(newRandomX).setFill(Color.web("ffffc8"));
+                                            }
+                                            rec.get(finalK + 1).get(finalJ).setFill(color);
+                                            lab.get(finalK + 1).get(finalJ).setVisible(true);
+                                            group.getChildren().remove(stackPane);
+                                        });
+                                        break;
+                                    }
+                                    if (Integer.parseInt(lab.get(k).get(j).getText()) == Integer.parseInt(lab.get(i).
+                                            get(j).getText()) && k != i) {
+                                        anim.setByY(80 * (k - i));
+                                        anim.play();
+                                        int a = 2 * Integer.parseInt(lab.get(i).get(j).getText());
+                                        lab.get(k).get(j).setText(Integer.toString(a));
+                                        lab.get(k).get(j).setVisible(false);
+                                        lab.get(i).get(j).setText("");
+                                        rec.get(i).get(j).setFill(Color.WHITE);
+                                        anim.setOnFinished(event1 -> {
+                                            if (newRandomY >= 0 && newRandomY <= 3 && newRandomX >= 0 && newRandomX <= 3) {
+                                                lab.get(newRandomY).get(newRandomX).setVisible(true);
+                                                rec.get(newRandomY).get(newRandomX).setFill(Color.web("ffffc8"));
+                                            }
+                                            lab.get(finalK).get(finalJ).setVisible(true);
+                                            setColor(lab.get(finalK).get(finalJ), rec.get(finalK).get(finalJ));
+                                            group.getChildren().remove(stackPane);
+                                        });
+                                        break;
+                                    }
+                                }
+                            }
                         }
                     }
+                    random2or4(lab, rec);
                     break;
                 case DOWN:
-                    for (int i = 0; i < n; i++) {
+                    for (int i = n - 2; i >= 0; i--) {
                         for (int j = 0; j < n; j++) {
+                            int finalI = i;
+                            int finalJ = j;
+                            if (!lab.get(i).get(j).getText().equals("")) {
+                                Rectangle copyRec = rec.get(finalI).get(finalJ);
+                                Rectangle rectangle = new Rectangle(copyRec.getX(), copyRec.getY(), copyRec.
+                                        getWidth(), copyRec.getHeight());
+                                rectangle.setFill(copyRec.getFill());
+                                rectangle.setStroke(Color.BLACK);
+                                Label label = new Label(lab.get(finalI).get(finalJ).getText());
+                                label.setLayoutX(15);
+                                label.setLayoutY(10);
+                                label.setStyle(lab.get(finalI).get(finalJ).getStyle());
+                                StackPane stackPane = new StackPane(rectangle, label);
+                                stackPane.setAlignment(Pos.CENTER);
+                                stackPane.setLayoutX(rectangle.getX());
+                                stackPane.setLayoutY(rectangle.getY());
+                                group.getChildren().add(stackPane);
+                                anim = new TranslateTransition();
+                                anim.setNode(stackPane);
+                                anim.setDuration(Duration.millis(300));
+                                for (int k = finalI + 1; k < n; k++) {
+                                    int finalK = k;
+                                    if (lab.get(k).get(j).getText().equals("") && k != n - 1) continue;
+                                    if (lab.get(k).get(j).getText().equals("") && k == n - 1 && k != i) {
+                                        anim.setByY(80 * (k - i));
+                                        anim.play();
+                                        lab.get(k).get(j).setText(lab.get(i).get(j).getText());
+                                        lab.get(k).get(j).setVisible(false);
+                                        lab.get(i).get(j).setText("");
+                                        Color color = (Color) rec.get(i).get(j).getFill();
+                                        rec.get(i).get(j).setFill(Color.WHITE);
+                                        anim.setOnFinished(event1 -> {
+                                            if (newRandomY >= 0 && newRandomY <= 3 && newRandomX >= 0 && newRandomX <= 3) {
+                                                lab.get(newRandomY).get(newRandomX).setVisible(true);
+                                                rec.get(newRandomY).get(newRandomX).setFill(Color.web("ffffc8"));
+                                            }
+                                            lab.get(finalK).get(finalJ).setVisible(true);
+                                            rec.get(finalK).get(finalJ).setFill(color);
+                                            group.getChildren().remove(stackPane);
+                                        });
+                                        break;
+                                    }
+                                    if (Integer.parseInt(lab.get(i).get(j).getText()) != Integer.parseInt(lab.get(k).
+                                            get(j).getText()) && k - i != 1) {
+                                        anim.setByY(80 * (k - i - 1));
+                                        anim.play();
+                                        lab.get(k - 1).get(j).setText(lab.get(i).get(j).getText());
+                                        lab.get(k - 1).get(j).setVisible(false);
+                                        Color color = (Color) rec.get(i).get(j).getFill();
+                                        if (k - i != 1) {
+                                            lab.get(i).get(j).setText("");
+                                            rec.get(i).get(j).setFill(Color.WHITE);
+                                        }
+                                        anim.setOnFinished(event1 -> {
+                                            if (newRandomY >= 0 && newRandomY <= 3 && newRandomX >= 0 && newRandomX <= 3) {
+                                                lab.get(newRandomY).get(newRandomX).setVisible(true);
+                                                rec.get(newRandomY).get(newRandomX).setFill(Color.web("ffffc8"));
+                                            }
+                                            rec.get(finalK - 1).get(finalJ).setFill(color);
+                                            lab.get(finalK - 1).get(finalJ).setVisible(true);
+                                            group.getChildren().remove(stackPane);
+                                        });
+                                        break;
+                                    }
+                                    if (Integer.parseInt(lab.get(i).get(j).getText()) == Integer.parseInt(lab.get(k).
+                                            get(j).getText()) && k != i) {
+                                        anim.setByY(80 * (k - i));
+                                        anim.play();
+                                        int a = 2 * Integer.parseInt(lab.get(i).get(j).getText());
+                                        lab.get(k).get(j).setText(Integer.toString(a));
+                                        lab.get(k).get(j).setVisible(false);
+                                        lab.get(i).get(j).setText("");
+                                        rec.get(i).get(j).setFill(Color.WHITE);
+                                        anim.setOnFinished(event1 -> {
+                                            if (newRandomY >= 0 && newRandomY <= 3 && newRandomX >= 0 && newRandomX <= 3) {
+                                                lab.get(newRandomY).get(newRandomX).setVisible(true);
+                                                rec.get(newRandomY).get(newRandomX).setFill(Color.web("ffffc8"));
+                                            }
+                                            lab.get(finalK).get(finalJ).setVisible(true);
+                                            setColor(lab.get(finalK).get(finalJ), rec.get(finalK).get(finalJ));
+                                            group.getChildren().remove(stackPane);
+                                        });
+                                        break;
+                                    }
+                                }
+                            }
                         }
                     }
+                    random2or4(lab, rec);
                     break;
             }
-        });
-
-        scene2.setOnMouseClicked(event -> {
-            String string = event.getX() + " , " + event.getY();
-            System.out.println(string);
         });
     }
 
@@ -207,41 +539,57 @@ public class Game2048 extends Application {
                 break;
         }
     }
+
+    private void random2or4(ArrayList<ArrayList<Label>> lab, ArrayList<ArrayList<Rectangle>> rec) {
+        ArrayList<Integer> x = new ArrayList<>();
+        ArrayList<Integer> y = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (lab.get(i).get(j).getText().equals("")) {
+                    x.add(j);
+                    y.add(i);
+                }
+            }
+        }
+        Random random = new Random();
+        int first = random.nextInt(x.size());
+        if (setLabel) {
+            newRandomX = x.get(first);
+            newRandomY = y.get(first);
+            lab.get(y.get(first)).get(x.get(first)).setText("2");
+            lab.get(y.get(first)).get(x.get(first)).setVisible(false);
+        } else {
+            newRandomX = -1;
+            newRandomY = -1;
+        }
+    }
 }
 
-class Player {
-    String username;
-    String password;
-}
-
-class Multi extends Thread {
-    private TranslateTransition anim;
+class Sleep extends Thread{
+    TranslateTransition anim;
     private ArrayList<ArrayList<Label>> lab;
     private ArrayList<ArrayList<Rectangle>> rec;
     private int finalI;
     private int finalJ;
-    private int n;
+    private int k;
 
-    Multi(TranslateTransition anim, ArrayList<ArrayList<Label>> lab, ArrayList<ArrayList<Rectangle>> rec,
-          int finalI, int finalJ, int n) {
+    Sleep (TranslateTransition anim, ArrayList<ArrayList<Label>> lab, ArrayList<ArrayList<Rectangle>> rec,
+           int finalI, int finalJ, int k) {
         this.anim = anim;
         this.lab = lab;
         this.rec = rec;
         this.finalI = finalI;
         this.finalJ = finalJ;
-        this.n = n;
+        this.k = k;
     }
 
     public void run() {
-        for (int k = finalJ + 1; k < n; k++) {
-            if (lab.get(finalI).get(k).getText().equals("") && k != n - 1) continue;
-            if ((lab.get(finalI).get(k).getText().equals("") && k == n - 1)) {
-                anim.setByX(80 * (k - finalJ));
-                anim.play();
-                lab.get(finalI).get(finalJ).setText("");
-                rec.get(finalI).get(finalJ).setFill(Color.WHITE);
-                break;
-            }
-        }
+        lab.get(finalI).get(k).setVisible(true);
+        rec.get(finalI).get(k).setFill(rec.get(finalI).get(finalJ).getFill());
     }
+}
+
+class Player {
+    String username;
+    String password;
 }
