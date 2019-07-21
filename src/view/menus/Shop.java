@@ -100,14 +100,50 @@ public class Shop extends PlayMenu {
             }
         });
 
-        heroMenu.setOnShowing(event -> {
+        heroLabel.setOnMouseClicked(event -> {
             int pages = heroes.size();
             int thisPage = 1;
             int i = 0;
             for (Card card : heroes.values()) {
                 Hero hero = (Hero) card;
-                //images[i] = hero.getImage();
-                cardIcons[i % 10].setImage(images[i]);
+                try {
+                    cardIcons[i % 10].setImage(new Image(new FileInputStream(hero.getImageName())));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                i++;
+                if (i == 10) break;
+            }
+        });
+
+        minionLabel.setOnMouseClicked(event -> {
+            int pages = heroes.size();
+            int thisPage = 1;
+            int i = 0;
+            for (Card card : minions.values()) {
+                Minion minion = (Minion) card;
+                try {
+                    cardIcons[i % 10].setImage(new Image(new FileInputStream(minion.getImageName())));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                i++;
+                if (i == 10) break;
+            }
+        });
+
+        itemLabel.setOnMouseClicked(event -> {
+            int pages = heroes.size();
+            int thisPage = 1;
+            int i = 0;
+            for (Card card : items.values()) {
+                Item item = (Item) card;
+                if (item.isCollectible()) continue;
+                try {
+                    cardIcons[i % 10].setImage(new Image(new FileInputStream(item.getImageName())));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 i++;
                 if (i == 10) break;
             }

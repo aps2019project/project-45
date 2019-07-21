@@ -5,8 +5,11 @@ import view.Battle;
 import java.util.Random;
 
 public class Item extends Card {
-    private Card flagOwner = new Card();
-    private boolean usable;
+    private Card flagOwner;
+    private boolean collectible = false;
+    private int number;
+    private String desc;
+
 
 
 
@@ -219,12 +222,28 @@ public class Item extends Card {
         this.flagOwner = flagOwner;
     }
 
-    public boolean isUsable() {
-        return usable;
+    public int getNumber() {
+        return number;
     }
 
-    public void setUsable(boolean usable) {
-        this.usable = usable;
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public boolean isCollectible() {
+        return collectible;
+    }
+
+    public void setCollectible(boolean collectible) {
+        this.collectible = collectible;
     }
 
     /*public void chineseSword() {

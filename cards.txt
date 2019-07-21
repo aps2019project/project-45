@@ -101,23 +101,23 @@
 {"name":"اسپل اسفندیار","cost":0,"square":null,"userAccount":null,"cardID":"f_اسپل اسفندیار_1","health":0,"imageName":null,"disarmTurns":0,"stunTurns":0,"increaseAPturns":[],"increaseAPamount":[],"decreaseAPturns":[],"decreaseAPamount":[],"holyBuffTurns":[-10],"holyBuffAmount":[3],"increaseHealthTurns":[],"increaseHealthAmount":[],"decreaseHealthTurns":[],"decreaseHealthAmount":[],"allDescs":["Gives 3 holy buffs for ever to Friend Hero continuousely in One Square"],"mp":0,"ap":0}
 {"name":"اسفندیار","cost":12000,"square":null,"userAccount":null,"cardID":null,"health":35,"imageName":null,"disarmTurns":0,"stunTurns":0,"increaseAPturns":[],"increaseAPamount":[],"decreaseAPturns":[],"decreaseAPamount":[],"holyBuffTurns":[],"holyBuffAmount":[],"increaseHealthTurns":[],"increaseHealthAmount":[],"decreaseHealthTurns":[],"decreaseHealthAmount":[],"heroClass":null,"specialPower":{"name":"اسپل اسفندیار","cost":0,"square":null,"userAccount":null,"cardID":"f_اسپل اسفندیار_1","health":0,"imageName":null,"disarmTurns":0,"stunTurns":0,"increaseAPturns":[],"increaseAPamount":[],"decreaseAPturns":[],"decreaseAPamount":[],"holyBuffTurns":[-10],"holyBuffAmount":[3],"increaseHealthTurns":[],"increaseHealthAmount":[],"decreaseHealthTurns":[],"decreaseHealthAmount":[],"allDescs":["Gives 3 holy buffs for ever to Friend Hero continuousely in One Square"],"mp":0,"ap":0},"specialPowerCooldown":0,"heroOrMinionType":"HYBRID","range":0,"mp":0,"ap":3}
 {"name":"رستم","cost":8000,"square":null,"userAccount":null,"cardID":null,"health":55,"imageName":null,"disarmTurns":0,"stunTurns":0,"increaseAPturns":[],"increaseAPamount":[],"decreaseAPturns":[],"decreaseAPamount":[],"holyBuffTurns":[],"holyBuffAmount":[],"increaseHealthTurns":[],"increaseHealthAmount":[],"decreaseHealthTurns":[],"decreaseHealthAmount":[],"heroClass":null,"specialPower":null,"specialPowerCooldown":0,"heroOrMinionType":"HYBRID","range":0,"mp":0,"ap":7}
-{"name":"تاج دانایی","number":1,"cost":300,"effect":"Increases MP 1 unit for first 3 turns"}
-{"name":"ناموس سپر","number":2,"cost":4000,"effect":"Exerts 12 holy buffs in friend hero"}
-{"name":"کمان دامول","number":3,"cost":3500,"effect":"Not_melee friend hero exerts disarm buff on the enemy"}
-{"name":"نوشدارو","number":4,"cost":0,"effect":"Increases health of random friend 6 units"}
-{"name":"تیر دو شاخ","number":5,"cost":0,"effect":"Increases AP of random not_melle friend 2 units"}
-{"name":"پر سیمرغ","number":6,"cost":3500,"effect":"Decreases power of not_melee enemy hero 2 units"}
-{"name":"اکسیر","number":7,"cost":0,"effect":"Increases health 3 units, increases AP of random friend 3 units"}
-{"name":"معجون مانا","number":8,"cost":0,"effect":"Increases MP 3 units next turn"}
-{"name":"معجون رویین تنی","number":9,"cost":0,"effect":"Exerts 12 holy buffs in random friend for 2 turns"}
-{"name":"نفرین مرگ","number":10,"cost":0,"effect":"Random friend minion strike 8 units on death to a random enemy beside it"}
-{"name":"RandomDamage","number":11,"cost":0,"effect":"Increases AP of random friend/enemy 2 units"}
-{"name":"TerroHood","number":12,"cost":5000,"effect":"Decreases AP of random enemy 2 units on attack"}
-{"name":"BladesOfAgility","number":13,"cost":0,"effect":"Increases AP of random friend 6 units"}
-{"name":"KingWisdom","number":14,"cost":9000,"effect":"Increases MP 1 unit"}
-{"name":"AssassinationDagger","number":15,"cost":15000,"effect":"Decreases health of enemy hero on putting each friend"}
-{"name":"PoisonousDagger","number":16,"cost":7000,"effect":"Friend decreases health of random enemy 1 unit for 1 turn on attack"}
-{"name":"ShockHammer","number":17,"cost":15000,"effect":"Friend hero exerts disarm buff on the enemy for 1 turn"}
-{"name":"SoulEater","number":18,"cost":25000,"effect":"Increases AP of random friend on death of any friend"}
-{"name":"غسل تعمید","number":19,"cost":20000,"effect":"Exerts 2 holy buffs on each friend minion on spawn"}
-{"name":"شمشیر چینی","number":20,"cost":0,"effect":"Increases AP of friend melle minions 5 units"}
+{"name":"تاج دانایی","number":"1","cost":"300","effect":"Increases MP 1 unit for first 3 turns"}
+{"name":"ناموس سپر","number":"2","cost":"4000","effect":"Exerts 12 holy buffs in friend hero"}
+{"name":"کمان دامول","number":"3","cost":"3500","effect":"Not_melee friend hero exerts disarm buff on the enemy"}
+{"name":"نوشدارو","number":"4","cost":"0","effect":"Increases health of random friend 6 units"}
+{"name":"تیر دو شاخ","number":"5","cost":"0","effect":"Increases AP of random not_melle friend 2 units"}
+{"name":"پر سیمرغ","number":"6","cost":"3500","effect":"Decreases power of not_melee enemy hero 2 units"}
+{"name":"اکسیر","number":"7","cost":"0","effect":"Increases health 3 units, increases AP of random friend 3 units"}
+{"name":"معجون مانا","number":"8","cost":"0","effect":"Increases MP 3 units next turn"}
+{"name":"معجون رویین تنی","number":"9","cost":"0","effect":"Exerts 12 holy buffs in random friend for 2 turns"}
+{"name":"نفرین مرگ","number":"10","cost":"0","effect":"Random friend minion strike 8 units on death to a random enemy beside it"}
+{"name":"RandomDamage","number":"11","cost":"0","effect":"Increases AP of random friend/enemy 2 units"}
+{"name":"TerroHood","number":"12","cost":"5000","effect":"Decreases AP of random enemy 2 units on attack"}
+{"name":"BladesOfAgility","number":"13","cost":"0","effect":"Increases AP of random friend 6 units"}
+{"name":"KingWisdom","number":"14","cost":"9000","effect":"Increases MP 1 unit"}
+{"name":"AssassinationDagger","number":"15","cost":"15000","effect":"Decreases health of enemy hero on putting each friend"}
+{"name":"PoisonousDagger","number":"16","cost":"7000","effect":"Friend decreases health of random enemy 1 unit for 1 turn on attack"}
+{"name":"ShockHammer","number":"17","cost":"15000","effect":"Friend hero exerts disarm buff on the enemy for 1 turn"}
+{"name":"SoulEater","number":"18","cost":"25000","effect":"Increases AP of random friend on death of any friend"}
+{"name":"غسل تعمید","number":"19","cost":"20000","effect":"Exerts 2 holy buffs on each friend minion on spawn"}
+{"name":"شمشیر چینی","number":"20","cost":"0","effect":"Increases AP of friend melle minions 5 units"}
