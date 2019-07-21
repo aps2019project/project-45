@@ -1,6 +1,7 @@
 package view.menus;
 
 import controller.PlayController;
+import javafx.scene.Group;
 import javafx.stage.Stage;
 import model.Account;
 import model.PlayingMode;
@@ -31,12 +32,6 @@ public class PlayingTypeMenu extends PlayMenu {
 
     @Override
     public void open(Stage primaryStage) {
-
+        Group group = (Group) primaryStage.getScene().getRoot();
     }
-
-    @Override
-    public void exit(Stage primaryStage) {
-
-    }
-
 }

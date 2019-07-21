@@ -43,8 +43,8 @@ public abstract class PlayMenu {
         help.setOnAction(event -> help(primaryStage));
         root.getChildren().add(help);
 
-        exit.setStyle("-fx-background-color: #702ea9");
-        help.setStyle("-fx-background-color: #702ea9");
+        exit.setStyle("-fx-background-color: #6cff59");
+        help.setStyle("-fx-background-color: #6cff59");
         try {
             open(primaryStage);
         } catch (LineUnavailableException e) {

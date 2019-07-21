@@ -20,7 +20,6 @@ public class Game2048 extends Application {
     private static int n = 4;
     private static int newRandomX;
     private static int newRandomY;
-    private boolean setLabel = true;
 
     public static void main(String[] args) {
         handleSaves();
@@ -106,7 +105,6 @@ public class Game2048 extends Application {
         root.getChildren().add(play);
 
         scene2.setOnKeyPressed(event -> {
-            setLabel = true;
             TranslateTransition anim = null;
             switch (event.getCode()) {
                 case RIGHT:
@@ -134,10 +132,6 @@ public class Game2048 extends Application {
                                 for (int k = j + 1; k < n; k++) {
                                     int finalK = k;
                                     if (lab.get(i).get(k).getText().equals("") && k != n - 1) continue;
-                                    if (lab.get(i).get(k).getText().equals("") && k == n - 1 && k == j) {
-                                        setLabel = false;
-                                        System.out.println(1);
-                                    }
                                     if (lab.get(i).get(k).getText().equals("") && k == n - 1 && k != j) {
                                         anim.setByX(80 * (k - j));
                                         anim.play();
@@ -158,12 +152,7 @@ public class Game2048 extends Application {
                                         break;
                                     }
                                     if (Integer.parseInt(lab.get(i).get(j).getText()) != Integer.parseInt(lab.get(i).
-                                            get(k).getText()) && k - j == 1) {
-                                        setLabel = false;
-                                        System.out.println(2);
-                                    }
-                                    if (Integer.parseInt(lab.get(i).get(j).getText()) != Integer.parseInt(lab.get(i).
-                                            get(k).getText()) && k - j != 1) {
+                                            get(k).getText())) {
                                         anim.setByX(80 * (k - j - 1));
                                         anim.play();
                                         lab.get(i).get(k - 1).setText(lab.get(i).get(j).getText());
@@ -185,12 +174,7 @@ public class Game2048 extends Application {
                                         break;
                                     }
                                     if (Integer.parseInt(lab.get(i).get(j).getText()) == Integer.parseInt(lab.get(i).
-                                            get(k).getText()) && k != j) {
-                                        setLabel = false;
-                                        System.out.println(3);
-                                    }
-                                    if (Integer.parseInt(lab.get(i).get(j).getText()) == Integer.parseInt(lab.get(i).
-                                            get(k).getText()) && k != j) {
+                                            get(k).getText())) {
                                         anim.setByX(80 * (k - j));
                                         anim.play();
                                         int a = 2 * Integer.parseInt(lab.get(i).get(j).getText());
@@ -261,7 +245,7 @@ public class Game2048 extends Application {
                                         break;
                                     }
                                     if (Integer.parseInt(lab.get(i).get(j).getText()) != Integer.parseInt(lab.get(i).
-                                            get(k).getText()) && j - k != 1) {
+                                            get(k).getText())) {
                                         anim.setByX(80 * (k - j + 1));
                                         anim.play();
                                         lab.get(i).get(k + 1).setText(lab.get(finalI).get(j).getText());
@@ -283,7 +267,7 @@ public class Game2048 extends Application {
                                         break;
                                     }
                                     if (Integer.parseInt(lab.get(i).get(j).getText()) == Integer.parseInt(lab.get(i).
-                                            get(k).getText()) && k != j) {
+                                            get(k).getText())) {
                                         anim.setByX(80 * (k - j));
                                         anim.play();
                                         int a = 2 * Integer.parseInt(lab.get(i).get(j).getText());
@@ -354,7 +338,7 @@ public class Game2048 extends Application {
                                         break;
                                     }
                                     if (Integer.parseInt(lab.get(k).get(j).getText()) != Integer.parseInt(lab.get(i).
-                                            get(j).getText()) && i - k != 1) {
+                                            get(j).getText())) {
                                         anim.setByY(80 * (k - i + 1));
                                         anim.play();
                                         lab.get(k + 1).get(j).setText(lab.get(i).get(j).getText());
@@ -376,7 +360,7 @@ public class Game2048 extends Application {
                                         break;
                                     }
                                     if (Integer.parseInt(lab.get(k).get(j).getText()) == Integer.parseInt(lab.get(i).
-                                            get(j).getText()) && k != i) {
+                                            get(j).getText())) {
                                         anim.setByY(80 * (k - i));
                                         anim.play();
                                         int a = 2 * Integer.parseInt(lab.get(i).get(j).getText());
@@ -427,7 +411,7 @@ public class Game2048 extends Application {
                                 for (int k = finalI + 1; k < n; k++) {
                                     int finalK = k;
                                     if (lab.get(k).get(j).getText().equals("") && k != n - 1) continue;
-                                    if (lab.get(k).get(j).getText().equals("") && k == n - 1 && k != i) {
+                                    if (lab.get(k).get(j).getText().equals("") && k == n - 1) {
                                         anim.setByY(80 * (k - i));
                                         anim.play();
                                         lab.get(k).get(j).setText(lab.get(i).get(j).getText());
@@ -447,7 +431,7 @@ public class Game2048 extends Application {
                                         break;
                                     }
                                     if (Integer.parseInt(lab.get(i).get(j).getText()) != Integer.parseInt(lab.get(k).
-                                            get(j).getText()) && k - i != 1) {
+                                            get(j).getText())) {
                                         anim.setByY(80 * (k - i - 1));
                                         anim.play();
                                         lab.get(k - 1).get(j).setText(lab.get(i).get(j).getText());
@@ -469,7 +453,7 @@ public class Game2048 extends Application {
                                         break;
                                     }
                                     if (Integer.parseInt(lab.get(i).get(j).getText()) == Integer.parseInt(lab.get(k).
-                                            get(j).getText()) && k != i) {
+                                            get(j).getText())) {
                                         anim.setByY(80 * (k - i));
                                         anim.play();
                                         int a = 2 * Integer.parseInt(lab.get(i).get(j).getText());
@@ -553,15 +537,11 @@ public class Game2048 extends Application {
         }
         Random random = new Random();
         int first = random.nextInt(x.size());
-        if (setLabel) {
-            newRandomX = x.get(first);
-            newRandomY = y.get(first);
-            lab.get(y.get(first)).get(x.get(first)).setText("2");
-            lab.get(y.get(first)).get(x.get(first)).setVisible(false);
-        } else {
-            newRandomX = -1;
-            newRandomY = -1;
-        }
+        newRandomX = x.get(first);
+        newRandomY = y.get(first);
+        lab.get(y.get(first)).get(x.get(first)).setText("2");
+        lab.get(y.get(first)).get(x.get(first)).setVisible(false);
+
     }
 }
 
